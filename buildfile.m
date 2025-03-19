@@ -178,12 +178,6 @@ end % docTask
 function packageTask( context )
 % Package the Chart Development Toolbox.
 
-% Package the Chart Browser app.
-%projectRoot = context.Plan.RootFolder;
-%appPackagingProject = fullfile( projectRoot, "Chart Browser.prj" );
-%matlab.apputil.package( appPackagingProject )
-%fprintf( 1, "** Updated the Chart Browser app\n" )
-
 % Toolbox short name.
 toolboxShortName = "charts";
 
