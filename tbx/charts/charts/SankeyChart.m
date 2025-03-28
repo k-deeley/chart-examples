@@ -49,8 +49,11 @@ classdef SankeyChart < Chart
         NodeEdgeWidth(1, 1) double {mustBePositive, mustBeFinite} = 0.5
         % Node label font size.
         NodeFontSize(1, 1) double {mustBePositive, mustBeFinite} = 10
+        % Node label interpreter.
+        NodeLabelInterpreter(1, 1) string {mustBeMember( ...
+            NodeLabelInterpreter, ["none", "tex", "latex"] )} = "tex"
         % Node label visibility.
-        NodeLabelsVisible(1, 1) matlab.lang.OnOffSwitchState = "on"
+        NodeLabelVisible(1, 1) matlab.lang.OnOffSwitchState = "on"
     end % properties
 
     properties ( Access = private, Transient, NonCopyable )
@@ -110,6 +113,10 @@ classdef SankeyChart < Chart
         ShortDescription(1, 1) string = "Illustrate the flow between" + ...
             " different states"
     end % properties ( Constant, Hidden )
+
+    events ( NotifyAccess = private, HasCallbackProperty )
+        NodeLabelClicked
+    end % events ( NotifyAccess = private, HasCallbackProperty )
 
     methods
 
@@ -224,15 +231,7 @@ classdef SankeyChart < Chart
             A = adjacency( obj.GraphData_, "weighted" );
             inflow  = sum( A, 1 )';
             outflow = sum( A, 2 );
-            src = inflow == 0;
-            snk = outflow == 0;
-
-            % Issue a warning for unbalanced graphs.
-            if ~isequal( inflow(~src & ~snk), outflow(~src & ~snk) )
-                warning( "SankeyChart:UnbalancedGraph", ...
-                    "The given graph is unbalanced." )
-            end % if
-
+            
             % Compute node and link coordinates.
             obj.NodeHeight = full( max( inflow, outflow ) );
             nodeCoordinates( obj )
@@ -596,11 +595,20 @@ classdef SankeyChart < Chart
                     "VerticalAlignment", vAlign, ...
                     "Clipping", "on", ...
                     "Tag", "NodeLabel", ...
-                    "ButtonDownFcn", @(~,~) nodeButtonDown( obj, nid ) )
+                    "ButtonDownFcn", ...
+                    @( s, e ) onNodeLabelClicked( obj, s, e, nid, ns ) )
 
             end % for
 
         end % updateNodeLabels
+
+        function onNodeLabelClicked( obj, ~, ~, nodeID, nodeText )
+            %ONNODELABELCLICKED Node label button down callback.
+
+            NED = NodeEventData( nodeID, nodeText );
+            obj.notify( "NodeLabelClicked", NED )
+
+        end % onNodeLabelClicked
 
         function nodeButtonDown( obj, id )
 
@@ -755,7 +763,7 @@ classdef SankeyChart < Chart
                     "FaceAlpha", obj.NodeAlpha, ...
                     "EdgeAlpha", obj.NodeAlpha, ...
                     "Tag", "Node", ...
-                    "ButtonDownFcn", @(~,~) nodeButtonDown( obj, nid ) )
+                    "ButtonDownFcn", @( ~, ~ ) nodeButtonDown( obj, nid ) )
 
             end % for
 
@@ -831,11 +839,13 @@ classdef SankeyChart < Chart
                 "LineWidth", obj.NodeEdgeWidth )
 
             set( obj.NodeLabels, ...
+                "Interpreter", obj.NodeLabelInterpreter, ...
                 "FontSize", obj.NodeFontSize, ...
-                "Visible", obj.NodeLabelsVisible )
+                "Visible", obj.NodeLabelVisible )
 
             set( obj.LinkLabels, ...
-                "FontSize", obj.LinkFontSize)
+                "Interpreter", obj.NodeLabelInterpreter, ...
+                "FontSize", obj.LinkFontSize )
 
         end % update
 

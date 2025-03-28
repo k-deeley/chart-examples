@@ -1,5 +1,5 @@
 % Chart Examples
-% Version 2.2.3 (R2025a) 13-Feb-2025
+% Version 2.2.4 (R2025a) 04-Apr-2025
 
 % Copyright 2018-2025 The MathWorks, Inc.
 
@@ -11,6 +11,7 @@
 %   Chart
 %   Component
 %   InductionMotorParameters
+%   NodeEventData
 
 % Charts
 %   AircraftChart
