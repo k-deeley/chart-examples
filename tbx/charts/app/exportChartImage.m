@@ -27,7 +27,7 @@ function mustBeChartName( str )
 %MUSTBECHARTNAME Verify that the input string array, str, contains valid
 %chart names.
 
-mustBeMember( str, allChartNames() )
+mustBeMember( str, chartNames() )
 
 end % mustBeChartName
 
@@ -647,6 +647,37 @@ axis( VARC, "off" )
 exportImage( "ValueAtRiskChart", VARC, [40, 50] )
 
 end % exportValueAtRiskChart
+
+function exportWaterfallChart()
+%EXPORTWATERFALLCHART Export the WaterfallChart.
+
+% Set the seed.
+s = rng();
+seedCleanup = onCleanup( @() rng( s ) );
+rng( "default" )
+
+% Create data for the chart.
+n = 10;
+y = randi( [-6, 6], [n, 1] );
+idx = y < 0;
+colors = repmat( [0, 1, 0], n, 1 );
+colors(idx, :) = repmat( [1, 0, 0], sum( idx ), 1 );
+
+% Create the chart.
+f = uifigure();
+figureCleanup = onCleanup( @() delete( f ) );
+WC = WaterfallChart( "Parent", f, ...
+    "Data", y, ...
+    "BarFaceColor", colors, ...
+    "BarLabelVisible", "off", ...
+    "ConnectingLineVisible", "off", ...
+    "LineWidth", 4 );
+axis( WC, "off" )
+
+% Export.
+exportImage( "WaterfallChart", WC, [40, 50] )
+
+end % exportWaterfallChart
 
 function exportWindRoseChart()
 %EXPORTWINDROSECHART Export the WindRoseChart.
