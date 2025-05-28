@@ -10,22 +10,22 @@ plan = buildplan( localfunctions() );
 plan.DefaultTasks = "package";
 
 % Add a test task to run the unit tests for the project. Generate and save
-% a coverage report. This build task is optional.
-%projectRoot = plan.RootFolder;
-%testFolder = fullfile( projectRoot, "charts", "tests" );
-%codeFolder = fullfile( projectRoot, "tbx", "charts"  );
-% plan("test") = matlab.buildtool.tasks.TestTask( testFolder, ...
-%     "Strict", true, ...
-%     "Description", "Assert that all tests across the project pass.", ...
-%     "SourceFiles", codeFolder, ...
-%     "CodeCoverageResults", "reports/Coverage.html", ...
-%     "OutputDetail", "none" );
+% a coverage report.
+projectRoot = plan.RootFolder;
+testFolder = fullfile( projectRoot, "tbx", "charts", "tests" );
+codeFolder = fullfile( projectRoot, "tbx", "charts", "charts"  );
+plan("test") = matlab.buildtool.tasks.TestTask( testFolder, ...
+    "Strict", true, ...
+    "Description", "Assert that all tests across the project pass.", ...
+    "SourceFiles", codeFolder, ...
+    "CodeCoverageResults", "reports/Coverage.html", ...
+    "OutputDetail", "none" );
 
 % The test task depends on the check task.
-%plan("test").Dependencies = "check";
+plan("test").Dependencies = "check";
 
-% The doc task depends on the check task.
-plan("doc").Dependencies = "check";
+% The doc task depends on the test task.
+plan("doc").Dependencies = "test";
 
 % Skip the doc task if the charts, examples, and doc files are up to date.
 plan("doc").Inputs = [
