@@ -1,5 +1,5 @@
 function plan = buildfile()
-%BUILDFILE Chart Development Toolbox build file.
+%BUILDFILE Chart Examples build file.
 
 % Copyright 2024-2025 The MathWorks, Inc.
 
@@ -9,6 +9,9 @@ plan = buildplan( localfunctions() );
 % Set the package task to run by default.
 plan.DefaultTasks = "package";
 
+% Add the clean task.
+plan("clean") = matlab.buildtool.tasks.CleanTask();
+
 % Add a test task to run the unit tests for the project. Generate and save
 % a coverage report.
 projectRoot = plan.RootFolder;
@@ -16,10 +19,15 @@ testFolder = fullfile( projectRoot, "tbx", "charts", "tests" );
 codeFolder = fullfile( projectRoot, "tbx", "charts", "charts"  );
 plan("test") = matlab.buildtool.tasks.TestTask( testFolder, ...
     "Strict", true, ...
-    "Description", "Assert that all tests across the project pass.", ...
+    "RunOnlyImpactedTests", true, ...
+    "Description", "Assert that all impacted tests " + ...
+    "across the project pass.", ...
     "SourceFiles", codeFolder, ...
-    "CodeCoverageResults", "reports/Coverage.html", ...
-    "OutputDetail", "none" );
+    "TestResults", "reports/Results.html", ...
+    "LoggingLevel", "Verbose", ...
+    "OutputDetail", "Verbose" );
+plan("test").addCodeCoverage( "reports/Coverage.html", ...
+    "MetricLevel", "mcdc" );
 
 % The test task depends on the check task.
 plan("test").Dependencies = "check";
@@ -115,7 +123,7 @@ for chartIdx = 1 : numel( chartNames )
     % Replace the file contents.
     fileID = fopen( publishedFile, "w" );
     fprintf( fileID, "%s", htmlFileContents );
-    fclose( fileID ); 
+    fclose( fileID );
 
     % Report progress.
     fprintf( 1, "[+] %s\n", publishedFile )

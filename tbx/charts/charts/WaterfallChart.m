@@ -49,6 +49,8 @@ classdef WaterfallChart < Chart
         ConnectingLineWidth(1, 1) double {mustBePositive, mustBeFinite} = 1
         % Connecting line visibility.
         ConnectingLineVisible(1, 1) matlab.lang.OnOffSwitchState = "on"
+        % Axes interactions.
+        Interactions(1, 1) matlab.lang.OnOffSwitchState = "on"
         % Target line color.
         TargetLineColor {validatecolor} = [0.5, 0.5, 0.5]
         % Target line style.
@@ -570,6 +572,15 @@ classdef WaterfallChart < Chart
                 obj.BarLabels(k).String = ...
                     sprintf( obj.BarLabelFormat, y(k) );
             end % for
+
+            % Axes interactions.
+            if obj.Interactions
+                enableDefaultInteractivity( obj.Axes )
+                axtoolbar( obj.Axes, "default" );
+            else
+                disableDefaultInteractivity( obj.Axes )
+                obj.Axes.Toolbar = [];
+            end % if
 
         end % update
 
