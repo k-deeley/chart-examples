@@ -1,0 +1,38 @@
+name = "Chart Examples"
+
+[folders]
+path = [
+    "tbx",
+    "tbx/charts",
+    "tbx/charts/app",
+    "tbx/charts/charts",
+    "tbx/charts/examples",
+    "tbx/charts/tests",
+    "tbx/charts/validators",
+    "tbx/chartsdoc",
+]
+test = [
+    "tbx/charts/tests",
+]
+
+[[package]]
+configuration-name = "chartBrowser"
+use-license-bsd = false
+name = ""
+version = "1.0"
+description = "This toolbox comprises several diverse examples of custom MATLAB charts. Use this app to browse the available charts and their documentation. You can inspect the source code, explore the features and functionality, and run examples demonstrating the use of each chart. The toolbox also has documentation and resources to help you develop your own charts."
+id = "72cac2e4-e1e8-470c-9de8-522edcd471e2"
+package-root = "/"
+provider.name = "Ken Deeley"
+provider.email = "kdeeley@mathworks.com"
+provider.organization = "MathWorks"
+display-name = "Chart Browser"
+summary = "App for browsing the available charts and their documentation."
+output-file-name = "MyToolbox.mltbx"
+output-folder = "release"
+supported-platforms = [
+    "windows",
+    "linux",
+    "macos",
+]
+
