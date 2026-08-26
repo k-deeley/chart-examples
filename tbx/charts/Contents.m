@@ -1,15 +1,10 @@
 % Chart Examples
-% Version 2.2.6 (R2025b) 07-Nov-2025
+% Version 2.3.0 (R2026b) 26-Aug-2026
 
-% Copyright 2018-2025 The MathWorks, Inc.
-
-% App
-%  chartBrowser
+% Copyright 2018-2026 The MathWorks, Inc.
 
 % Classes
 %   Blip
-%   Chart
-%   Component
 %   InductionMotorParameters
 %   NodeEventData
 
@@ -42,6 +37,7 @@
 %   WindRoseChart
 
 % Functions
+%   chartNames
 %   chartsRoot
 %   exampleFigure
 %   kids2graph

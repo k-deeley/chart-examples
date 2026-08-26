@@ -1,7 +1,7 @@
 function plan = buildfile()
 %BUILDFILE Chart Examples build file.
 
-% Copyright 2024-2025 The MathWorks, Inc.
+% Copyright 2024-2026 The MathWorks, Inc.
 
 % Define the build plan.
 plan = buildplan( localfunctions() );
@@ -11,6 +11,9 @@ plan.DefaultTasks = "package";
 
 % Add the clean task.
 plan("clean") = matlab.buildtool.tasks.CleanTask();
+
+% Add the package task.
+plan("package") = matlab.buildtool.tasks.PackageTask( "Chart_Examples" );
 
 % Add a test task to run the unit tests for the project. Generate and save
 % a coverage report.
@@ -35,22 +38,17 @@ plan("test").Dependencies = "check";
 % The doc task depends on the test task.
 plan("doc").Dependencies = "test";
 
-% Skip the doc task if the charts, examples, and doc files are up to date.
-plan("doc").Inputs = [
-    fullfile( chartsRoot(), "charts" );
-    fullfile( chartsRoot(), "examples" );
-    fullfile( chartsRoot(), "doc" )];
+% Skip the doc task if the documentation files are up to date.
+docFolder = fullfile( projectRoot, "tbx", "chartsdoc" );
+plan("doc").Inputs = docFolder;
+plan("doc").Outputs = [
+    fullfile( docFolder, "**", "*.html" );
+    fullfile( docFolder, "*.xml" );
+    fullfile( docFolder, "resources" );
+    fullfile( docFolder, "helpsearch-v*" )];
 
-% Obfuscate the required files.
-appFolder = fullfile( chartsRoot(), "app" );
-sourceFile = fullfile( appFolder, "ChartBrowserLauncher.m" );
-plan("pcode") = matlab.buildtool.tasks.PcodeTask( ...
-    sourceFile, appFolder, ...
-    "Description", "Obfuscate the required code files.", ...
-    "Dependencies", "doc" );
-
-% The package task depends on the p-code task.
-plan("package").Dependencies = "pcode";
+% The package task depends on the doc task.
+plan("package").Dependencies = "doc";
 
 end % buildfile
 
@@ -92,184 +90,25 @@ assert( all( passed ), "buildfile:ProjectIssue", ...
 end % checkTask
 
 function docTask( context )
-% Build the documentation and examples.
+% Build the documentation.
 
-% Publish the chart classes as HTML documents.
-chartsFolder = context.Task.Inputs(1).Path;
-chartsInfo = struct2table( dir( fullfile( chartsFolder, "*.m" ) ) );
-chartNames = string( chartsInfo.name );
-chartFullPaths = fullfile( chartsFolder, chartNames );
-chartNames = erase( chartNames, ".m" );
-htmlOutputFolder = fullfile( chartsRoot(), "app", "html", "charts" );
+docFolder = context.Task.Inputs(1).Path;
+markdownFiles = fullfile( docFolder, "**", "*.md" );
 
-for chartIdx = 1 : numel( chartNames )
+docdelete( docFolder )
+fprintf( 1, "** Removed previously generated documentation.\n" )
 
-    % Export the chart classdef file to an HTML document.
-    publishedFile = publish( chartFullPaths(chartIdx), ...
-        "format", "html", ...
-        "outputDir", htmlOutputFolder, ...
-        "evalCode", false );
+htmlFiles = docconvert( markdownFiles, ...
+    "Theme", "light", ...
+    "Root", docFolder );
+fprintf( 1, "** Converted Markdown documentation to HTML.\n" )
 
-    % Open it for editing.
-    htmlFileContents = fileread( publishedFile );
+docrun( htmlFiles, ...
+    "Theme", "light", ...
+    "FigureSize", [600, 400] )
+fprintf( 1, "** Inserted MATLAB output into documentation.\n" )
 
-    % Insert the JavaScript code.
-    jsFile = fullfile( chartsRoot(), "app", "html", ...
-        "respondToThemeChanges.js" );
-    jsCode = fileread( jsFile );
-    htmlFileContents = insertBefore( htmlFileContents, "</body>", ...
-        "<script type=""text/javascript"">" + jsCode + "</script>" );
-
-    % Replace the file contents.
-    fileID = fopen( publishedFile, "w" );
-    fprintf( fileID, "%s", htmlFileContents );
-    fclose( fileID );
-
-    % Report progress.
-    fprintf( 1, "[+] %s\n", publishedFile )
-
-end % for
-
-% Publish the examples as HTML documents.
-examplesFolder = context.Task.Inputs(2).Path;
-examplesInfo = struct2table( dir( fullfile( ...
-    examplesFolder, "*Examples.m" ) ) );
-exampleNames = string( examplesInfo.name );
-exampleFullPaths = fullfile( examplesFolder, exampleNames );
-exampleNames = erase( exampleNames, ".m" );
-htmlOutputFolder = fullfile( chartsRoot(), "app", "html", "examples" );
-
-for exampleIdx = 1 : numel( exampleNames )
-
-    % Export the script to HTML.
-    exportName = fullfile( htmlOutputFolder, ...
-        exampleNames(exampleIdx) + ".html" );
-    export( exampleFullPaths(exampleIdx), exportName, ...
-        "Format", "html", ...
-        "Run", false );
-
-    % Activate the hyperlinks.
-    activateLinks( exportName )
-
-    % Report progress.
-    fprintf( 1, "[+] %s\n", exportName )
-
-end % for
-
-% Write down the doc source and output folders.
-docFolder = context.Task.Inputs(3).Path;
-htmlOutputFolder = fullfile( chartsRoot(), "app", "html", "doc" );
-
-% Publish the documentation files.
-docInfo = struct2table( dir( fullfile( docFolder, "*.m" ) ) );
-docFilenames = string( docInfo.name );
-for fileIdx = 1 : numel( docFilenames )
-    exportToHTML( docFilenames(fileIdx) )
-end % for
-
-    function exportToHTML( scriptName )
-        %EXPORTTOHTML Export the given script to HTML format.
-
-        scriptFullPath = fullfile( docFolder, scriptName );
-        [~, scriptNameNoExt] = fileparts( scriptName );
-        exportName = fullfile( htmlOutputFolder, ...
-            scriptNameNoExt + ".html" );
-        export( scriptFullPath, exportName, ...
-            "Format", "html", ...
-            "Run", false );
-        activateLinks( exportName )
-
-    end % exportToHTML
+docindex( docFolder )
+fprintf( 1, "** Indexed documentation.\n" )
 
 end % docTask
-
-function packageTask( context )
-% Package the Chart Development Toolbox.
-
-% Toolbox short name.
-toolboxShortName = "charts";
-
-% Project root directory.
-projectRoot = context.Plan.RootFolder;
-
-% Import and tweak the toolbox metadata.
-toolboxJSON = fullfile( projectRoot, toolboxShortName + ".json" );
-meta = jsondecode( fileread( toolboxJSON ) );
-meta.ToolboxMatlabPath = fullfile( projectRoot, meta.ToolboxMatlabPath );
-meta.ToolboxFolder = fullfile( projectRoot, meta.ToolboxFolder );
-meta.ToolboxImageFile = fullfile( projectRoot, meta.ToolboxImageFile );
-versionString = feval( @(s) s(1).Version, ...
-    ver( toolboxShortName ) ); %#ok<FVAL>
-meta.ToolboxVersion = versionString;
-meta.ToolboxGettingStartedGuide = fullfile( projectRoot, ...
-    meta.ToolboxGettingStartedGuide );
-mltbx = fullfile( projectRoot, ...
-    meta.ToolboxName + " " + versionString + ".mltbx" );
-meta.OutputFile = mltbx;
-
-% Define the toolbox packaging options.
-toolboxFolder = meta.ToolboxFolder;
-toolboxID = meta.Identifier;
-meta = rmfield( meta, ["Identifier", "ToolboxFolder"] );
-opts = matlab.addons.toolbox.ToolboxOptions( ...
-    toolboxFolder, toolboxID, meta );
-
-% Remove unnecessary files.
-tf = endsWith( opts.ToolboxFiles, "ChartBrowserLauncher.m" ) | ...
-    endsWith( opts.ToolboxFiles, ...
-    "app\images\" + lettersPattern() + "Chart.png" );
-opts.ToolboxFiles(tf) = [];
-
-% Package the toolbox.
-matlab.addons.toolbox.packageToolbox( opts )
-fprintf( 1, "[+] %s\n", opts.OutputFile )
-
-% Add the license.
-licenseText = fileread( fullfile( projectRoot, "LICENSE.txt" ) );
-mlAddonSetLicense( char( opts.OutputFile ), ...
-    struct( "type", 'BSD', "text", licenseText ) );
-
-end % packageTask
-
-function activateLinks( file )
-%ACTIVATELINKS Convert the Live Script hyperlinks to JavaScript-enabled
-%links within the specified HTML file.
-
-arguments ( Input )
-    file(1, 1) string {mustBeFile}
-end % arguments ( Input )
-
-% Read the file contents.
-htmlFileContents = string( fileread( file ) );
-
-% Replace the commands within the anchors.
-
-% Extract the anchors.
-anchors = extractBetween( htmlFileContents, "<a href = ""matlab:", ">", ...
-    "Boundaries", "inclusive" );
-
-% Extract the commands.
-commands = extractBetween( anchors, """", """" );
-
-% Format the JavaScript-enabled anchors.
-replacementAnchors = "<a href = ""#"" onclick=""handleClick(" + ...
-    "'" + commands + "'" + "); return false;"">";
-
-% Replace the original anchors with the new anchors.
-for k = 1 : numel( anchors )
-    htmlFileContents = replace( htmlFileContents, ...
-        anchors(k), replacementAnchors(k) );
-end % for
-
-% Insert the JavaScript block.
-jsFile = fullfile( chartsRoot(), "app", "html", "activateLinks.js" );
-jsCode = fileread( jsFile );
-htmlFileContents = insertBefore( htmlFileContents, "</body>", ...
-    "<script type = ""text/javascript"">" + jsCode + "</script>" );
-
-% Replace the file contents.
-fileID = fopen( file, "w" );
-fprintf( fileID, "%s", htmlFileContents );
-fclose( fileID );
-
-end % activateLinks

@@ -4,35 +4,48 @@ name = "Chart Examples"
 path = [
     "tbx",
     "tbx/charts",
-    "tbx/charts/app",
     "tbx/charts/charts",
-    "tbx/chartsdoc/examples",
     "tbx/charts/tests",
     "tbx/charts/validators",
     "tbx/chartsdoc",
+    "tbx/chartsdoc/examples",
+    "tbx/chartsdoc/notes",
 ]
 test = [
     "tbx/charts/tests",
 ]
 
+[dependencies]
+Test_Framework_Extensions = {version = "1.0.7", id = "609722db-8fd7-4bbd-b440-c413f25e08c0"}
+MATLAB_DocMaker = {version = "0.7.0", id = "ae82d5d2-45be-4fc5-a01b-70d8bb905ca2"}
+
 [[package]]
-configuration-name = "chartBrowser"
+name = "Chart_Examples"
+version = "2.3.0"
+id = "c6878a14-4d2a-4689-81d0-8a6d696e380c"
+display-name = "Chart Examples"
+description = "A chart provides a task-specific application programming interface (API) for creating custom visualizations. Designing and implementing a chart not only provides a convenient API for end users, but simultaneously removes the need for the user to manipulate low-level graphics objects. This toolbox comprises multiple diverse examples of custom MATLAB charts. You can inspect the source code, explore the features and functionality, and run examples demonstrating the use of each chart. The toolbox also has documentation and resources to help you develop your own charts."
+summary = "This toolbox contains the MATLAB code for the technical article \"Creating Specialized Charts with MATLAB Object-Oriented Programming\"."
+preview-image-file = "./tbx/chartsdoc/examples/images/ToolboxLogo.png"
+getting-started-file = "./tbx/chartsdoc/GettingStarted.m"
+output-file-name = "Chart_Examples.mltbx"
+output-folder = "./releases"
 use-license-bsd = false
-name = ""
-version = "1.0"
-description = "This toolbox comprises several diverse examples of custom MATLAB charts. Use this app to browse the available charts and their documentation. You can inspect the source code, explore the features and functionality, and run examples demonstrating the use of each chart. The toolbox also has documentation and resources to help you develop your own charts."
-id = "72cac2e4-e1e8-470c-9de8-522edcd471e2"
-package-root = "/"
-provider.name = "Ken Deeley"
-provider.email = "kdeeley@mathworks.com"
-provider.organization = "MathWorks"
-display-name = "Chart Browser"
-summary = "App for browsing the available charts and their documentation."
-output-file-name = "MyToolbox.mltbx"
-output-folder = "release"
 supported-platforms = [
     "windows",
     "linux",
     "macos",
 ]
+product-dependencies = [
+    "MATLAB",
+    "Statistics and Machine Learning Toolbox",
+    "Financial Toolbox",
+    "Financial Instruments Toolbox",
+    "Optimization Toolbox",
+]
+package-root = "./tbx"
+provider.name = "Ken Deeley"
+provider.email = "kdeeley@mathworks.com"
+provider.organization = "MathWorks"
+provider.url = "https://github.com/k-deeley/chart-examples"
 

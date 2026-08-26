@@ -37,7 +37,7 @@ arguments ( Output )
     p(1, 1) string {mustBeFolder}
 end % arguments ( Output )
 
-p = fullfile( chartsRoot(), "app", "images" );
+p = fullfile( chartsRoot(), "..", "chartsdoc", "examples", "images" );
 
 end % exportPath
 
@@ -131,7 +131,7 @@ CC = CylinderChart( "Parent", f, "Data", magic( 2 ) );
 axis( CC, "off" )
 
 % Export.
-exportImage( "CylinderChart", CC, [40, 50] )
+exportImage( "CylinderChart", CC )
 
 end % exportCylinderChart
 
@@ -155,7 +155,7 @@ axis( EBC, "off" )
 title( EBC, "" )
 
 % Export.
-exportImage( "EdgeworthBowleyChart", EBC, [40, 50] )
+exportImage( "EdgeworthBowleyChart", EBC )
 
 end % exportEdgeworthBowleyChart
 
@@ -180,7 +180,7 @@ GHC = GraphicsHierarchyChart( "Parent", f2, ...
     "ShowNodeLabels", "off" );
 
 % Export.
-exportImage( "GraphicsHierarchyChart", GHC, [40, 50] )
+exportImage( "GraphicsHierarchyChart", GHC )
 
 end % exportGraphicsHierarchyChart
 
@@ -203,7 +203,7 @@ pause( 0.5 )
 % Export.
 ax = t.Parent;
 ax.Color = "none";
-exportImage( "ImpliedVolatilityChart", ax, [40, 50] )
+exportImage( "ImpliedVolatilityChart", ax )
 
 end % exportImpliedVolatilityChart
 
@@ -226,7 +226,7 @@ axis( IMC, "off" )
 title( IMC, "" )
 
 % Export.
-exportImage( "InductionMotorChart", IMC, [40, 50] )
+exportImage( "InductionMotorChart", IMC )
 
 end % exportInductionMotorChart
 
@@ -253,7 +253,7 @@ axis( LGC, "off" )
 pause( 0.5 )
 
 % Export.
-exportImage( "LineGradientChart", LGC, [40, 50] )
+exportImage( "LineGradientChart", LGC )
 
 end % exportLineGradientChart
 
@@ -282,7 +282,7 @@ LSC.select( 2 )
 axis( LSC, "off" )
 
 % Export.
-exportImage( "LineSelectorChart", LSC, [40, 50] )
+exportImage( "LineSelectorChart", LSC )
 
 end % exportLineSelectorChart
 
@@ -357,7 +357,7 @@ RFC = RangefinderChart( "Parent", f, ...
 axis( RFC, "off" )
 
 % Export.
-exportImage( "RangefinderChart", RFC, [40, 50] )
+exportImage( "RangefinderChart", RFC )
 
 end % exportRangefinderChart
 
@@ -374,11 +374,11 @@ SC = SankeyChart( "Parent", f, ...
     "LinkType", "vtanh", ...
     "NodeWidth", 0.2, ...
     "NodePadRatio", 0.25, ...
-    "NodeLabelsVisible", "off" );
+    "NodeLabelVisible", "off" );
 SC.YNodeData(13:end) = SC.YNodeData(13:end) - 50;
 
 % Export.
-exportImage( "SankeyChart", SC, [40, 50] )
+exportImage( "SankeyChart", SC )
 
 end % exportSankeyChart
 
@@ -412,7 +412,7 @@ colorGradient = map(d, :);
 SBC.ScatterCData = colorGradient;
 
 % Export.
-exportImage( "ScatterBoxChart", SBC, [40, 50] )
+exportImage( "ScatterBoxChart", SBC )
 
 end % exportScatterBoxChart
 
@@ -445,7 +445,7 @@ colorbar( SDC, "off" )
 axis( SDC, "off" )
 
 % Export.
-exportImage( "ScatterDensityChart", SDC, [40, 50] )
+exportImage( "ScatterDensityChart", SDC )
 
 end % exportScatterDensityChart
 
@@ -474,7 +474,7 @@ axis( SFC, "off" )
 title( SFC, "" )
 
 % Export.
-exportImage( "ScatterFitChart", SFC, [40, 50] )
+exportImage( "ScatterFitChart", SFC )
 
 end % exportScatterFitChart
 
@@ -508,7 +508,7 @@ legend( SC, "off" )
 pause( 0.5 )
 
 % Export.
-exportImage( "SettlementChart", SC, [40, 50] )
+exportImage( "SettlementChart", SC )
 
 end % exportSettlementChart
 
@@ -535,7 +535,7 @@ STC = SignalTraceChart( "Parent", f, ...
 xticks( STC, [] )
 
 % Export.
-exportImage( "SignalTraceChart", STC, [40, 50] )
+exportImage( "SignalTraceChart", STC )
 
 end % exportSignalTraceChart
 
@@ -562,7 +562,7 @@ axis( STC, "off" )
 STC.step( 34 )
 
 % Export.
-exportImage( "SnailTrailChart", STC, [40, 50] )
+exportImage( "SnailTrailChart", STC )
 
 end % exportSnailTrailChart
 
@@ -643,7 +643,7 @@ legend( VARC, "off" )
 axis( VARC, "off" )
 
 % Export.
-exportImage( "ValueAtRiskChart", VARC, [40, 50] )
+exportImage( "ValueAtRiskChart", VARC )
 
 end % exportValueAtRiskChart
 
@@ -658,23 +658,20 @@ rng( "default" )
 % Create data for the chart.
 n = 10;
 y = randi( [-6, 6], [n, 1] );
-idx = y < 0;
-colors = repmat( [0, 1, 0], n, 1 );
-colors(idx, :) = repmat( [1, 0, 0], sum( idx ), 1 );
 
 % Create the chart.
 f = uifigure();
 figureCleanup = onCleanup( @() delete( f ) );
 WC = WaterfallChart( "Parent", f, ...
     "Data", y, ...
-    "BarFaceColor", colors, ...
+    "ColorOrder", [0, 1, 0; 1, 0, 0], ...
     "BarLabelVisible", "off", ...
     "ConnectingLineVisible", "off", ...
     "LineWidth", 4 );
 axis( WC, "off" )
 
 % Export.
-exportImage( "WaterfallChart", WC, [40, 50] )
+exportImage( "WaterfallChart", WC )
 
 end % exportWaterfallChart
 
@@ -700,23 +697,22 @@ exportImage( "WindRoseChart", WRC )
 
 end % exportWindRoseChart
 
-function exportImage( name, gobj, resolution )
+function exportImage( name, gobj )
 %EXPORTIMAGE Export PNG images of the given chart using a transparent 
 %background.
 
 arguments ( Input )
     name(1, 1) string    
     gobj(1, 1) matlab.graphics.Graphics
-    resolution(1, 2) double {mustBePositive, mustBeInteger} = [40, 40]
 end % arguments ( Input )
 
 % Export the axes using both black and white backgrounds.
 colors = ["Black", "White"];
 pngPath = fullfile( exportPath(), name + colors + ".png" );
-for k = 1 : numel( colors )
-    exportgraphics( gobj, pngPath(k), ...
-        "Resolution", 300, ...
-        "BackgroundColor", colors(k) )
+for colorIdx = 1 : numel( colors )
+    exportgraphics( gobj, pngPath(colorIdx), ...
+        "Resolution", 150, ...
+        "BackgroundColor", colors(colorIdx) )
 end % for
 
 % Merge the two images to create an image with a transparent background.
@@ -730,12 +726,12 @@ alpha = max( 0, min( alpha, 1 ) );
 nonZeroAlpha = alpha >= eps;
 pngrgb = zeros( size( black ) );
 
-for k = 1 : 3
-    currentSlice = black(:, :, k);
-    zeroSlice = pngrgb(:, :, k);
+for sliceIdx = 1 : 3
+    currentSlice = black(:, :, sliceIdx);
+    zeroSlice = pngrgb(:, :, sliceIdx);
     zeroSlice(nonZeroAlpha) = currentSlice(nonZeroAlpha) ./ ...
         alpha(nonZeroAlpha);
-    pngrgb(:, :, k) = zeroSlice;
+    pngrgb(:, :, sliceIdx) = zeroSlice;
 end % for
 
 pngrgb = max( 0, min( pngrgb, 1 ) );
@@ -748,17 +744,11 @@ imwrite( pngrgb, exportName, "Alpha", alpha )
 delete( pngPath(1) )
 delete( pngPath(2) )
 
-% Export an icon-size version of the image.
-pngrgb40 = imresize( pngrgb, resolution, "bicubic" );
-alpha40 = imresize( alpha, resolution, "bicubic" );
-export40Name = fullfile( exportPath(), name + "40.png" );
-imwrite( pngrgb40, export40Name, "Alpha", alpha40 )
-
 % Create the toolbox logo.
 if name == "ScatterFitChart"
     pngrgb24 = imresize( pngrgb, [24, 24], "bicubic" );
     alpha24 = imresize( alpha, [24, 24], "bicubic" );
-    export24Name = fullfile( exportPath(), "toolboxLogo.png" );
+    export24Name = fullfile( exportPath(), "ToolboxLogo.png" );
     imwrite( pngrgb24, export24Name, "Alpha", alpha24 )
 end % if
 
