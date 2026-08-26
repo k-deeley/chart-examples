@@ -6,7 +6,7 @@ path = [
     "tbx/charts",
     "tbx/charts/app",
     "tbx/charts/charts",
-    "tbx/charts/examples",
+    "tbx/chartsdoc/examples",
     "tbx/charts/tests",
     "tbx/charts/validators",
     "tbx/chartsdoc",
