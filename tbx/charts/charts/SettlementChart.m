@@ -1,4 +1,5 @@
-classdef SettlementChart < Component
+classdef SettlementChart < ...
+        matlab.ui.componentcontainer.ComponentContainer
     %SETTLEMENTCHART Chart displaying option prices against strike prices.
     %A settlement chart plots option prices on the y-axis against strike
     %prices on the x-axis. The option prices comprise put prices below
@@ -301,7 +302,13 @@ classdef SettlementChart < Component
 
             arguments ( Input )
                 namedArgs.?SettlementChart
-            end % arguments ( Input )           
+            end % arguments ( Input )
+            % Call the superclass constructor.
+            obj@matlab.ui.componentcontainer.ComponentContainer( ...
+                "Parent", [], ...
+                "Units", "normalized", ...
+                "Position", [0, 0, 1, 1] )
+
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -629,3 +636,19 @@ classdef SettlementChart < Component
     end % methods ( Access = private )
 
 end % classdef
+
+function mustBeLineStyle( style )
+%MUSTBELINESTYLE Validate a line style value.
+
+lineStyleValues = set( groot(), "DefaultLineLineStyle" );
+mustBeMember( style, lineStyleValues )
+
+end % mustBeLineStyle
+
+function mustBeMarker( marker )
+%MUSTBEMARKER Validate a line or scatter marker value.
+
+markerValues = set( groot(), "DefaultLineMarker" );
+mustBeMember( marker, markerValues )
+
+end % mustBeMarker

@@ -1,4 +1,5 @@
-classdef RangefinderChart < Chart
+classdef RangefinderChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %RANGEFINDERCHART Rangefinder chart for bivariate scattered data.
     %The rangefinder chart displays a 2D scatter plot overlaid with a
     %marker at the crossover point of the marginal medians and lines
@@ -149,6 +150,13 @@ classdef RangefinderChart < Chart
             arguments ( Input )
                 namedArgs.?RangefinderChart
             end % arguments ( Input )
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
+
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -207,14 +215,14 @@ classdef RangefinderChart < Chart
                     "MarkerSize", crossoverMarkerSizes(k), ...
                     "LineWidth", lineWidths(k) );
             end % for
-            
+
             hold( obj.Axes, "on" )
-            
+
             for k = 1 : 4
-                
-                % Create the line segments for the adjacent values.                        
-                obj.AdjacentLines(k) = plot( obj.Axes, NaN, NaN, ...                    
-                    "LineWidth", obj.LineWidth );                
+
+                % Create the line segments for the adjacent values.
+                obj.AdjacentLines(k) = plot( obj.Axes, NaN, NaN, ...
+                    "LineWidth", obj.LineWidth );
 
                 % Define the labels for the custom datatips.
                 if k <= 2
@@ -239,7 +247,7 @@ classdef RangefinderChart < Chart
             end % for
 
             hold( obj.Axes, "off" )
-            
+
         end % setup
 
         function update( obj )
@@ -342,3 +350,11 @@ classdef RangefinderChart < Chart
     end % methods ( Access = protected )
 
 end % classdef
+
+function mustBeMarker( marker )
+%MUSTBEMARKER Validate a line or scatter marker value.
+
+markerValues = set( groot(), "DefaultLineMarker" );
+mustBeMember( marker, markerValues )
+
+end % mustBeMarker

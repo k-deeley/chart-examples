@@ -7,3 +7,4 @@ tbx/charts/app/images
 tbx/charts/app/ChartBrowserLauncher.m
 tbx/charts/app/Chart Browser.mlappinstall
 *.mltbx
+*.html

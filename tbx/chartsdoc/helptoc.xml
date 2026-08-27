@@ -1,37 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <toc version="1.0">
-    <tocitem target="index.html">Chart Examples<tocitem target="GettingStarted.html">Getting started</tocitem>
-        <tocitem target="Changelog.html">Release notes</tocitem>
-        <tocitem target="ChartExamples.html">Chart examples<tocitem target="examples/AircraftChart.html">AircraftChart</tocitem>
-            <tocitem target="examples/AnnulusChart.html">AnnulusChart</tocitem>
-            <tocitem target="examples/CircularNetFlowChart.html">CircularNetFlowChart</tocitem>
-            <tocitem target="examples/ClockChart.html">ClockChart</tocitem>
-            <tocitem target="examples/CylinderChart.html">CylinderChart</tocitem>
-            <tocitem target="examples/EdgeworthBowleyChart.html">EdgeworthBowleyChart</tocitem>
-            <tocitem target="examples/GraphicsHierarchyChart.html">GraphicsHierarchyChart</tocitem>
-            <tocitem target="examples/ImpliedVolatilityChart.html">ImpliedVolatilityChart</tocitem>
-            <tocitem target="examples/InductionMotorChart.html">InductionMotorChart</tocitem>
-            <tocitem target="examples/LineGradientChart.html">LineGradientChart</tocitem>
-            <tocitem target="examples/LineSelectorChart.html">LineSelectorChart</tocitem>
-            <tocitem target="examples/PolarChart.html">PolarChart</tocitem>
-            <tocitem target="examples/RadarScope.html">RadarScope</tocitem>
-            <tocitem target="examples/RangefinderChart.html">RangefinderChart</tocitem>
-            <tocitem target="examples/SankeyChart.html">SankeyChart</tocitem>
-            <tocitem target="examples/ScatterBoxChart.html">ScatterBoxChart</tocitem>
-            <tocitem target="examples/ScatterDensityChart.html">ScatterDensityChart</tocitem>
-            <tocitem target="examples/ScatterFitChart.html">ScatterFitChart</tocitem>
-            <tocitem target="examples/SettlementChart.html">SettlementChart</tocitem>
-            <tocitem target="examples/SignalTraceChart.html">SignalTraceChart</tocitem>
-            <tocitem target="examples/SnailTrailChart.html">SnailTrailChart</tocitem>
-            <tocitem target="examples/SpiderChart.html">SpiderChart</tocitem>
-            <tocitem target="examples/TernaryChart.html">TernaryChart</tocitem>
-            <tocitem target="examples/ValueAtRiskChart.html">ValueAtRiskChart</tocitem>
-            <tocitem target="examples/WaterfallChart.html">WaterfallChart</tocitem>
-            <tocitem target="examples/WindRoseChart.html">WindRoseChart</tocitem>
-        </tocitem>
-        <tocitem target="DevelopmentNotes.html">Development notes<tocitem target="notes/WhatIsAChart.html">What is a Chart?</tocitem>
+    <tocitem target="index.html">Chart Examples<tocitem target="GettingStarted.html">Getting Started</tocitem>
+        <tocitem target="Changelog.html">Release Notes</tocitem>
+        <tocitem target="DevelopmentNotes.html">Development Notes<tocitem target="notes/WhatIsAChart.html">What is a Chart?</tocitem>
             <tocitem target="notes/ChartDevelopmentGuide.html">Chart Development Guide</tocitem>
             <tocitem target="notes/TechnicalArticle.html">Creating Specialized Charts with MATLAB Object-Oriented Programming</tocitem>
+        </tocitem>
+        <tocitem target="ChartExamples.html">Chart Reference<tocitem target="charts/ChartsIndex.html">Chart Reference Index</tocitem>
+            <tocitem target="charts/AircraftChart.html">AircraftChart<tocitem target="charts/AircraftChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/AircraftChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/AnnulusChart.html">AnnulusChart<tocitem target="charts/AnnulusChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/AnnulusChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/CircularNetFlowChart.html">CircularNetFlowChart<tocitem target="charts/CircularNetFlowChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/CircularNetFlowChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/ClockChart.html">ClockChart<tocitem target="charts/ClockChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/ClockChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/CylinderChart.html">CylinderChart<tocitem target="charts/CylinderChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/CylinderChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/EdgeworthBowleyChart.html">EdgeworthBowleyChart<tocitem target="charts/EdgeworthBowleyChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/EdgeworthBowleyChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/GraphicsHierarchyChart.html">GraphicsHierarchyChart<tocitem target="charts/GraphicsHierarchyChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/GraphicsHierarchyChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/ImpliedVolatilityChart.html">ImpliedVolatilityChart<tocitem target="charts/ImpliedVolatilityChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/ImpliedVolatilityChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/InductionMotorChart.html">InductionMotorChart<tocitem target="charts/InductionMotorChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/InductionMotorChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/LineGradientChart.html">LineGradientChart<tocitem target="charts/LineGradientChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/LineGradientChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/LineSelectorChart.html">LineSelectorChart<tocitem target="charts/LineSelectorChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/LineSelectorChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/PolarChart.html">PolarChart<tocitem target="charts/PolarChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/PolarChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/RadarScope.html">RadarScope<tocitem target="charts/RadarScopeClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/RadarScopeSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/RangefinderChart.html">RangefinderChart<tocitem target="charts/RangefinderChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/RangefinderChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/SankeyChart.html">SankeyChart<tocitem target="charts/SankeyChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/SankeyChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/ScatterBoxChart.html">ScatterBoxChart<tocitem target="charts/ScatterBoxChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/ScatterBoxChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/ScatterDensityChart.html">ScatterDensityChart<tocitem target="charts/ScatterDensityChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/ScatterDensityChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/ScatterFitChart.html">ScatterFitChart<tocitem target="charts/ScatterFitChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/ScatterFitChartSourceCode.html">Source Code Listing</tocitem>
+                <tocitem target="charts/ScatterFitChartUnitTest.html">Unit Test Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/SettlementChart.html">SettlementChart<tocitem target="charts/SettlementChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/SettlementChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/SignalTraceChart.html">SignalTraceChart<tocitem target="charts/SignalTraceChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/SignalTraceChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/SnailTrailChart.html">SnailTrailChart<tocitem target="charts/SnailTrailChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/SnailTrailChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/SpiderChart.html">SpiderChart<tocitem target="charts/SpiderChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/SpiderChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/TernaryChart.html">TernaryChart<tocitem target="charts/TernaryChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/TernaryChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/ValueAtRiskChart.html">ValueAtRiskChart<tocitem target="charts/ValueAtRiskChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/ValueAtRiskChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/WaterfallChart.html">WaterfallChart<tocitem target="charts/WaterfallChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/WaterfallChartSourceCode.html">Source Code Listing</tocitem>
+                <tocitem target="charts/WaterfallChartUnitTest.html">Unit Test Listing</tocitem>
+            </tocitem>
+            <tocitem target="charts/WindRoseChart.html">WindRoseChart<tocitem target="charts/WindRoseChartClassReference.html">Class Documentation and Examples</tocitem>
+                <tocitem target="charts/WindRoseChartSourceCode.html">Source Code Listing</tocitem>
+            </tocitem>
         </tocitem>
     </tocitem>
 </toc>

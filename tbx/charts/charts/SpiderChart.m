@@ -1,4 +1,5 @@
-classdef SpiderChart < Chart
+classdef SpiderChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %SPIDERCHART Manages the display of values from distinct measurements
     %plotted around a web. The number of nodes in the web is equal to the
     %number of distinct measurements.
@@ -215,7 +216,14 @@ classdef SpiderChart < Chart
 
             arguments ( Input )
                 namedArgs.?SpiderChart
-            end % arguments ( Input )            
+            end % arguments ( Input )
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
+
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -473,3 +481,27 @@ classdef SpiderChart < Chart
     end % methods ( Access = private )
 
 end % classdef
+
+function mustBeLineStyle( style )
+%MUSTBELINESTYLE Validate a line style value.
+
+lineStyleValues = set( groot(), "DefaultLineLineStyle" );
+mustBeMember( style, lineStyleValues )
+
+end % mustBeLineStyle
+
+function mustBeFontAngle( fontAngle )
+%MUSTBEFONTANGLE Validate a text object font angle value.
+
+fontAngleValues = set( groot(), "DefaultTextFontAngle" );
+mustBeMember( fontAngle, fontAngleValues )
+
+end % mustBeFontAngle
+
+function mustBeFontWeight( fontWeight )
+%MUSTBEFONTWEIGHT Validate a text object font weight value.
+
+fontWeightValues = set( groot(), "DefaultTextFontWeight" );
+mustBeMember( fontWeight, fontWeightValues )
+
+end % mustBeFontWeight

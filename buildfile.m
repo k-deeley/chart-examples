@@ -93,22 +93,60 @@ function docTask( context )
 % Build the documentation.
 
 docFolder = context.Task.Inputs(1).Path;
-markdownFiles = fullfile( docFolder, "**", "*.md" );
+generatedMarkdownFiles = generateChartReferencePages();
+markdownInfo = dir( fullfile( docFolder, "**", "*.md" ) );
+markdownFiles = fullfile( string( {markdownInfo.folder} ), ...
+    string( {markdownInfo.name} ) ).';
+exampleFolder = fullfile( docFolder, "examples" ) + filesep();
+markdownFiles = markdownFiles( ~startsWith( markdownFiles, ...
+    exampleFolder ) );
 
 docdelete( docFolder )
 fprintf( 1, "** Removed previously generated documentation.\n" )
-
+removeObsoleteExampleHtmlFromProject()
 htmlFiles = docconvert( markdownFiles, ...
     "Theme", "light", ...
     "Root", docFolder );
 fprintf( 1, "** Converted Markdown documentation to HTML.\n" )
 
-docrun( htmlFiles, ...
-    "Theme", "light", ...
-    "FigureSize", [600, 400] )
-fprintf( 1, "** Inserted MATLAB output into documentation.\n" )
-
 docindex( docFolder )
 fprintf( 1, "** Indexed documentation.\n" )
 
+addGeneratedFilesToProject( [generatedMarkdownFiles; htmlFiles] )
+
 end % docTask
+
+function addGeneratedFilesToProject( files )
+%ADDGENERATEDFILESTOPROJECT Add generated files to the current project.
+
+arguments ( Input )
+    files(:, 1) string
+end % arguments ( Input )
+
+prj = currentProject();
+projectFiles = string( {prj.Files.Path} ).';
+for file = files.'
+    if isfile( file ) && ~any( projectFiles == file )
+        addFile( prj, file );
+    end % if
+end % for
+
+end % addGeneratedFilesToProject
+
+function removeObsoleteExampleHtmlFromProject()
+%REMOVEOBSOLETEEXAMPLEHTMLFROMPROJECT Remove retired example HTML pages.
+
+prj = currentProject();
+docFolder = fullfile( string( prj.RootFolder ), "tbx", "chartsdoc" );
+exampleFolder = fullfile( docFolder, "examples" ) + filesep();
+projectFiles = string( {prj.Files.Path} ).';
+obsoleteFiles = projectFiles( startsWith( projectFiles, ...
+    exampleFolder ) & endsWith( projectFiles, ".html" ) );
+for file = obsoleteFiles.'
+    removeFile( prj, file )
+    if isfile( file )
+        delete( file )
+    end % if
+end % for
+
+end % removeObsoleteExampleHtmlFromProject

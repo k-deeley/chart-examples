@@ -1,4 +1,5 @@
-classdef RadarScope < Component
+classdef RadarScope < ...
+        matlab.ui.componentcontainer.ComponentContainer
     %RADARSCOPE Component managing a radar scope and a set of blips
     %representing objects detected on the scope.
 
@@ -58,6 +59,12 @@ classdef RadarScope < Component
             arguments ( Input )
                 namedArgs.?RadarScope
             end % arguments ( Input )
+            % Call the superclass constructor.
+            obj@matlab.ui.componentcontainer.ComponentContainer( ...
+                "Parent", [], ...
+                "Units", "normalized", ...
+                "Position", [0, 0, 1, 1] )
+
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -99,12 +106,9 @@ classdef RadarScope < Component
                 % Store a reference to the blip in the scope.
                 obj.Blips(end+1, 1) = blip;
                 % Update the position listeners.
-                weakObj = matlab.lang.WeakReference( obj );
-                callback = @( varargin ) weakObj.Handle...
-                    .onBlipPositionChanged( varargin{:} );
                 obj.BlipPositionListeners(end+1, 1) = ...
                     listener( obj.Blips(end), ...
-                    "Position", "PostSet", callback );
+                    "Position", "PostSet", @obj.onBlipPositionChanged );
                 % Update the proximity status.
                 obj.onBlipPositionChanged()
             end % if

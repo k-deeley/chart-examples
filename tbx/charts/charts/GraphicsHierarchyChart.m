@@ -1,4 +1,5 @@
-classdef GraphicsHierarchyChart < Chart
+classdef GraphicsHierarchyChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %GRAPHICSHIERARCHYCHART Visualize the graphics hierarchy descending
     %from a given graphics object.
 
@@ -58,6 +59,13 @@ classdef GraphicsHierarchyChart < Chart
             arguments ( Input )
                 namedArgs.?GraphicsHierarchyChart
             end % arguments ( Input )
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
+
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -149,3 +157,12 @@ classdef GraphicsHierarchyChart < Chart
     end % methods ( Access = protected )
 
 end % classdef
+
+function mustBeValidGraphics( gobj )
+%MUSTBEVALIDGRAPHICS Validate that the input is a valid graphics object.
+
+assert( isgraphics( gobj ) && isvalid( gobj ), ...
+    "GraphicsHierarchyChart:InvalidGraphicsObject", ...
+    "The input must be a valid graphics object." )
+
+end % mustBeValidGraphics

@@ -5,21 +5,25 @@ custom chart classes. Each chart encapsulates a visualization workflow behind
 a task-specific API, so users can create and update complex graphics without
 manipulating the underlying graphics objects directly.
 
-## [Getting started](GettingStarted.md)
+## [Getting Started](GettingStarted.md)
 
 Start here for toolbox installation notes, product requirements, and the full
 chart list.
 
-## [Chart examples](ChartExamples.md)
+## [Release Notes](Changelog.md)
 
-Browse the example charts and open the page for each chart to see the
-overview, related MATLAB documentation, and runnable usage examples.
+Review changes by toolbox version.
 
-## [Development notes](DevelopmentNotes.md)
+## [Development Notes](DevelopmentNotes.md)
 
 Read background material and implementation guidance for developing custom
 MATLAB charts.
 
-## [Release notes](Changelog.md)
+## [Chart Reference](charts/ChartsIndex.md)
 
-Review changes by toolbox version.
+Browse the chart reference pages, including class documentation, examples,
+source code listings, and chart-specific tests when available.
+
+## [Chart Examples](ChartExamples.md)
+
+Open the chart reference pages for each chart.

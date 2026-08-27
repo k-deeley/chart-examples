@@ -1,4 +1,5 @@
-classdef WindRoseChart < Chart
+classdef WindRoseChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %WINDROSECHART Chart for displaying speed and direction data on an
     %angular (polar) histogram.
 
@@ -83,7 +84,7 @@ classdef WindRoseChart < Chart
         % Legend font weight.
         LegendFontWeight(1, 1) string {mustBeFontWeight} = "normal"
         % Legend line width.
-        LegendLineWidth(1, 1) double {mustBePositive, mustBeFinite} = 0.5        
+        LegendLineWidth(1, 1) double {mustBePositive, mustBeFinite} = 0.5
         % Legend title string.
         LegendTitle(1, 1) string = "Windspeed (m/s)"
     end % properties
@@ -222,7 +223,7 @@ classdef WindRoseChart < Chart
         function set.RadialLabelDirection( obj, value )
 
             % Perform a reverse lookup to determine the required angle
-            % (clockwise from North).            
+            % (clockwise from North).
             directions = values( obj.DirectionLookup );
             obj.RadialLabelAngle = obj.RayAngles(directions == value);
 
@@ -274,6 +275,13 @@ classdef WindRoseChart < Chart
             arguments ( Input )
                 namedArgs.?WindRoseChart
             end % arguments ( Input )
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
+
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -368,7 +376,7 @@ classdef WindRoseChart < Chart
                     obj.TextBoxes(k1, k2) = text( "Parent", obj.Axes, ...
                         "PickableParts", "none", ...
                         "HorizontalAlignment", "left", ...
-                        "VerticalAlignment", "middle", ...                       
+                        "VerticalAlignment", "middle", ...
                         "LineWidth", 1.5, ...
                         "Visible", "off" );
                 end % for k2
@@ -748,3 +756,27 @@ if ~isstring( c ) || ~ismember( c, opts )
 end % if
 
 end % mustBeColor
+
+function mustBeLineStyle( style )
+%MUSTBELINESTYLE Validate a line style value.
+
+lineStyleValues = set( groot(), "DefaultLineLineStyle" );
+mustBeMember( style, lineStyleValues )
+
+end % mustBeLineStyle
+
+function mustBeFontAngle( fontAngle )
+%MUSTBEFONTANGLE Validate a text object font angle value.
+
+fontAngleValues = set( groot(), "DefaultTextFontAngle" );
+mustBeMember( fontAngle, fontAngleValues )
+
+end % mustBeFontAngle
+
+function mustBeFontWeight( fontWeight )
+%MUSTBEFONTWEIGHT Validate a text object font weight value.
+
+fontWeightValues = set( groot(), "DefaultTextFontWeight" );
+mustBeMember( fontWeight, fontWeightValues )
+
+end % mustBeFontWeight

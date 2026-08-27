@@ -32,8 +32,8 @@ currentIdx = 1;
 % Navigate the graphics hierarchy looking for children.
 traverseChildren( graphicsObject, parentIdx )
 
-% Prepare the node names for display. We use the last part of the 
-% fully-qualified class name. Typically graphics objects are located in 
+% Prepare the node names for display. We use the last part of the
+% fully-qualified class name. Typically graphics objects are located in
 % nested packages with long names. For example, "matlab.ui.control.Button"
 % will become "Button" after this step.
 for nodeIdx = 1 : numel( nodeLabels )
@@ -87,3 +87,12 @@ G = graph( startNodes, endNodes );
     end % traverseChildren
 
 end % kids2graph
+
+function mustBeValidGraphics( gobj )
+%MUSTBEVALIDGRAPHICS Validate that the input is a valid graphics object.
+
+assert( isgraphics( gobj ) && isvalid( gobj ), ...
+    "GraphicsHierarchyChart:InvalidGraphicsObject", ...
+    "The input must be a valid graphics object." )
+
+end % mustBeValidGraphics

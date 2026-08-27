@@ -1,4 +1,5 @@
-classdef ClockChart < Chart
+classdef ClockChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %CLOCKCHART Display an analog clock, using a timer to schedule regular
     %updates.
 
@@ -54,7 +55,14 @@ classdef ClockChart < Chart
 
             arguments ( Input )
                 namedArgs.?ClockChart
-            end % arguments ( Input )            
+            end % arguments ( Input )
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
+
 
             % Create the timer.
             obj.Timer = timer( "Period", 1, ...
@@ -66,11 +74,8 @@ classdef ClockChart < Chart
 
             % Create a listener to delete the timer when the chart is
             % deleted.
-            weakObj = matlab.lang.WeakReference( obj );
-            callback = @( varargin ) weakObj.Handle.onChartDeleted( ...
-                varargin{:} );
             obj.DestructionListener = listener( obj, ...
-                "ObjectBeingDestroyed", callback );
+                "ObjectBeingDestroyed", @obj.onChartDeleted );
 
             % Set any user-specified properties.
             set( obj, namedArgs )
@@ -240,7 +245,7 @@ if isempty( inverseTangent )
         handDimensions(:, 2)] );
 end % if
 
-% Define the conversion factor from degrees to radians (pi/180), in the 
+% Define the conversion factor from degrees to radians (pi/180), in the
 % clockwise direction (-1).
 f = (-1) * pi/180;
 

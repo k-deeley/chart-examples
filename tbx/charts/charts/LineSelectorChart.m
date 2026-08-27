@@ -1,4 +1,5 @@
-classdef LineSelectorChart < Chart
+classdef LineSelectorChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %LINESELECTORCHART Chart displaying a collection of line plots,
     %possibly on different scales.
 
@@ -180,6 +181,13 @@ classdef LineSelectorChart < Chart
             arguments ( Input )
                 namedArgs.?LineSelectorChart
             end % arguments ( Input )
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
+
 
             % Set any user-defined properties.
             set( obj, namedArgs )

@@ -1,4 +1,5 @@
-classdef ScatterFitChart < Component
+classdef ScatterFitChart < ...
+        matlab.ui.componentcontainer.ComponentContainer
     %SCATTERFITCHART Chart component managing 2D scattered data (x and y)
     %together with the corresponding best-fit line.
 
@@ -257,7 +258,7 @@ classdef ScatterFitChart < Component
             % Update the line.
             obj.BestFitLine.Color = value;
 
-            % Update the color picker.            
+            % Update the color picker.
             obj.LineColorPicker.Value = obj.LineColor;
 
         end % set.LineColor
@@ -320,7 +321,13 @@ classdef ScatterFitChart < Component
 
             arguments ( Input )
                 namedArgs.?ScatterFitChart
-            end % arguments ( Input )            
+            end % arguments ( Input )
+            % Call the superclass constructor.
+            obj@matlab.ui.componentcontainer.ComponentContainer( ...
+                "Parent", [], ...
+                "Units", "normalized", ...
+                "Position", [0, 0, 1, 1] )
+
 
             % Set any user-specified properties.
             set( obj, namedArgs )
@@ -465,9 +472,9 @@ classdef ScatterFitChart < Component
                 "Value", obj.BestFitLine.LineStyle, ...
                 "ValueChangedFcn", @obj.onLineStyleSelected );
 
-            % Best-fit line color selector.            
+            % Best-fit line color selector.
             obj.LineColorPicker = uicolorpicker( ...
-                "Parent", controlLayout, ...                
+                "Parent", controlLayout, ...
                 "Tooltip", "Select the color of the best-fit line", ...
                 "Value", obj.BestFitLine.Color, ...
                 "ValueChangedFcn", @obj.onLineColorPicked );
@@ -656,3 +663,19 @@ s = "Best-fit line equation:" + newline() + newline() + ...
     "Residual norm: " + num2str( resNorm, "%g" );
 
 end % modelSummary
+
+function mustBeLineStyle( style )
+%MUSTBELINESTYLE Validate a line style value.
+
+lineStyleValues = set( groot(), "DefaultLineLineStyle" );
+mustBeMember( style, lineStyleValues )
+
+end % mustBeLineStyle
+
+function mustBeMarker( marker )
+%MUSTBEMARKER Validate a line or scatter marker value.
+
+markerValues = set( groot(), "DefaultLineMarker" );
+mustBeMember( marker, markerValues )
+
+end % mustBeMarker

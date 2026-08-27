@@ -1,4 +1,5 @@
-classdef SnailTrailChart < Component
+classdef SnailTrailChart < ...
+        matlab.ui.componentcontainer.ComponentContainer
     %SNAILTRAILCHART Chart for displaying excess return against tracking
     %error for a given asset return series relative to a given benchmark
     %return series.
@@ -326,12 +327,18 @@ classdef SnailTrailChart < Component
     methods
 
         function obj = SnailTrailChart( namedArgs )
-            %SNAILTRAILCHART Construct a SnailTrailChart object, given 
+            %SNAILTRAILCHART Construct a SnailTrailChart object, given
             %optional name-value arguments.
 
             arguments ( Input )
                 namedArgs.?SnailTrailChart
-            end % arguments ( Input )            
+            end % arguments ( Input )
+            % Call the superclass constructor.
+            obj@matlab.ui.componentcontainer.ComponentContainer( ...
+                "Parent", [], ...
+                "Units", "normalized", ...
+                "Position", [0, 0, 1, 1] )
+
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -483,7 +490,7 @@ classdef SnailTrailChart < Component
                 "Tooltip", "Show/hide the colorbar", ...
                 "Value", true, ...
                 "ValueChangedFcn", @obj.onColorbarSelected );
-            
+
             % Current point details check box.
             obj.CurrentPointCheckBox = uicheckbox( ...
                 "Parent", controlLayout, ...
