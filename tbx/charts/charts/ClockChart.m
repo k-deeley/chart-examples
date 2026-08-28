@@ -9,7 +9,8 @@ classdef ClockChart < ...
         ShowNumbers(1, 1) matlab.lang.OnOffSwitchState = "on"
     end % properties
 
-    properties ( Access = private, Transient, NonCopyable )
+    properties ( GetAccess = ?Testable, SetAccess = private, ...
+            Transient, NonCopyable )
         % Chart axes.
         Axes(:, 1) matlab.graphics.axis.Axes {mustBeScalarOrEmpty}
         % Line for the clock face edge.

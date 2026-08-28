@@ -54,7 +54,8 @@ classdef LineSelectorChart < ...
         YDataMin(1, :) double {mustBeReal}
     end % properties ( Dependent, Access = private )
 
-    properties ( Access = private, Transient, NonCopyable )
+    properties ( GetAccess = ?Testable, SetAccess = private, ...
+            Transient, NonCopyable )
         % Chart axes.
         Axes(:, 1) matlab.graphics.axis.Axes {mustBeScalarOrEmpty}
         % Reset button.

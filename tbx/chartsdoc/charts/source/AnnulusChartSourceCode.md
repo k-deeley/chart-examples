@@ -77,7 +77,8 @@ classdef AnnulusChart < ...
         ComputationRequired(1, 1) logical = true
     end % properties ( Access = private )
 
-    properties ( Access = private, Transient, NonCopyable )
+    properties ( GetAccess = ?Testable, SetAccess = private, ...
+            Transient, NonCopyable )
         % Chart layout.
         LayoutGrid(:, 1) matlab.ui.container.GridLayout ...
             {mustBeScalarOrEmpty}

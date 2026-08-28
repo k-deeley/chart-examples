@@ -1,5 +1,5 @@
 %[text] # **Chart Examples: Getting Started**
-%[text:tableOfContents]{"heading":"**Table of Contents**"}
+%[text:tableOfContents]{"heading":"Table of Contents"}
 %[text] 
 %[text] ## Overview
 %[text] This toolbox contains the MATLAB code and examples for the technical article [Creating Specialized Charts with MATLAB Object-Oriented Programming](<matlab: web("https://www.mathworks.com/company/newsletters/articles/creating-specialized-charts-with-matlab-object-oriented-programming.html")>).
@@ -38,7 +38,7 @@
 %[text] - [MATLAB](<matlab: web("https://www.mathworks.com/products/matlab.html")>) \
 %[text] Some example charts in the toolbox rely on additional toolboxes
 %[text] ## Documentation and Chart Examples
-%[text] Open the toolbox documentation under Supplemental Software to browse the chart examples.
+%[text] Open the toolbox documentation under **Supplemental Software** $\\rightarrow$ **Chart Examples Toolbox**.
 %[text] ## License
 %[text] The license is available in the `LICENSE.txt` file in this GitHub repository.
 %[text] *Copyright 2018-2026 The MathWorks, Inc*
