@@ -1,6 +1,6 @@
 # `ScatterBoxChart`
 
-Combine a scatter plot with marginal box plots.
+Bivariate scatter plot with marginal boxplots
 
 ## Overview
 
@@ -69,15 +69,11 @@ x = randn( 1000, 1 );
 y = 2 * x + 1 + 3 * randn( size( x ) );
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "ScatterBoxChart Example" );
-```
-
 ### Create the chart, specifying the parent, position and input data.
 
 ```matlab
+f = exampleFigure( "Name", "ScatterBoxChart Example" );
+
 SBC = ScatterBoxChart( "Parent", f, ...
     "XData", x, ...
     "YData", y );

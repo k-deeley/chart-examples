@@ -1,6 +1,6 @@
 # Waterfall Chart
 
-Show the cumulative evolution of an initial value.
+Cumulative bar chart visualizing the evolution of an initial value
 
 ![](../images/WaterfallChart.png)
 

@@ -1,6 +1,6 @@
 # Aircraft Chart
 
-Visualize an aircraft and modify its roll, pitch, and yaw.
+Visualize an aircraft and modify its roll, pitch, and yaw
 
 ![](../images/AircraftChart.png)
 

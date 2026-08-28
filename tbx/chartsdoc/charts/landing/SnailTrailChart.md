@@ -1,6 +1,6 @@
 # Snail Trail Chart
 
-Plot excess returns against tracking errors.
+Plot excess returns against tracking errors for an asset relative to a benchmark
 
 ![](../images/SnailTrailChart.png)
 

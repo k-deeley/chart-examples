@@ -1,6 +1,6 @@
 # `RangefinderChart`
 
-Show median crossover and marginal adjacent values.
+Bivariate scatter plot showing the crossover point of the marginal medians and lines indicating the marginal adjacent values
 
 ## Overview
 
@@ -69,15 +69,11 @@ x = 2 * randn( numPoints, 1 );
 y = 2 * x + 1 + 2 * randn( numPoints, 1 );
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "RangefinderChart Example" );
-```
-
 ### Create the chart, specifying the parent and input data.
 
 ```matlab
+f = exampleFigure( "Name", "RangefinderChart Example" );
+
 RFC = RangefinderChart( "Parent", f, ...
     "XData", x, ...
     "YData", y );

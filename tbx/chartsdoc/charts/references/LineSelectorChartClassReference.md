@@ -1,6 +1,6 @@
 # `LineSelectorChart`
 
-Select and highlight one line from a collection.
+Display a collection of line plots and select one to highlight
 
 ## Overview
 
@@ -80,15 +80,11 @@ Extract the currency codes.
 codes = T.Properties.VariableNames;
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "LineSelectorChart Example" );
-```
-
 ### Create the chart, specifying the data, figure and legend entries.
 
 ```matlab
+f = exampleFigure( "Name", "LineSelectorChart Example" );
+
 LSC = LineSelectorChart( "Parent", f, ...
     "XData", t, ...
     "YData", T.Variables );

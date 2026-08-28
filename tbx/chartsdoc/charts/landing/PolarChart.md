@@ -1,6 +1,6 @@
 # Polar Chart
 
-Plot circular data on a polar chart.
+Polar line graph of dependent numeric variables plotted against independent circular data
 
 ![](../images/PolarChart.png)
 

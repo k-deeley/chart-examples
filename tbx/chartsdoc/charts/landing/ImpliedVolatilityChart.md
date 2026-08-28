@@ -1,6 +1,6 @@
 # Implied Volatility Chart
 
-Plot an implied volatility surface.
+Plot an implied volatility surface as a function of the option strike price and time to expiry
 
 ![](../images/ImpliedVolatilityChart.png)
 

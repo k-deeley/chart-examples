@@ -1,6 +1,6 @@
 # `LineGradientChart`
 
-Plot a variable-color curve.
+Plot a variable-color curve against a date/time vector
 
 ## Overview
 
@@ -57,15 +57,11 @@ steps = [0, randn( size( dates(1:end-1) ) )];
 walk = cumsum( steps );
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "LineGradientChart Example" );
-```
-
 ### Create the chart, specifying the data and figure.
 
 ```matlab
+f = exampleFigure( "Name", "LineGradientChart Example" );
+
 LGC = LineGradientChart( "Parent", f, ...
     "XData", dates, ...
     "YData", walk );

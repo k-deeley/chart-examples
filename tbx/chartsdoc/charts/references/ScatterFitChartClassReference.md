@@ -1,6 +1,6 @@
 # `ScatterFitChart`
 
-Manage scattered data with a best-fit line.
+Manage bivariate scattered data together with the line of best fit
 
 ## Overview
 
@@ -64,15 +64,11 @@ x = randn( 1000, 1 );
 y = 2 * x + 1 + 2 * randn( size( x ) );
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "ScatterFitChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "ScatterFitChart Example" );
+
 SFC = ScatterFitChart( "Parent", f, ...
     "XData", x, ...
     "YData", y );

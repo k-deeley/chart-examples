@@ -15,7 +15,8 @@ classdef AircraftChart < ...
         Triangulation(:, 3) triangulation = defaultAircraft()
     end % properties
 
-    properties ( Access = private, Transient, NonCopyable )
+    properties ( GetAccess = ?Testable, SetAccess = private, ...
+            Transient, NonCopyable )
         % Chart axes.
         Axes(:, 1) matlab.graphics.axis.Axes {mustBeScalarOrEmpty}
         % Transform object.

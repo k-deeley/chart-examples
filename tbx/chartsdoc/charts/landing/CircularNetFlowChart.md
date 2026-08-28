@@ -1,6 +1,6 @@
 # Circular Net Flow Chart
 
-Show directed flow relationships between categories.
+Show directed to/from relationships between pairs of categories
 
 ![](../images/CircularNetFlowChart.png)
 

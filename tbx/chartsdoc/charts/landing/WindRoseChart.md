@@ -1,6 +1,6 @@
 # Wind Rose Chart
 
-Display wind speed and direction on a polar histogram.
+Display wind speed and direction data on a polar histogram
 
 ![](../images/WindRoseChart.png)
 

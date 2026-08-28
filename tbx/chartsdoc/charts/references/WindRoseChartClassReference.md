@@ -1,6 +1,6 @@
 # `WindRoseChart`
 
-Display wind speed and direction on a polar histogram.
+Display wind speed and direction data on a polar histogram
 
 ## Overview
 
@@ -96,15 +96,11 @@ Display a preview of the data table.
 disp( head( W ) )
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "WindRoseChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "WindRoseChart Example" );
+
 WRC = WindRoseChart( "Parent", f, "WindData", W );
 ```
 

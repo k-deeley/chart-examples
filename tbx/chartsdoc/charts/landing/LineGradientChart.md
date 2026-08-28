@@ -1,6 +1,6 @@
 # Line Gradient Chart
 
-Plot a variable-color curve.
+Plot a variable-color curve against a date/time vector
 
 ![](../images/LineGradientChart.png)
 

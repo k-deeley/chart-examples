@@ -1,6 +1,6 @@
 # `ScatterDensityChart`
 
-Use color to show relative point density.
+Bivariate scatter plot using color to indicate relative density of the data points
 
 ## Overview
 
@@ -84,15 +84,11 @@ x = [C1(:, 1); C2(:, 1); C3(:, 1); C4(:, 1)];
 y = [C1(:, 2); C2(:, 2); C3(:, 2); C4(:, 2)];
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "ScatterDensityChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "ScatterDensityChart Example" );
+
 SDC = ScatterDensityChart( "Parent", f, ...
     "XData", x, ...
     "YData", y );

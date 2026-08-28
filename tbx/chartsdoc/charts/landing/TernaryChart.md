@@ -1,6 +1,6 @@
 # Ternary Chart
 
-Plot three variables that sum to a constant.
+Barycentric plot of three variables summing to a constant
 
 ![](../images/TernaryChart.png)
 

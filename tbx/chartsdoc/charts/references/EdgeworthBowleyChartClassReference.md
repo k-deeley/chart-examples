@@ -1,6 +1,6 @@
 # `EdgeworthBowleyChart`
 
-Plot utility curves and a Pareto-efficient contract curve.
+Plot the utility curves of two individuals and the derived Pareto-efficient contract curve
 
 ## Overview
 
@@ -64,15 +64,11 @@ disp("Chart B-data:")
 disp(B)
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "EdgeworthBowleyChart Example" );
-```
-
 ### Create the chart, specifying the parent and input data.
 
 ```matlab
+f = exampleFigure( "Name", "EdgeworthBowleyChart Example" );
+
 EBC = EdgeworthBowleyChart( "Parent", f, ...
     "AData", A, ...
     "BData", B );

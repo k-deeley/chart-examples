@@ -1,6 +1,6 @@
 # Value At Risk Chart
 
-Show a return distribution and value-at-risk metrics.
+Plot the distribution of a return series together with its value at risk metrics and a distribution fit
 
 ![](../images/ValueAtRiskChart.png)
 

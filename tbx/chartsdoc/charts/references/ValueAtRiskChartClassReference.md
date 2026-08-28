@@ -1,6 +1,6 @@
 # `ValueAtRiskChart`
 
-Show a return distribution and value-at-risk metrics.
+Plot the distribution of a return series together with its value at risk metrics and a distribution fit
 
 ## Overview
 
@@ -72,15 +72,11 @@ rng( "default" )
 d = 0.02 * trnd(10, 2000, 1 );
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "ValueAtRiskChart Example" );
-```
-
 ### Create and label the chart.
 
 ```matlab
+f = exampleFigure( "Name", "ValueAtRiskChart Example" );
+
 VRC = ValueAtRiskChart( "Parent", f, "Data", d );
 ```
 

@@ -1,6 +1,6 @@
 # Induction Motor Chart
 
-Visualize induction motor characteristics.
+Display the operating point of an induction motor in speed-torque coordinates
 
 ![](../images/InductionMotorChart.png)
 

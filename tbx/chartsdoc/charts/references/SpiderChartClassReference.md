@@ -1,6 +1,6 @@
 # `SpiderChart`
 
-Compare values from distinct measurements on a web.
+Plot and compare values from distinct measurements on a web
 
 ## Overview
 
@@ -74,15 +74,11 @@ Define the node labels.
 labels = "Property " + (1:numel( data ));
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "SpiderChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "SpiderChart Example" );
+
 SC = SpiderChart( "Parent", f, ...
     "Data", data, ...
     "LabelText", labels );

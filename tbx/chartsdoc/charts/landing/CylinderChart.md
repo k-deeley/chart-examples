@@ -1,6 +1,6 @@
 # Cylinder Chart
 
-Plot data using stacked cylinders.
+Plot data using stacked cylinders
 
 ![](../images/CylinderChart.png)
 

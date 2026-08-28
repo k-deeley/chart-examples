@@ -1,6 +1,6 @@
 # Annulus Chart
 
-Visualize relative proportions in a data vector using an annulus.
+Visualize relative proportions in a data vector using an annulus (ring)
 
 ![](../images/AnnulusChart.png)
 

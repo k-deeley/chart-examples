@@ -1,6 +1,6 @@
 # Radar Scope
 
-Plot radar blips and issue proximity alerts.
+Plot a set of blips on a radar scope and issue proximity alerts
 
 ![](../images/RadarScope.png)
 

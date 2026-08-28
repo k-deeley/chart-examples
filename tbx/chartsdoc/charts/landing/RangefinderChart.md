@@ -1,6 +1,6 @@
 # Rangefinder Chart
 
-Show median crossover and marginal adjacent values.
+Bivariate scatter plot showing the crossover point of the marginal medians and lines indicating the marginal adjacent values
 
 ![](../images/RangefinderChart.png)
 

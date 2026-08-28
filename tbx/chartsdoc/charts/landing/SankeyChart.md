@@ -1,6 +1,6 @@
 # Sankey Chart
 
-Illustrate flow between states.
+Illustrate the flow between different states
 
 ![](../images/SankeyChart.png)
 

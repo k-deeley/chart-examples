@@ -1,6 +1,6 @@
 # Clock Chart
 
-Display an analog clock with scheduled updates.
+Display an analog clock, using a timer to schedule regular updates
 
 ![](../images/ClockChart.png)
 

@@ -1,6 +1,6 @@
 # `SnailTrailChart`
 
-Plot excess returns against tracking errors.
+Plot excess returns against tracking errors for an asset relative to a benchmark
 
 ## Overview
 
@@ -74,15 +74,11 @@ All `SnailTrailChart` inputs are optional name-value arguments.
 load( fullfile( chartsRoot(), "data", "Returns.mat" ), "rets" )
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "SnailTrailChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "SnailTrailChart Example" );
+
 STC = SnailTrailChart( "Parent", f, ...
     "Returns", rets );
 ```

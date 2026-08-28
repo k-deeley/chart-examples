@@ -1,6 +1,6 @@
 # Edgeworth Bowley Chart
 
-Plot utility curves and a Pareto-efficient contract curve.
+Plot the utility curves of two individuals and the derived Pareto-efficient contract curve
 
 ![](../images/EdgeworthBowleyChart.png)
 

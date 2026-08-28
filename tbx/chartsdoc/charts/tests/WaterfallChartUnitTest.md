@@ -115,7 +115,7 @@ classdef tWaterfallChart < tChart
             % Verify that the value has been set correctly.
             actual = feval( TickMethod, testCase.Chart );
             if endsWith( TickMethod, "labels" )
-                constraint = IsEquivalentText( string( expected ) );
+                constraint = IsEquivalentText( compose( "%d", expected ) );
             else
                 constraint = IsEqualVector( expected );
             end % if
@@ -150,10 +150,11 @@ classdef tWaterfallChart < tChart
             gridValues = ["on", "off"];
             for k = 1 : numel( gridValues )
                 grid( testCase.Chart, gridValues(k) )
-                actual = string( [testCase.Chart.Axes.XGrid, ...
-                    testCase.Chart.Axes.YGrid] );
-                expected = [gridValues(k), gridValues(k)];
-                testCase.verifyEqual( actual, expected, ...
+                actual = {testCase.Chart.Axes.XGrid, ...
+                    testCase.Chart.Axes.YGrid};
+                expected = repmat( ...
+                    matlab.lang.OnOffSwitchState( gridValues(k) ), 1, 2 );
+                testCase.verifyEqual( [actual{:}], expected, ...
                     "Calling the chart's grid() method with the " + ...
                     "value '" + gridValues(k) + "' did not update" + ...
                     " the axes' 'XGrid' and 'YGrid' properties." )
@@ -167,8 +168,8 @@ classdef tWaterfallChart < tChart
             boxValues = ["on", "off"];
             for k = 1 : numel( boxValues )
                 box( testCase.Chart, boxValues(k) )
-                actual = string( testCase.Chart.Axes.Box );
-                expected = boxValues(k);
+                actual = testCase.Chart.Axes.Box;
+                expected = matlab.lang.OnOffSwitchState( boxValues(k) );
                 testCase.verifyEqual( actual, expected, ...
                     "Calling the chart's box() method with the " + ...
                     "value '" + boxValues(k) + "' did not update" + ...

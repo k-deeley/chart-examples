@@ -1,6 +1,6 @@
 # Settlement Chart
 
-Plot in-the-money option prices against strike prices.
+Plot in the money option prices against strike prices
 
 ![](../images/SettlementChart.png)
 

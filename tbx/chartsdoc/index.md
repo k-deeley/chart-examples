@@ -19,7 +19,7 @@ Review changes by toolbox version.
 Read background material and implementation guidance for developing custom
 MATLAB charts.
 
-## [Chart Reference](ChartExamples.md)
+## [Chart Examples](ChartExamples.md)
 
 Browse the chart reference pages, including class documentation, examples,
 source code listings, and chart-specific tests when available.

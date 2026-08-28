@@ -1,6 +1,6 @@
 # `CircularNetFlowChart`
 
-Show directed flow relationships between categories.
+Show directed to/from relationships between pairs of categories
 
 ## Overview
 
@@ -70,15 +70,11 @@ Tabulate the link data.
 linkdata = array2table( linkdata, "VariableNames", labels );
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "CircularNetFlowChart Example" );
-```
-
 ### Create the chart, specifying the parent and input data.
 
 ```matlab
+f = exampleFigure( "Name", "CircularNetFlowChart Example" );
+
 CNFC = CircularNetFlowChart( "Parent", f, ...
     "LinkData", linkdata );
 ```

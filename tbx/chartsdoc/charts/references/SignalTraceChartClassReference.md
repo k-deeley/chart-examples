@@ -1,6 +1,6 @@
 # `SignalTraceChart`
 
-Plot non-overlapping signal traces.
+Plot non-overlapping signal traces against a numeric time vector
 
 ## Overview
 
@@ -77,15 +77,11 @@ Join the signals $y\_1$, $y\_2$, $y\_3$ and $y\_4$ into a matrix with four colum
 signals = [y1, y2, y3, y4];
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "SignalTraceChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "SignalTraceChart Example" );
+
 STC = SignalTraceChart( "Parent", f, ...
     "Time", t, ...
     "SignalData", signals, ...

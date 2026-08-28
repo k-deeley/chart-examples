@@ -1,6 +1,6 @@
 # Signal Trace Chart
 
-Plot non-overlapping signal traces.
+Plot non-overlapping signal traces against a numeric time vector
 
 ![](../images/SignalTraceChart.png)
 

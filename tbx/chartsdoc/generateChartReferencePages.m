@@ -17,18 +17,18 @@ outputFolders = chartOutputFolders( outputRoot );
 
 ensureOutputFolders( outputFolders )
 
-chartInfo = dir( fullfile( chartFolder, "*.m" ) );
-chartNames = sort( erase( string( {chartInfo.name} ), ".m" ) ).';
-descriptions = getChartDescriptions();
+allChartNames = chartNames();
+chartNameList = sort( allChartNames(:) );
+descriptions = getChartDescriptions( chartNameList );
 
 generatedFiles = strings( 0, 1 );
 generatedFiles(end + 1, 1) = writeChartIndex( ...
-    outputRoot, chartNames, descriptions );
+    outputRoot, chartNameList, descriptions );
 generatedFiles(end + 1, 1) = writeHelpToc( ...
-    docRoot, chartNames, testFolder );
+    docRoot, chartNameList, testFolder );
 
-for chartIdx = 1 : numel( chartNames )
-    chartName = chartNames(chartIdx);
+for chartIdx = 1 : numel( chartNameList )
+    chartName = chartNameList(chartIdx);
     newFiles = writeChartPages( ...
         outputFolders, chartName, descriptions, chartFolder, ...
         exampleFolder, testFolder );
@@ -84,71 +84,24 @@ end % for
 
 end % ensureOutputFolders
 
-function descriptions = getChartDescriptions()
+function descriptions = getChartDescriptions( chartNames )
 %GETCHARTDESCRIPTIONS Return chart reference descriptions.
 
+arguments ( Input )
+    chartNames(:, 1) string
+end % arguments ( Input )
+
 arguments ( Output )
-    descriptions containers.Map
+    descriptions(1, 1) dictionary
 end % arguments ( Output )
 
-chartNames = [
-    "AircraftChart"
-    "AnnulusChart"
-    "CircularNetFlowChart"
-    "ClockChart"
-    "CylinderChart"
-    "EdgeworthBowleyChart"
-    "GraphicsHierarchyChart"
-    "ImpliedVolatilityChart"
-    "InductionMotorChart"
-    "LineGradientChart"
-    "LineSelectorChart"
-    "PolarChart"
-    "RadarScope"
-    "RangefinderChart"
-    "SankeyChart"
-    "ScatterBoxChart"
-    "ScatterDensityChart"
-    "ScatterFitChart"
-    "SettlementChart"
-    "SignalTraceChart"
-    "SnailTrailChart"
-    "SpiderChart"
-    "TernaryChart"
-    "ValueAtRiskChart"
-    "WaterfallChart"
-    "WindRoseChart"];
+chartDescriptions = strings( size( chartNames ) );
+for chartIdx = 1 : numel( chartNames )
+    chartDescriptions(chartIdx) = eval( ...
+        chartNames(chartIdx) + ".ShortDescription" );
+end % for
 
-chartDescriptions = [
-    "visualize an aircraft and modify its roll, pitch, and yaw."
-    "visualize relative proportions in a data vector using an annulus."
-    "show directed flow relationships between categories."
-    "display an analog clock with scheduled updates."
-    "plot data using stacked cylinders."
-    "plot utility curves and a Pareto-efficient contract curve."
-    "visualize the graphics hierarchy below a graphics object."
-    "plot an implied volatility surface."
-    "visualize induction motor characteristics."
-    "plot a variable-color curve."
-    "select and highlight one line from a collection."
-    "plot circular data on a polar chart."
-    "plot radar blips and issue proximity alerts."
-    "show median crossover and marginal adjacent values."
-    "illustrate flow between states."
-    "combine a scatter plot with marginal box plots."
-    "use color to show relative point density."
-    "manage scattered data with a best-fit line."
-    "plot in-the-money option prices against strike prices."
-    "plot non-overlapping signal traces."
-    "plot excess returns against tracking errors."
-    "compare values from distinct measurements on a web."
-    "plot three variables that sum to a constant."
-    "show a return distribution and value-at-risk metrics."
-    "show the cumulative evolution of an initial value."
-    "display wind speed and direction on a polar histogram."];
-
-descriptions = containers.Map( cellstr( chartNames ), ...
-    cellstr( chartDescriptions ) );
+descriptions = dictionary( chartNames, chartDescriptions );
 
 end % getChartDescriptions
 
@@ -159,7 +112,7 @@ function outputFile = writeChartIndex( ...
 arguments ( Input )
     outputFolder(1, 1) string
     chartNames(:, 1) string
-    descriptions containers.Map
+    descriptions(1, 1) dictionary
 end % arguments ( Input )
 
 arguments ( Output )
@@ -222,8 +175,8 @@ lines = [
     "    * [Chart Development Guide](notes/ChartDevelopmentGuide.md)"
     "    * [Creating Specialized Charts with MATLAB " + ...
     "Object-Oriented Programming](notes/TechnicalArticle.md)"
-    "  * [Chart Reference](ChartExamples.md)"
-    "    * [Chart Reference Index](charts/ChartsIndex.md)"];
+    "  * [Chart Examples](ChartExamples.md)"
+    "    * [Chart Reference](charts/ChartsIndex.md)"];
 
 for chartName = chartNames.'
     testFile = findTestFile( testFolder, chartName );
@@ -255,7 +208,7 @@ function outputFiles = writeChartPages( outputFolders, chartName, ...
 arguments ( Input )
     outputFolders(1, 1) struct
     chartName(1, 1) string
-    descriptions containers.Map
+    descriptions(1, 1) dictionary
     chartFolder(1, 1) string
     exampleFolder(1, 1) string
     testFolder(1, 1) string
@@ -553,7 +506,7 @@ function description = lookupDescription( descriptions, chartName )
 %LOOKUPDESCRIPTION Return the chart description.
 
 arguments ( Input )
-    descriptions containers.Map
+    descriptions(1, 1) dictionary
     chartName(1, 1) string
 end % arguments ( Input )
 
@@ -561,8 +514,8 @@ arguments ( Output )
     description(1, 1) string
 end % arguments ( Output )
 
-if isKey( descriptions, char( chartName ) )
-    description = string( descriptions( char( chartName ) ) );
+if isKey( descriptions, chartName )
+    description = descriptions( chartName );
 else
     description = "Reference documentation for `" + chartName + "`.";
 end % if
@@ -986,6 +939,8 @@ sections.Examples = sectionLines( ...
     lines, "## Examples", "## See Also", ...
     "## Examples" + newline() + ...
     "No example content is available." );
+sections.Examples = mergeChartFigureSection( sections.Examples );
+sections.Examples = mergeChartFigureCodeBlocks( sections.Examples );
 
 sections.Overview = fixChartRelativeLinks( ...
     sections.Overview, "../images" );
@@ -995,6 +950,144 @@ sections.Examples = fixChartRelativeLinks( ...
     sections.Examples, "../images" );
 
 end % extractExampleSections
+
+function lines = mergeChartFigureSection( lines )
+%MERGECHARTFIGURESECTION Fold figure setup into chart creation.
+
+arguments ( Input )
+    lines(:, 1) string
+end % arguments ( Input )
+
+arguments ( Output )
+    lines(:, 1) string
+end % arguments ( Output )
+
+figureHeading = "### Create a figure for the chart.";
+figureIdx = find( strtrim( lines ) == figureHeading, 1, "first" );
+while ~isempty( figureIdx )
+    nextHeadingIdx = find( startsWith( strtrim( ...
+        lines(figureIdx + 1:end) ), "### " ), 1, "first" );
+    if isempty( nextHeadingIdx )
+        return
+    end % if
+    nextHeadingIdx = nextHeadingIdx + figureIdx;
+    
+    figureLines = stripBlankBoundaryLines( ...
+        lines(figureIdx + 1:nextHeadingIdx - 1) );
+    chartLines = stripLeadingBlankLines( lines(nextHeadingIdx + 1:end) );
+    lines = [
+        lines(1:figureIdx - 1)
+        lines(nextHeadingIdx)
+        ""
+        figureLines
+        ""
+        chartLines];
+    
+    figureIdx = find( strtrim( lines ) == figureHeading, 1, "first" );
+end % while
+
+end % mergeChartFigureSection
+
+function lines = mergeChartFigureCodeBlocks( lines )
+%MERGECHARTFIGURECODEBLOCKS Combine figure and chart code blocks.
+
+arguments ( Input )
+    lines(:, 1) string
+end % arguments ( Input )
+
+arguments ( Output )
+    lines(:, 1) string
+end % arguments ( Output )
+
+text = strtrim( lines );
+headingIdxs = find( startsWith( text, "### Create the chart" ) | ...
+    startsWith( text, "### Create and label the chart" ) );
+for headingIdx = flip( headingIdxs.' )
+    nextHeadingIdx = find( startsWith( strtrim( ...
+        lines(headingIdx + 1:end) ), "### " ), 1, "first" );
+    if isempty( nextHeadingIdx )
+        nextHeadingIdx = numel( lines ) + 1;
+    else
+        nextHeadingIdx = nextHeadingIdx + headingIdx;
+    end % if
+    
+    body = lines(headingIdx + 1:nextHeadingIdx - 1);
+    [body, modified] = mergeFirstTwoCodeBlocks( body );
+    if modified
+        body = stripLeadingBlankLines( body );
+        lines = [
+            lines(1:headingIdx)
+            ""
+            body
+            lines(nextHeadingIdx:end)];
+    end % if
+end % for
+
+end % mergeChartFigureCodeBlocks
+
+function [lines, modified] = mergeFirstTwoCodeBlocks( lines )
+%MERGEFIRSTTWOCODEBLOCKS Move setup code into the next code block.
+
+arguments ( Input )
+    lines(:, 1) string
+end % arguments ( Input )
+
+arguments ( Output )
+    lines(:, 1) string
+    modified(1, 1) logical
+end % arguments ( Output )
+
+modified = false;
+fenceIdx = find( startsWith( strtrim( lines ), "```" ) );
+if numel( fenceIdx ) < 4
+    return
+end % if
+
+figureCode = stripBlankBoundaryLines( ...
+    lines(fenceIdx(1) + 1:fenceIdx(2) - 1) );
+if ~any( contains( figureCode, "exampleFigure" ) )
+    return
+end % if
+
+removeStart = fenceIdx(1);
+while removeStart > 1 && ...
+        strlength( strip( lines(removeStart - 1) ) ) == 0
+    removeStart = removeStart - 1;
+end % while
+
+removeEnd = fenceIdx(2);
+while removeEnd < numel( lines ) && ...
+        strlength( strip( lines(removeEnd + 1) ) ) == 0
+    removeEnd = removeEnd + 1;
+end % while
+
+lines(removeStart:removeEnd) = [];
+fenceIdx = find( startsWith( strtrim( lines ), "```" ), 1, "first" );
+lines = [
+    lines(1:fenceIdx)
+    figureCode
+    ""
+    lines(fenceIdx + 1:end)];
+modified = true;
+
+end % mergeFirstTwoCodeBlocks
+
+function lines = stripLeadingBlankLines( lines )
+%STRIPLEADINGBLANKLINES Remove leading blank lines.
+
+arguments ( Input )
+    lines(:, 1) string
+end % arguments ( Input )
+
+arguments ( Output )
+    lines(:, 1) string
+end % arguments ( Output )
+
+while ~isempty( lines ) && strlength( strip( lines(1) ) ) == 0
+    lines(1) = [];
+end % while
+
+end % stripLeadingBlankLines
 
 function section = sectionLines( lines, heading, stopHeadings, fallback )
 %SECTIONLINES Extract one Markdown section, including its heading.

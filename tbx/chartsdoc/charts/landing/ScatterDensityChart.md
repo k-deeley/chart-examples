@@ -1,6 +1,6 @@
 # Scatter Density Chart
 
-Use color to show relative point density.
+Bivariate scatter plot using color to indicate relative density of the data points
 
 ![](../images/ScatterDensityChart.png)
 

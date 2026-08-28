@@ -1,6 +1,6 @@
 # `WaterfallChart`
 
-Show the cumulative evolution of an initial value.
+Cumulative bar chart visualizing the evolution of an initial value
 
 ## Overview
 
@@ -102,15 +102,11 @@ rng( "default" )
 data = randi( [-6, 6], 10, 1 );
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "WaterfallChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "WaterfallChart Example" );
+
 WC = WaterfallChart( "Parent", f, "Data", data );
 ```
 

@@ -1,6 +1,6 @@
 # `SettlementChart`
 
-Plot in-the-money option prices against strike prices.
+Plot in the money option prices against strike prices
 
 ## Overview
 
@@ -122,15 +122,11 @@ Dividend yield, expressed as a decimal number between 0 and 1.
 Yield = 0.01;
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "SettlementChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "SettlementChart Example" );
+
 SC = SettlementChart( "Parent", f, ...
     "Strike", Strike, ...
     "Price", Price, ...

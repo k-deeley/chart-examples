@@ -1,6 +1,6 @@
 # `AnnulusChart`
 
-Visualize relative proportions in a data vector using an annulus.
+Visualize relative proportions in a data vector using an annulus (ring)
 
 ## Overview
 
@@ -73,17 +73,13 @@ data = randperm( 10 );
 
 The chart accepts the vector data either as a row or a column, but it is stored within the chart as a column vector.
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "AnnulusChart Example" );
-```
-
 ### Create the chart.
 
 Next, create the chart object, specifying the `Parent` and `Data` properties, and hiding the chart controls to begin with. Use a standard colormap for the wedge face colors.
 
 ```matlab
+f = exampleFigure( "Name", "AnnulusChart Example" );
+
 AC = AnnulusChart( "Parent", f, ...
     "Data", data, ...
     "FaceColor", hsv( numel( data ) ), ...

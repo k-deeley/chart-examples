@@ -1,6 +1,6 @@
 # `AircraftChart`
 
-Visualize an aircraft and modify its roll, pitch, and yaw.
+Visualize an aircraft and modify its roll, pitch, and yaw
 
 ## Overview
 
@@ -53,18 +53,14 @@ All `AircraftChart` inputs are optional name-value arguments.
 
 ## Examples
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "AircraftChart Example" );
-```
-
 ### Create the chart.
 
 Create the chart, using the default triangulation.
 **Reference**: Airplane by Yorchmur, [`https://www.printables.com/model/34767-airplane`](https://www.printables.com/model/34767-airplane), licensed under the Creative Commons Attribution 4.0 International License.
 
 ```matlab
+f = exampleFigure( "Name", "AircraftChart Example" );
+
 AC = AircraftChart( "Parent", f );
 ```
 

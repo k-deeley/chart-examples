@@ -1,6 +1,6 @@
 # Scatter Fit Chart
 
-Manage scattered data with a best-fit line.
+Manage bivariate scattered data together with the line of best fit
 
 ![](../images/ScatterFitChart.png)
 

@@ -1,6 +1,6 @@
 # `ImpliedVolatilityChart`
 
-Plot an implied volatility surface.
+Plot an implied volatility surface as a function of the option strike price and time to expiry
 
 ## Overview
 
@@ -66,17 +66,13 @@ The market data comprises option expiry times, strike prices and implied volatil
 load( fullfile( chartsRoot(), "data", "Option.mat" ), "D" )
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "ImpliedVolatilityChart Example" );
-```
-
 ### Create the chart.
 
 First, extract the option data for a specific group.
 
 ```matlab
+f = exampleFigure( "Name", "ImpliedVolatilityChart Example" );
+
 D1 = D(D.Group == "G1", 1:4);
 IVC = ImpliedVolatilityChart( "Parent", f, ...
     "OptionData", D1 );

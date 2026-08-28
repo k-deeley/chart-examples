@@ -1,6 +1,6 @@
 # Spider Chart
 
-Compare values from distinct measurements on a web.
+Plot and compare values from distinct measurements on a web
 
 ![](../images/SpiderChart.png)
 

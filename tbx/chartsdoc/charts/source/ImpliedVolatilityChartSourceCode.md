@@ -162,10 +162,17 @@ classdef ImpliedVolatilityChart < ...
             % Take the maximal interior domain of the strike prices across
             % each unique expiry time.
             T = obj.UniqueExpiryTimes;
+            if isempty( T )
+                value = double.empty( 0, 1 );
+                return
+            end % if
+
+            mn = zeros( numel( T ), 1 );
+            mx = zeros( numel( T ), 1 );
             for k = numel( T ) : -1 : 1
                 currentTIdx = obj.OptionData_.(1) == T(k);
                 K = obj.OptionData_.(2);
-                [mn(k, 1), mx(k, 1)] = bounds( K(currentTIdx) );
+                [mn(k), mx(k)] = bounds( K(currentTIdx) );
             end % for
             mn = max( mn );
             mx = min( mx );

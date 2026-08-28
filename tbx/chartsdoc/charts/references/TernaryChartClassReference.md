@@ -1,6 +1,6 @@
 # `TernaryChart`
 
-Plot three variables that sum to a constant.
+Barycentric plot of three variables summing to a constant
 
 ## Overview
 
@@ -82,15 +82,11 @@ load( fullfile( chartsRoot(), "data", "Chemicals.mat" ) )
 disp( T )
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "TernaryChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "TernaryChart Example" );
+
 TC = TernaryChart( "Parent", f, ...
     "Data", T );
 ```

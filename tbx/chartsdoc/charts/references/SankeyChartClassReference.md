@@ -1,6 +1,6 @@
 # `SankeyChart`
 
-Illustrate flow between states.
+Illustrate the flow between different states
 
 ## Overview
 
@@ -82,17 +82,13 @@ plot( DG, "EdgeLabel", DG.Edges.Weight )
 title( "Directed Graph" )
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "SankeyChart Example" );
-```
-
 ### Create the chart.
 
 Next, create the chart object, specifying the `Parent` and `GraphData` properties.
 
 ```matlab
+f = exampleFigure( "Name", "SankeyChart Example" );
+
 SC = SankeyChart( "Parent", f, "GraphData", DG );
 ```
 

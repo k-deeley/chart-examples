@@ -1,6 +1,6 @@
 # `InductionMotorChart`
 
-Visualize induction motor characteristics.
+Display the operating point of an induction motor in speed-torque coordinates
 
 ## Overview
 
@@ -70,15 +70,11 @@ IMP = InductionMotorParameters( motorParametersFolder );
 disp( IMP )
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "InductionMotorChart Example" );
-```
-
 ### Create the chart.
 
 ```matlab
+f = exampleFigure( "Name", "InductionMotorChart Example" );
+
 IMC = InductionMotorChart( "Parent", f, "MotorParameters", IMP );
 ```
 

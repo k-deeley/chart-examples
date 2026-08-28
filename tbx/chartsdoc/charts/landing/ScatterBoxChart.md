@@ -1,6 +1,6 @@
 # Scatter Box Chart
 
-Combine a scatter plot with marginal box plots.
+Bivariate scatter plot with marginal boxplots
 
 ![](../images/ScatterBoxChart.png)
 

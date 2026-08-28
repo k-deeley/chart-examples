@@ -6,6 +6,6 @@ documentation pages include syntax, public members, usage notes, and
 examples. Source code and test code listings are provided separately for 
 inspection.
 
-* [Chart Reference Index](charts/ChartsIndex.md) - Browse the full catalog of chart examples.
+* [Chart Reference](charts/ChartsIndex.md) - Browse the full catalog of chart examples.
 
 

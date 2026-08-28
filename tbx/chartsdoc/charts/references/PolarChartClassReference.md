@@ -1,6 +1,6 @@
 # `PolarChart`
 
-Plot circular data on a polar chart.
+Polar line graph of dependent numeric variables plotted against independent circular data
 
 ## Overview
 
@@ -63,15 +63,11 @@ meanMonthlyTemps = [4, 5, 6, 9, 12, 16, 17, 18, 15, 11, 7, 4;
     3, 4, 6, 8, 11, 13, 15, 15, 13, 10, 6, 4].';
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "PolarChart Example" );
-```
-
 ### Create the chart, specifying the parent and input data.
 
 ```matlab
+f = exampleFigure( "Name", "PolarChart Example" );
+
 PC = PolarChart( "Parent", f, ...
     "AngularData", months, ...
     "RadialData", meanMonthlyTemps );

@@ -1,6 +1,6 @@
 # Graphics Hierarchy Chart
 
-Visualize the graphics hierarchy below a graphics object.
+Visualize the graphics hierarchy descending from a given graphics object
 
 ![](../images/GraphicsHierarchyChart.png)
 

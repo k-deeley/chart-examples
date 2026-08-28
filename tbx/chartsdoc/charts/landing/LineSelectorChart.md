@@ -1,6 +1,6 @@
 # Line Selector Chart
 
-Select and highlight one line from a collection.
+Display a collection of line plots and select one to highlight
 
 ![](../images/LineSelectorChart.png)
 

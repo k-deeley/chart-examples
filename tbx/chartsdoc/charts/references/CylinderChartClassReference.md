@@ -1,6 +1,6 @@
 # `CylinderChart`
 
-Plot data using stacked cylinders.
+Plot data using stacked cylinders
 
 ## Overview
 
@@ -60,15 +60,11 @@ Y = [2, 2, 3;
     2, 11, 12];
 ```
 
-### Create a figure for the chart.
-
-```matlab
-f = exampleFigure( "Name", "CylinderChart Example" );
-```
-
 ### Create the chart, specifying the parent and input data.
 
 ```matlab
+f = exampleFigure( "Name", "CylinderChart Example" );
+
 CC = CylinderChart( "Parent", f, "Data", Y );
 ```
 
