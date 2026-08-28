@@ -19,7 +19,7 @@ ensureOutputFolders( outputFolders )
 
 chartInfo = dir( fullfile( chartFolder, "*.m" ) );
 chartNames = sort( erase( string( {chartInfo.name} ), ".m" ) ).';
-descriptions = getChartDescriptions( docRoot );
+descriptions = getChartDescriptions();
 
 generatedFiles = strings( 0, 1 );
 generatedFiles(end + 1, 1) = writeChartIndex( ...
@@ -84,31 +84,71 @@ end % for
 
 end % ensureOutputFolders
 
-function descriptions = getChartDescriptions( docRoot )
-%GETCHARTDESCRIPTIONS Read chart descriptions from the chart index.
-
-arguments ( Input )
-    docRoot(1, 1) string
-end % arguments ( Input )
+function descriptions = getChartDescriptions()
+%GETCHARTDESCRIPTIONS Return chart reference descriptions.
 
 arguments ( Output )
     descriptions containers.Map
 end % arguments ( Output )
 
-descriptions = containers.Map( "KeyType", "char", "ValueType", "char" );
-indexFile = fullfile( docRoot, "ChartExamples.md" );
-if ~isfile( indexFile )
-    return
-end % if
+chartNames = [
+    "AircraftChart"
+    "AnnulusChart"
+    "CircularNetFlowChart"
+    "ClockChart"
+    "CylinderChart"
+    "EdgeworthBowleyChart"
+    "GraphicsHierarchyChart"
+    "ImpliedVolatilityChart"
+    "InductionMotorChart"
+    "LineGradientChart"
+    "LineSelectorChart"
+    "PolarChart"
+    "RadarScope"
+    "RangefinderChart"
+    "SankeyChart"
+    "ScatterBoxChart"
+    "ScatterDensityChart"
+    "ScatterFitChart"
+    "SettlementChart"
+    "SignalTraceChart"
+    "SnailTrailChart"
+    "SpiderChart"
+    "TernaryChart"
+    "ValueAtRiskChart"
+    "WaterfallChart"
+    "WindRoseChart"];
 
-lines = readlines( indexFile );
-expr = "^\* \[`(?<name>[^`]+)`\]\([^)]+\) - (?<text>.+)$";
-for idx = 1 : numel( lines )
-    tokens = regexp( lines(idx), expr, "names" );
-    if ~isempty( tokens )
-        descriptions( char( tokens.name ) ) = char( tokens.text );
-    end % if
-end % for
+chartDescriptions = [
+    "visualize an aircraft and modify its roll, pitch, and yaw."
+    "visualize relative proportions in a data vector using an annulus."
+    "show directed flow relationships between categories."
+    "display an analog clock with scheduled updates."
+    "plot data using stacked cylinders."
+    "plot utility curves and a Pareto-efficient contract curve."
+    "visualize the graphics hierarchy below a graphics object."
+    "plot an implied volatility surface."
+    "visualize induction motor characteristics."
+    "plot a variable-color curve."
+    "select and highlight one line from a collection."
+    "plot circular data on a polar chart."
+    "plot radar blips and issue proximity alerts."
+    "show median crossover and marginal adjacent values."
+    "illustrate flow between states."
+    "combine a scatter plot with marginal box plots."
+    "use color to show relative point density."
+    "manage scattered data with a best-fit line."
+    "plot in-the-money option prices against strike prices."
+    "plot non-overlapping signal traces."
+    "plot excess returns against tracking errors."
+    "compare values from distinct measurements on a web."
+    "plot three variables that sum to a constant."
+    "show a return distribution and value-at-risk metrics."
+    "show the cumulative evolution of an initial value."
+    "display wind speed and direction on a polar histogram."];
+
+descriptions = containers.Map( cellstr( chartNames ), ...
+    cellstr( chartDescriptions ) );
 
 end % getChartDescriptions
 

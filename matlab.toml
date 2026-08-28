@@ -7,7 +7,6 @@ path = [
     "tbx/charts/charts",
     "tbx/charts/tests",
     "tbx/chartsdoc",
-    "tbx/chartsdoc/charts/images",
 ]
 test = [
     "tbx/charts/tests",

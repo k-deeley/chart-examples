@@ -1,6 +1,6 @@
 # Chart Reference
 
-Each chart reference page links to the class documentation and examples, source code listing, and chart-specific test code listing when a matching test exists.
+Each chart reference page links to the class documentation and examples, source code listing, and chart-specific test code listing.
 
 ## Section Contents
 
