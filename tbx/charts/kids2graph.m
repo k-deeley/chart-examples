@@ -2,6 +2,8 @@ function [G, nodeLabels] = kids2graph( graphicsObject, namedArgs )
 %KIDS2GRAPH Construct a graph listing the descendants of the given graphics
 %object.
 
+% Copyright 2026 The MathWorks, Inc.
+
 arguments ( Input )
     graphicsObject(1, 1) {mustBeValidGraphics}
     namedArgs.ShowHiddenHandles(1, 1) matlab.lang.OnOffSwitchState = "off"

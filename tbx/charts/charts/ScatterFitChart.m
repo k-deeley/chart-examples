@@ -3,7 +3,7 @@ classdef ScatterFitChart < ...
     %SCATTERFITCHART Chart component managing 2D scattered data (x and y)
     %together with the corresponding best-fit line.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart x-data.
@@ -17,7 +17,7 @@ classdef ScatterFitChart < ...
         SizeData(:, 1) double {mustBePositive, mustBeFinite} = 36
         % Color data for the scatter series.
         CData(:, 3) double ...
-            {mustBeInRange( CData, 0, 1 )} = [0, 0.4470, 0.7410]
+            {mustBeBetween( CData, 0, 1 )} = [0, 0.4470, 0.7410]
     end % properties
 
     properties ( Dependent )
@@ -322,12 +322,12 @@ classdef ScatterFitChart < ...
             arguments ( Input )
                 namedArgs.?ScatterFitChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer( ...
                 "Parent", [], ...
                 "Units", "normalized", ...
                 "Position", [0, 0, 1, 1] )
-
 
             % Set any user-specified properties.
             set( obj, namedArgs )

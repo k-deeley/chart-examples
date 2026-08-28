@@ -8,7 +8,6 @@ classdef LineGradientChart < ...
     %LINEGRADIENTCHART Chart for managing a variable-color curve plotted
     %against a date/time vector.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart x-data.
@@ -120,13 +119,13 @@ classdef LineGradientChart < ...
             arguments ( Input )
                 namedArgs.?LineGradientChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -230,10 +229,11 @@ assert( issorted( d ), ...
     "The LineGradient chart's x-data must be nondecreasing." )
 
 end % mustBeSorted
+
 ````
 
 ## See Also
 
-* [`LineGradientChart`](LineGradientChart.md)
+* [Line Gradient Chart](LineGradientChart.md)
 * [Chart Reference](ChartsIndex.md)
 

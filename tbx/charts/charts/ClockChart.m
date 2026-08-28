@@ -3,7 +3,7 @@ classdef ClockChart < ...
     %CLOCKCHART Display an analog clock, using a timer to schedule regular
     %updates.
 
-    % Copyright 2024-2025 The MathWorks, Inc.
+    % Copyright 2024-2026 The MathWorks, Inc.
 
     properties
         ShowNumbers(1, 1) matlab.lang.OnOffSwitchState = "on"
@@ -56,13 +56,13 @@ classdef ClockChart < ...
             arguments ( Input )
                 namedArgs.?ClockChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Create the timer.
             obj.Timer = timer( "Period", 1, ...

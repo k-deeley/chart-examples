@@ -8,7 +8,6 @@ classdef SignalTraceChart < ...
     %SIGNALTRACECHART Chart for managing a collection of non-overlapping
     %signal traces plotted against a numeric time vector.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart time data.
@@ -152,6 +151,7 @@ classdef SignalTraceChart < ...
             arguments ( Input )
                 namedArgs.?SignalTraceChart
             end % arguments
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
@@ -288,6 +288,6 @@ end % mustBeIncreasing
 
 ## See Also
 
-* [`SignalTraceChart`](SignalTraceChart.md)
+* [Signal Trace Chart](SignalTraceChart.md)
 * [Chart Reference](ChartsIndex.md)
 

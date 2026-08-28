@@ -1,4 +1,4 @@
-# `ImpliedVolatilityChart`
+# Implied Volatility Chart
 
 Plot an implied volatility surface.
 
@@ -6,5 +6,4 @@ Plot an implied volatility surface.
 
 * [Class Documentation and Examples](ImpliedVolatilityChartClassReference.md)
 * [Source Code Listing](ImpliedVolatilityChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](ImpliedVolatilityChartUnitTest.md)

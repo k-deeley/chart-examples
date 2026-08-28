@@ -9,7 +9,6 @@ classdef ImpliedVolatilityChart < ...
     %strike price, time to expiry and implied volatility, together with an
     %interpolated implied volatility surface.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
 
     properties ( Dependent )
         % Table of option data, comprising the time to expiry, strike
@@ -219,12 +218,12 @@ classdef ImpliedVolatilityChart < ...
             arguments ( Input )
                 namedArgs.?ImpliedVolatilityChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer( ...
                 "Parent", [], ...
                 "Units", "normalized", ...
                 "Position", [0, 0, 1, 1] )
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -498,7 +497,7 @@ if ~isempty( t )
 
     volatility = t{:, 3};
     mustBeVector( volatility )
-    mustBeInRange( volatility, 0, 100, "exclude-lower" )
+    mustBeBetween( volatility, 0, 100, "openleft" )
 
     assetPrice = t{:, 4};
     mustBeVector( assetPrice )
@@ -521,6 +520,6 @@ end % mustBeMarker
 
 ## See Also
 
-* [`ImpliedVolatilityChart`](ImpliedVolatilityChart.md)
+* [Implied Volatility Chart](ImpliedVolatilityChart.md)
 * [Chart Reference](ChartsIndex.md)
 

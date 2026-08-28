@@ -100,7 +100,7 @@ SFC.YData = (-1) * SFC.XData + 2 + 2 * randn( size( SFC.XData ) );
 
 ## See Also
 
-* [`ScatterFitChart`](ScatterFitChart.md)
+* [Scatter Fit Chart](ScatterFitChart.md)
 * [Source Code Listing](ScatterFitChartSourceCode.md)
 * [Unit Test Listing](ScatterFitChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)

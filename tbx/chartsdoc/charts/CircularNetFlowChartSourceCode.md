@@ -8,7 +8,6 @@ classdef CircularNetFlowChart < ...
     %CIRCULARNETFLOWCHART Illustrates the directed to/from relationships
     %between pairs of categories.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart data table.
@@ -19,7 +18,7 @@ classdef CircularNetFlowChart < ...
 
     properties
         % Transparency of the link patches.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )} = 0.5
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )} = 0.5
         % Visibility of the text labels.
         ShowLabels(1, 1) matlab.lang.OnOffSwitchState = "on"
     end % properties
@@ -41,9 +40,9 @@ classdef CircularNetFlowChart < ...
         % Row/column indices and values of the positive net flow.
         PositiveNetFlow(:, 3) double {mustBePositive, mustBeFinite}
         % List of colors used for the various graphics objects.
-        Colors(:, 3) double {mustBeInRange( Colors, 0, 1 )}
+        Colors(:, 3) double {mustBeBetween( Colors, 0, 1 )}
         % Colormap used for the patch objects.
-        PatchColormap(:, 3) double {mustBeInRange( PatchColormap, 0, 1 )}
+        PatchColormap(:, 3) double {mustBeBetween( PatchColormap, 0, 1 )}
         % Angular positions of the arc endpoints, measured in radians
         % anticlockwise from the easterly direction.
         AngularPositions(:, 1) double {mustBeReal, mustBeFinite}
@@ -96,10 +95,10 @@ classdef CircularNetFlowChart < ...
         PatchLabelOffset(1, 1) double {mustBePositive, mustBeFinite} = 10
         % Patch label font size.
         PatchLabelFontSize(1, 1) double ...
-            {mustBeInRange( PatchLabelFontSize, 0, 1 )} = 0.03
+            {mustBeBetween( PatchLabelFontSize, 0, 1 )} = 0.03
         % Outer label font size.
         OuterLabelFontSize(1, 1) double ...
-            {mustBeInRange( OuterLabelFontSize, 0, 1 )} = 0.04
+            {mustBeBetween( OuterLabelFontSize, 0, 1 )} = 0.04
     end % properties ( Constant, GetAccess = private )
 
     properties ( Constant, Hidden )
@@ -119,13 +118,13 @@ classdef CircularNetFlowChart < ...
             arguments ( Input )
                 namedArgs.?CircularNetFlowChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -561,10 +560,11 @@ X = 0;
 t = table( X );
 
 end % defaultLinkData
+
 ````
 
 ## See Also
 
-* [`CircularNetFlowChart`](CircularNetFlowChart.md)
+* [Circular Net Flow Chart](CircularNetFlowChart.md)
 * [Chart Reference](ChartsIndex.md)
 

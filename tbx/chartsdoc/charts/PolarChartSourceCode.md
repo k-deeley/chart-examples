@@ -8,7 +8,6 @@ classdef PolarChart < ...
     %POLARCHART Chart displaying a line graph of dependent numeric
     %variables plotted against independent circular data.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart angular data.
@@ -112,13 +111,13 @@ classdef PolarChart < ...
             arguments ( Input )
                 namedArgs.?PolarChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -263,10 +262,11 @@ function mustBeNonDecreasing( v )
 validateattributes( v, "double", "nondecreasing" )
 
 end % mustBeNonDecreasing
+
 ````
 
 ## See Also
 
-* [`PolarChart`](PolarChart.md)
+* [Polar Chart](PolarChart.md)
 * [Chart Reference](ChartsIndex.md)
 

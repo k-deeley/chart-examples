@@ -3,7 +3,7 @@ classdef ScatterDensityChart < ...
     %SCATTERDENSITYCHART Bivariate scatter plot using color to indicate
     %relative density of the data points.
 
-    % Copyright 2019-2025 The MathWorks, Inc.
+    % Copyright 2019-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart x-data.
@@ -192,13 +192,13 @@ classdef ScatterDensityChart < ...
             arguments ( Input )
                 namedArgs.?ScatterDensityChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

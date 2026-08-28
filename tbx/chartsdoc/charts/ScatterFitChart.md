@@ -1,4 +1,4 @@
-# `ScatterFitChart`
+# Scatter Fit Chart
 
 Manage scattered data with a best-fit line.
 

@@ -1,4 +1,4 @@
-# `EdgeworthBowleyChart`
+# Edgeworth Bowley Chart
 
 Plot utility curves and a Pareto-efficient contract curve.
 
@@ -6,5 +6,4 @@ Plot utility curves and a Pareto-efficient contract curve.
 
 * [Class Documentation and Examples](EdgeworthBowleyChartClassReference.md)
 * [Source Code Listing](EdgeworthBowleyChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](EdgeworthBowleyChartUnitTest.md)

@@ -3,7 +3,7 @@ classdef TernaryChart < ...
     %TERNARYCHART Chart managing a barycentric plot of three variables
     %which sum to a constant.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Table of data: columns 1-3 are inputs and column 4 is the output.
@@ -31,9 +31,9 @@ classdef TernaryChart < ...
         % Surface edge color.
         EdgeColor = [0, 0, 0]
         % Surface face alpha.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )} = 1
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )} = 1
         % Surface edge alpha.
-        EdgeAlpha(1, 1) double {mustBeInRange( EdgeAlpha, 0, 1 )} = 1
+        EdgeAlpha(1, 1) double {mustBeBetween( EdgeAlpha, 0, 1 )} = 1
         % Surface line style.
         LineStyle(1, 1) string {mustBeLineStyle} = "-"
         % Surface line width.
@@ -585,12 +585,12 @@ classdef TernaryChart < ...
             arguments ( Input )
                 namedArgs.?TernaryChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer( ...
                 "Parent", [], ...
                 "Units", "normalized", ...
                 "Position", [0, 0, 1, 1] )
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

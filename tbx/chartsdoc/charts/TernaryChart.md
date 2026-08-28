@@ -1,4 +1,4 @@
-# `TernaryChart`
+# Ternary Chart
 
 Plot three variables that sum to a constant.
 
@@ -6,5 +6,4 @@ Plot three variables that sum to a constant.
 
 * [Class Documentation and Examples](TernaryChartClassReference.md)
 * [Source Code Listing](TernaryChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](TernaryChartUnitTest.md)

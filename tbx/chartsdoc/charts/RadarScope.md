@@ -1,4 +1,4 @@
-# `RadarScope`
+# Radar Scope
 
 Plot radar blips and issue proximity alerts.
 
@@ -6,5 +6,4 @@ Plot radar blips and issue proximity alerts.
 
 * [Class Documentation and Examples](RadarScopeClassReference.md)
 * [Source Code Listing](RadarScopeSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](RadarScopeUnitTest.md)

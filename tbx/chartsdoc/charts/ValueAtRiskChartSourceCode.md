@@ -8,7 +8,6 @@ classdef ValueAtRiskChart < ...
     %VALUEATRISKCHART Chart displaying the distribution of a return series
     %together with value at risk metrics and a distribution fit.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
 
    properties ( Dependent )
         % Underlying data for the chart, typically a series of returns.
@@ -18,7 +17,7 @@ classdef ValueAtRiskChart < ...
     properties ( Dependent, AbortSet )
         % Value at risk level, used for both the VaR and CVaR metrics.
         VaRLevel(1, 1) double {mustBeReal, ...
-            mustBeInRange( VaRLevel, 0.90, 1.00, "exclude-upper" )}
+            mustBeBetween( VaRLevel, 0.90, 1.00, "closedleft" )}
         % Probability distribution name.
         DistributionName(1, 1) string ...
             {mustBeMember( DistributionName, ["Kernel", "Normal", ...
@@ -46,11 +45,11 @@ classdef ValueAtRiskChart < ...
         % Width of distribution fit curve and risk lines.
         LineWidth(1, 1) double {mustBePositive, mustBeFinite} = 2
         % Histogram edge transparency.
-        EdgeAlpha(1, 1) double {mustBeInRange( EdgeAlpha, 0, 1 )}
+        EdgeAlpha(1, 1) double {mustBeBetween( EdgeAlpha, 0, 1 )}
         % Histogram edge color.
         EdgeColor
         % Histogram bar face transparency.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )}
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )}
         % Histogram bar face color.
         FaceColor
         % Visibility of the chart controls.
@@ -67,7 +66,7 @@ classdef ValueAtRiskChart < ...
         Data_(:, 1) double {mustBeReal, mustBeNonempty, mustBeFinite} = 0
         % Internal storage for the VaR level.
         VaRLevel_(1, 1) double {mustBeReal, ...
-            mustBeInRange( VaRLevel_, 0.90, 1.00, "exclude-upper" )} = 0.95
+            mustBeBetween( VaRLevel_, 0.90, 1.00, "closedleft" )} = 0.95
         % Internal storage for the distribution name.
         DistributionName_(1, 1) string ...
             {mustBeMember( DistributionName_, ["Kernel", "Normal", ...
@@ -367,12 +366,12 @@ classdef ValueAtRiskChart < ...
             arguments ( Input )
                 namedArgs.?ValueAtRiskChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer( ...
                 "Parent", [], ...
                 "Units", "normalized", ...
                 "Position", [0, 0, 1, 1] )
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -775,10 +774,11 @@ classdef ValueAtRiskChart < ...
     end % methods ( Access = private )
 
 end % classdef
+
 ````
 
 ## See Also
 
-* [`ValueAtRiskChart`](ValueAtRiskChart.md)
+* [Value At Risk Chart](ValueAtRiskChart.md)
 * [Chart Reference](ChartsIndex.md)
 

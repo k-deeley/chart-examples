@@ -1,4 +1,4 @@
-# `LineGradientChart`
+# Line Gradient Chart
 
 Plot a variable-color curve.
 
@@ -6,5 +6,4 @@ Plot a variable-color curve.
 
 * [Class Documentation and Examples](LineGradientChartClassReference.md)
 * [Source Code Listing](LineGradientChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](LineGradientChartUnitTest.md)

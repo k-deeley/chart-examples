@@ -6,7 +6,7 @@ classdef InductionMotorChart < ...
     %
     % See also InductionMotorParameters.
 
-    % Copyright 2021-2025 The MathWorks, Inc.
+    % Copyright 2021-2026 The MathWorks, Inc.
 
     properties
         % Operating point of the motor.
@@ -16,7 +16,7 @@ classdef InductionMotorChart < ...
         % Operating point marker size.
         MarkerSize(1, 1) double {mustBePositive, mustBeFinite} = 20
         % Transparency of the patches.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )} = 0.6
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )} = 0.6
         % Visibility of the legend.
         LegendVisible(1, 1) matlab.lang.OnOffSwitchState = "on"
     end % properties
@@ -79,13 +79,13 @@ classdef InductionMotorChart < ...
             arguments ( Input )
                 namedArgs.?InductionMotorChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

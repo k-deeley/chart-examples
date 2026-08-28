@@ -9,7 +9,6 @@ classdef AircraftChart < ...
     %aircraft. The chart also provides roll, pitch and yaw methods for
     %modifying the attitude of the aircraft.
 
-    % Copyright 2024-2025 The MathWorks, Inc.
 
     properties
         % Aircraft triangulation coordinate data.
@@ -37,17 +36,16 @@ classdef AircraftChart < ...
     methods
 
         function obj = AircraftChart( namedArgs )
-
             arguments ( Input )
                 namedArgs.?AircraftChart
             end % arguments
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -227,10 +225,11 @@ opts = weboptions( "ContentReader", @stlread );
 tr = webread( url, opts );
 
 end % defaultAircraft
+
 ````
 
 ## See Also
 
-* [`AircraftChart`](AircraftChart.md)
+* [Aircraft Chart](AircraftChart.md)
 * [Chart Reference](ChartsIndex.md)
 

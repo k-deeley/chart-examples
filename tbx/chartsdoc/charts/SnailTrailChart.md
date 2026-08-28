@@ -1,4 +1,4 @@
-# `SnailTrailChart`
+# Snail Trail Chart
 
 Plot excess returns against tracking errors.
 
@@ -6,5 +6,4 @@ Plot excess returns against tracking errors.
 
 * [Class Documentation and Examples](SnailTrailChartClassReference.md)
 * [Source Code Listing](SnailTrailChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](SnailTrailChartUnitTest.md)

@@ -8,11 +8,10 @@ classdef GraphicsHierarchyChart < ...
     %GRAPHICSHIERARCHYCHART Visualize the graphics hierarchy descending
     %from a given graphics object.
 
-    % Copyright 2024-2025 The MathWorks, Inc.
 
     properties
         % Edge transparency.
-        EdgeAlpha(1, 1) double {mustBeInRange( EdgeAlpha, 0, 1 )} = 0.7
+        EdgeAlpha(1, 1) double {mustBeBetween( EdgeAlpha, 0, 1 )} = 0.7
         % Edge width.
         LineWidth(1, 1) double {mustBePositive, mustBeFinite} = 3
         % Node size.
@@ -64,13 +63,13 @@ classdef GraphicsHierarchyChart < ...
             arguments ( Input )
                 namedArgs.?GraphicsHierarchyChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -176,6 +175,6 @@ end % mustBeValidGraphics
 
 ## See Also
 
-* [`GraphicsHierarchyChart`](GraphicsHierarchyChart.md)
+* [Graphics Hierarchy Chart](GraphicsHierarchyChart.md)
 * [Chart Reference](ChartsIndex.md)
 

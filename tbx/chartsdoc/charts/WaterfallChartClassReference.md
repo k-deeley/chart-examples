@@ -163,7 +163,7 @@ set( WC, "BaseLineWidth", 2, ...
 
 ## See Also
 
-* [`WaterfallChart`](WaterfallChart.md)
+* [Waterfall Chart](WaterfallChart.md)
 * [Source Code Listing](WaterfallChartSourceCode.md)
 * [Unit Test Listing](WaterfallChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)

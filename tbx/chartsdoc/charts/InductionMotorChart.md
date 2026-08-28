@@ -1,4 +1,4 @@
-# `InductionMotorChart`
+# Induction Motor Chart
 
 Visualize induction motor characteristics.
 
@@ -6,5 +6,4 @@ Visualize induction motor characteristics.
 
 * [Class Documentation and Examples](InductionMotorChartClassReference.md)
 * [Source Code Listing](InductionMotorChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](InductionMotorChartUnitTest.md)

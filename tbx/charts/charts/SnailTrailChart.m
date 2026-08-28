@@ -4,7 +4,7 @@ classdef SnailTrailChart < ...
     %error for a given asset return series relative to a given benchmark
     %return series.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties
         % Marker size.
@@ -333,12 +333,12 @@ classdef SnailTrailChart < ...
             arguments ( Input )
                 namedArgs.?SnailTrailChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer( ...
                 "Parent", [], ...
                 "Units", "normalized", ...
                 "Position", [0, 0, 1, 1] )
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

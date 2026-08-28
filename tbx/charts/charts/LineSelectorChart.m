@@ -3,7 +3,7 @@ classdef LineSelectorChart < ...
     %LINESELECTORCHART Chart displaying a collection of line plots,
     %possibly on different scales.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart x-data.
@@ -40,7 +40,7 @@ classdef LineSelectorChart < ...
             {mustBeNonnegative, mustBeInteger} = 0
         % Internal storage for the TraceColor property.
         TraceColor_(1, 3) double ...
-            {mustBeInRange( TraceColor_, 0, 1 )} = [0.5, 0.5, 0.5]
+            {mustBeBetween( TraceColor_, 0, 1 )} = [0.5, 0.5, 0.5]
         % Logical scalar specifying whether a computation is required.
         ComputationRequired(1, 1) logical = false
     end % properties ( Access = private )
@@ -181,13 +181,13 @@ classdef LineSelectorChart < ...
             arguments ( Input )
                 namedArgs.?LineSelectorChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

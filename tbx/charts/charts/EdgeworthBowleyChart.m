@@ -4,7 +4,7 @@ classdef EdgeworthBowleyChart < ...
     %utility curves of two individuals and the Pareto-efficient contract
     %curve.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties
         % Contract line width.
@@ -188,13 +188,13 @@ classdef EdgeworthBowleyChart < ...
             arguments ( Input )
                 namedArgs.?EdgeworthBowleyChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

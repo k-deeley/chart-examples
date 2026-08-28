@@ -97,7 +97,8 @@ set( VRC, "Data", newData, "VaRLevel", 0.95 )
 
 ## See Also
 
-* [`ValueAtRiskChart`](ValueAtRiskChart.md)
+* [Value At Risk Chart](ValueAtRiskChart.md)
 * [Source Code Listing](ValueAtRiskChartSourceCode.md)
+* [Unit Test Listing](ValueAtRiskChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

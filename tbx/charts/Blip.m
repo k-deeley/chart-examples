@@ -2,7 +2,7 @@ classdef Blip < matlab.mixin.SetGetExactNames
     %BLIP Class managing a radar blip. Radar blips are intended for use
     %with a polar axes, or the RadarScope chart.
 
-    % Copyright 2021-2025 The MathWorks, Inc.
+    % Copyright 2021-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Blip parent.
@@ -20,7 +20,7 @@ classdef Blip < matlab.mixin.SetGetExactNames
     properties ( Dependent, SetObservable )
         % Position of the blip's point in (theta, rho) polar coordinates.
         Position(1, 2) {mustBeReal, mustBeFinite}
-    end % properties ( Dependent, SetObservable )    
+    end % properties ( Dependent, SetObservable )
 
     properties ( Access = private )
         % Line object for the point.
@@ -146,7 +146,7 @@ classdef Blip < matlab.mixin.SetGetExactNames
         function value = get.MarkerSize( obj )
 
             value = obj.Point.MarkerSize;
-            
+
         end % get.MarkerSize
 
         function set.MarkerSize( obj, value )

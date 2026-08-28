@@ -117,7 +117,8 @@ RFC.CData = [1, 0.2, 0];
 
 ## See Also
 
-* [`RangefinderChart`](RangefinderChart.md)
+* [Rangefinder Chart](RangefinderChart.md)
 * [Source Code Listing](RangefinderChartSourceCode.md)
+* [Unit Test Listing](RangefinderChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

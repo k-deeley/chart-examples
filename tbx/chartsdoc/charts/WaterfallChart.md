@@ -1,4 +1,4 @@
-# `WaterfallChart`
+# Waterfall Chart
 
 Show the cumulative evolution of an initial value.
 

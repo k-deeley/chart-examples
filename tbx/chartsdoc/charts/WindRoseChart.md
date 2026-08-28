@@ -1,4 +1,4 @@
-# `WindRoseChart`
+# Wind Rose Chart
 
 Display wind speed and direction on a polar histogram.
 
@@ -6,5 +6,4 @@ Display wind speed and direction on a polar histogram.
 
 * [Class Documentation and Examples](WindRoseChartClassReference.md)
 * [Source Code Listing](WindRoseChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](WindRoseChartUnitTest.md)

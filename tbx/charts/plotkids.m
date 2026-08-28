@@ -3,6 +3,8 @@ function varargout = plotkids( graphicsObject, namedArgs )
 %graphics object. If "ShowHiddenHandles" is true, then the hierarchy also
 %includes children with their HandleVisibility set to "off".
 
+% Copyright 2026 The MathWorks, Inc.
+
 arguments ( Input )
     graphicsObject(1, 1) {mustBeValidGraphics}
     namedArgs.?GraphicsHierarchyChart

@@ -5,7 +5,7 @@ classdef RangefinderChart < ...
     %marker at the crossover point of the marginal medians and lines
     %indicating the marginal adjacent values.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart x-data.
@@ -20,7 +20,7 @@ classdef RangefinderChart < ...
         % Size data for the discrete plot.
         SizeData(:, 1) double {mustBePositive, mustBeFinite} = 36
         % Color of the discrete plot.
-        CData(:, 3) double {mustBeInRange( CData, 0, 1 )} = ...
+        CData(:, 3) double {mustBeBetween( CData, 0, 1 )} = ...
             [0, 0.4470, 0.7410]
         % Axes x-grid.
         XGrid(1, 1) matlab.lang.OnOffSwitchState = "on"
@@ -150,13 +150,13 @@ classdef RangefinderChart < ...
             arguments ( Input )
                 namedArgs.?RangefinderChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

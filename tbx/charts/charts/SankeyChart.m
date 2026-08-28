@@ -2,7 +2,7 @@ classdef SankeyChart < ...
         matlab.graphics.chartcontainer.ChartContainer
     %SANKEYCHART Illustrate the flow between different states.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Directed graph representing the Sankey diagram.
@@ -31,7 +31,7 @@ classdef SankeyChart < ...
 
     properties
         % Link transparency.
-        LinkAlpha(1, 1) double {mustBeInRange( LinkAlpha, 0, 1 )} = 0.5
+        LinkAlpha(1, 1) double {mustBeBetween( LinkAlpha, 0, 1 )} = 0.5
         % Link edge color.
         LinkEdgeColor {validatecolor} = "black"
         % Link edge style.
@@ -41,7 +41,7 @@ classdef SankeyChart < ...
         % Font size for link annotations.
         LinkFontSize(1, 1) double {mustBePositive, mustBeFinite} = 10
         % Node transparency.
-        NodeAlpha(1, 1) double {mustBeInRange( NodeAlpha, 0, 1 )} = 1
+        NodeAlpha(1, 1) double {mustBeBetween( NodeAlpha, 0, 1 )} = 1
         % Node edge color.
         NodeEdgeColor {validatecolor} = "black"
         % Node edge line style.
@@ -128,13 +128,13 @@ classdef SankeyChart < ...
             arguments ( Input )
                 namedArgs.?SankeyChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

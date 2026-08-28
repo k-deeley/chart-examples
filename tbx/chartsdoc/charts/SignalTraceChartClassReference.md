@@ -102,7 +102,8 @@ STC.SignalData = [y1, y3];
 
 ## See Also
 
-* [`SignalTraceChart`](SignalTraceChart.md)
+* [Signal Trace Chart](SignalTraceChart.md)
 * [Source Code Listing](SignalTraceChartSourceCode.md)
+* [Unit Test Listing](SignalTraceChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

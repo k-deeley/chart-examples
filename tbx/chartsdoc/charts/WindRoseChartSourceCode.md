@@ -8,7 +8,6 @@ classdef WindRoseChart < ...
     %WINDROSECHART Chart for displaying speed and direction data on an
     %angular (polar) histogram.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
 
     properties ( Dependent )
         % Wind data table, containing direction and speed values.
@@ -22,7 +21,7 @@ classdef WindRoseChart < ...
         ObservationCounts(:, :) double {mustBeInteger, mustBeNonnegative}
         % Percentage observation counts in each bin.
         PercentageObservationCounts(:, :) double ...
-            {mustBeInRange( PercentageObservationCounts, 0, 100 )}
+            {mustBeBetween( PercentageObservationCounts, 0, 100 )}
         % Cumulative percentages in each bin (by wind direction).
         CumulativePercentageObservationCounts(:, :) double ...
             {mustBeNonnegative, mustBeFinite}
@@ -41,7 +40,7 @@ classdef WindRoseChart < ...
         % Direction label visibility.
         DirectionLabelVisible(1, 1) matlab.lang.OnOffSwitchState = "on"
         % Patch face transparency.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )} = 1
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )} = 1
         % Patch line width.
         LineWidth(1, 1) double {mustBePositive, mustBeFinite} = 0.5
         % Patch line style.
@@ -50,7 +49,7 @@ classdef WindRoseChart < ...
         EdgeColor {mustBeColor( EdgeColor, ...
             ["flat", "none", "interp"] )} = [0.5, 0.5, 0.5]
         % Patch edge alpha.
-        EdgeAlpha(1, 1) double {mustBeInRange( EdgeAlpha, 0, 1 )} = 1
+        EdgeAlpha(1, 1) double {mustBeBetween( EdgeAlpha, 0, 1 )} = 1
         % Backdrop color.
         BackdropColor {validatecolor} = [0.85, 0.85, 0.85]
         % Backdrop line width.
@@ -98,7 +97,7 @@ classdef WindRoseChart < ...
         % Angular direction in which to display the radial labels.
         RadialLabelDirection(1, 1) string {mustBeDirection}
         % Patch face colors.
-        FaceColors(:, 3) double {mustBeInRange( FaceColors, 0, 1 )}
+        FaceColors(:, 3) double {mustBeBetween( FaceColors, 0, 1 )}
     end % properties ( Dependent )
 
     properties ( Access = private )
@@ -108,7 +107,7 @@ classdef WindRoseChart < ...
         SpeedBinEdges_(1, :) double {mustBeNonnegative} = [0:5:30, Inf]
         % Internal angle for the radial text labels (clockwise from North).
         RadialLabelAngle(1, 1) double ...
-            {mustBeInRange( RadialLabelAngle, 0, 360 )} = 135
+            {mustBeBetween( RadialLabelAngle, 0, 360 )} = 135
         % Minimum backdrop circle radius.
         MinRadius(1, 1) double {mustBePositive, mustBeFinite} = 1
         % Maximum backdrop circle radius.
@@ -280,13 +279,13 @@ classdef WindRoseChart < ...
             arguments ( Input )
                 namedArgs.?WindRoseChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -790,6 +789,6 @@ end % mustBeFontWeight
 
 ## See Also
 
-* [`WindRoseChart`](WindRoseChart.md)
+* [Wind Rose Chart](WindRoseChart.md)
 * [Chart Reference](ChartsIndex.md)
 

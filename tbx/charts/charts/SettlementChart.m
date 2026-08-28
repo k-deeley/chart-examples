@@ -8,7 +8,7 @@ classdef SettlementChart < ...
     %
     % See also BLSPRICE.
 
-    % Copyright 2019-2025 The MathWorks, Inc.
+    % Copyright 2019-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % The strike (i.e., exercise) price of the option.
@@ -17,14 +17,14 @@ classdef SettlementChart < ...
         Price(1, 1) double {mustBeNonnegative, mustBeFinite}
         % Annualized continuously compounded risk-free rate of return
         % over the life of the option.
-        Rate(1, 1) double {mustBeInRange( Rate, 0, 1 )}
+        Rate(1, 1) double {mustBeBetween( Rate, 0, 1 )}
         % The time to expiray of the option, expressed in years.
         Time(1, 1) double {mustBeNonnegative, mustBeFinite}
         % Annualized asset price volatility.
-        Volatility(1, 1) double {mustBeInRange( Volatility, 0, 1 )}
+        Volatility(1, 1) double {mustBeBetween( Volatility, 0, 1 )}
         % Annualized continuously compounded yield of the underlying asset
         % over the life of the option.
-        Yield(1, 1) double {mustBeInRange( Yield, 0, 1 )}
+        Yield(1, 1) double {mustBeBetween( Yield, 0, 1 )}
     end % properties
 
     properties ( Dependent, SetAccess = private )
@@ -74,13 +74,13 @@ classdef SettlementChart < ...
         % Internal storage for the Price property.
         Price_(1, 1) double {mustBeNonnegative, mustBeFinite} = 100
         % Internal storage for the Rate property.
-        Rate_(1, 1) double {mustBeInRange( Rate_, 0, 1 )} = 0.1
+        Rate_(1, 1) double {mustBeBetween( Rate_, 0, 1 )} = 0.1
         % Internal storage for the Time property.
         Time_(1, 1) double {mustBeNonnegative, mustBeFinite} = 0.1
         % Internal storage for the Volatility property.
-        Volatility_(1, 1) double {mustBeInRange( Volatility_, 0, 1 )} = 0.1
+        Volatility_(1, 1) double {mustBeBetween( Volatility_, 0, 1 )} = 0.1
         % Internal storage for the Yield property.
-        Yield_(1, 1) double {mustBeInRange( Yield_, 0, 1 )} = 0.1
+        Yield_(1, 1) double {mustBeBetween( Yield_, 0, 1 )} = 0.1
         % Internal storage for the Strike property.
         Strike_(:, 1) double {mustBeNonnegative, mustBeFinite} = (85:115).'
         % Logical scalar specifying whether a computation is required.
@@ -303,12 +303,12 @@ classdef SettlementChart < ...
             arguments ( Input )
                 namedArgs.?SettlementChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer( ...
                 "Parent", [], ...
                 "Units", "normalized", ...
                 "Position", [0, 0, 1, 1] )
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

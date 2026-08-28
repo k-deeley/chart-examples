@@ -8,15 +8,14 @@ classdef WaterfallChart < ...
     %WATERFALLCHART Cumulative bar chart visualizing the evolution of an
     %initial value.
 
-    % Copyright 2025 The MathWorks, Inc.
 
     properties
         % Bar edge alpha.
-        BarEdgeAlpha(1, 1) double {mustBeInRange( BarEdgeAlpha, 0, 1 )} = 1
+        BarEdgeAlpha(1, 1) double {mustBeBetween( BarEdgeAlpha, 0, 1 )} = 1
         % Bar edge color.
         BarEdgeColor {validatecolor} = [0.5, 0.5, 0.5]
         % Bar face alpha.
-        BarFaceAlpha(1, 1) double {mustBeInRange( BarFaceAlpha, 0, 1 )} = 1
+        BarFaceAlpha(1, 1) double {mustBeBetween( BarFaceAlpha, 0, 1 )} = 1
         % Bar line width.
         BarLineWidth(1, 1) double {mustBePositive, mustBeFinite} = 1
         % Bar line style.
@@ -71,12 +70,12 @@ classdef WaterfallChart < ...
         TargetLineLabel(1, 1) string = ""
         % Total bar edge alpha.
         TotalBarEdgeAlpha(1, 1) double ...
-            {mustBeInRange( TotalBarEdgeAlpha, 0, 1 )} = 1
+            {mustBeBetween( TotalBarEdgeAlpha, 0, 1 )} = 1
         % Total bar edge color.
         TotalBarEdgeColor {validatecolor} = [0.5, 0.5, 0.5]
         % Total bar face alpha.
         TotalBarFaceAlpha(1, 1) double ...
-            {mustBeInRange( TotalBarFaceAlpha, 0, 1 )} = 1
+            {mustBeBetween( TotalBarFaceAlpha, 0, 1 )} = 1
         % Total bar face color.
         TotalBarFaceColor = [0, 0.4470, 0.7410]
         % Total bar line width.
@@ -97,7 +96,7 @@ classdef WaterfallChart < ...
         % Global line width.
         LineWidth(1, 1) double {mustBePositive, mustBeFinite}
         % Bar width.
-        BarWidth(1, 1) double {mustBeInRange( BarWidth, 0, 1 )}
+        BarWidth(1, 1) double {mustBeBetween( BarWidth, 0, 1 )}
     end % properties ( Dependent )
 
     properties ( GetAccess = ?Testable, SetAccess = private )
@@ -129,7 +128,7 @@ classdef WaterfallChart < ...
         ColorData_(:, 1) double {mustBePositive, mustBeInteger} = ...
             double.empty( 0, 1 )
         % Internal storage for BarWidth.
-        BarWidth_(1, 1) double {mustBeInRange( BarWidth_, 0, 1 )} = 0.5
+        BarWidth_(1, 1) double {mustBeBetween( BarWidth_, 0, 1 )} = 0.5
         % Logical flag specifying whether a full update is needed.
         ComputationRequired(1, 1) logical = false
     end % properties ( Access = private )
@@ -151,13 +150,13 @@ classdef WaterfallChart < ...
             arguments ( Input )
                 namedArgs.?WaterfallChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -637,6 +636,6 @@ end % mustBeFontWeight
 
 ## See Also
 
-* [`WaterfallChart`](WaterfallChart.md)
+* [Waterfall Chart](WaterfallChart.md)
 * [Chart Reference](ChartsIndex.md)
 

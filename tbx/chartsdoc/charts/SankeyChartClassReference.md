@@ -197,7 +197,8 @@ title( SC, "Diesel Engine Energy Flow" )
 
 ## See Also
 
-* [`SankeyChart`](SankeyChart.md)
+* [Sankey Chart](SankeyChart.md)
 * [Source Code Listing](SankeyChartSourceCode.md)
+* [Unit Test Listing](SankeyChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

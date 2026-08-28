@@ -3,7 +3,7 @@ classdef tWaterfallChart < tChart
     %
     % See also WaterfallChart, tChart
 
-    % Copyright 2025 The MathWorks, Inc.
+    % Copyright 2025-2026 The MathWorks, Inc.
 
     properties ( TestParameter )
         % Tick/tick label methods.
@@ -51,7 +51,7 @@ classdef tWaterfallChart < tChart
             % Set a nonempty vector.
             initialVector = -5:5;
             testCase.Chart.Data = initialVector;
-            drawnow
+            drawnow()
 
             % Set a shorter vector.
             idx = 1:6;
@@ -457,7 +457,7 @@ classdef tWaterfallChart < tChart
                 "correctly after setting the 'ColorData' property." )
 
         end % tSettingColorDataUpdatesFaceColor
-        
+
         function tGlobalLineWidthRelatesToIndividualLineWidths( testCase )
 
             % Verify the initial state is correct.
@@ -526,6 +526,16 @@ classdef tWaterfallChart < tChart
                 "set the 'Labels' property of the total bar to """"." )
 
         end % tSwitchingOffBarLabelVisibleUsesEmptyString
+
+        function tTurningOffInteractionsDisablesToolbar( testCase )
+
+            testCase.Chart.Interactions = "off";
+            drawnow()
+            testCase.verifyEmpty( testCase.Chart.Axes.Toolbar, ...
+                "Setting 'Interactions' to 'off' did not remove " + ...
+                "the axes toolbar." )
+
+        end % tTurningOffInteractionsDisablesToolbar
 
     end % methods ( Test )
 

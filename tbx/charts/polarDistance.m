@@ -3,6 +3,8 @@ function d = polarDistance( point, pointArray )
 %polar coordinates (theta, rho), where the angular coordinate theta is
 %measured in radians.
 
+% Copyright 2026 The MathWorks, Inc.
+
 % Extract the (theta, rho) coordinates.
 theta1 = point(1);
 theta2 = pointArray(:, 1);

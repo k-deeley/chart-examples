@@ -1,4 +1,4 @@
-# `LineSelectorChart`
+# Line Selector Chart
 
 Select and highlight one line from a collection.
 
@@ -6,5 +6,4 @@ Select and highlight one line from a collection.
 
 * [Class Documentation and Examples](LineSelectorChartClassReference.md)
 * [Source Code Listing](LineSelectorChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](LineSelectorChartUnitTest.md)

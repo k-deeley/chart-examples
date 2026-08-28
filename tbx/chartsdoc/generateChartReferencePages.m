@@ -95,7 +95,8 @@ lines = [
 
 for chartName = chartNames.'
     description = lookupDescription( descriptions, chartName );
-    lines(end + 1, 1) = "* [`" + chartName + "`](" + ...
+    displayName = chartDisplayName( chartName );
+    lines(end + 1, 1) = "* [" + displayName + "](" + ...
         chartName + ".md) - " + description; %#ok<AGROW>
 end % for
 
@@ -142,7 +143,8 @@ lines = [
 
 for chartName = chartNames.'
     testFile = findTestFile( testFolder, chartName );
-    lines(end + 1, 1) = "    * [" + chartName + "](charts/" + ...
+    displayName = chartDisplayName( chartName );
+    lines(end + 1, 1) = "    * [" + displayName + "](charts/" + ...
         chartName + ".md)"; %#ok<AGROW>
     lines(end + 1, 1) = "      * [Class Documentation and " + ...
         "Examples](charts/" + chartName + ...
@@ -213,7 +215,7 @@ arguments ( Output )
 end % arguments ( Output )
 
 lines = [
-    "# `" + chartName + "`"
+    "# " + chartDisplayName( chartName )
     ""
     capitalizeFirstLetter( description )
     ""];
@@ -306,7 +308,7 @@ lines = [
     ""
     "## See Also"
     ""
-    "* [`" + chartName + "`](" + chartName + ".md)"
+    "* [" + chartDisplayName( chartName ) + "](" + chartName + ".md)"
     "* [Source Code Listing](" + chartName + "SourceCode.md)"];
 
 if strlength( testFile ) > 0
@@ -349,7 +351,7 @@ lines = [
     ""
     "## See Also"
     ""
-    "* [`" + chartName + "`](" + chartName + ".md)"
+    "* [" + chartDisplayName( chartName ) + "](" + chartName + ".md)"
     "* [Chart Reference](ChartsIndex.md)"
     ""];
 
@@ -383,7 +385,7 @@ lines = [
     ""
     "## See Also"
     ""
-    "* [`" + chartName + "`](" + chartName + ".md)"
+    "* [" + chartDisplayName( chartName ) + "](" + chartName + ".md)"
     "* [Chart Reference](ChartsIndex.md)"
     ""];
 
@@ -436,6 +438,22 @@ characters = char( chartName );
 initials = string( characters(isstrprop( characters, "upper" )) );
 
 end % chartInitials
+
+function displayName = chartDisplayName( chartName )
+%CHARTDISPLAYNAME Convert a chart class name to a display name.
+
+arguments ( Input )
+    chartName(1, 1) string
+end % arguments ( Input )
+
+arguments ( Output )
+    displayName(1, 1) string
+end % arguments ( Output )
+
+words = regexp( chartName, "[A-Z][a-z0-9]*", "match" );
+displayName = strjoin( string( words ), " " );
+
+end % chartDisplayName
 
 function description = lookupDescription( descriptions, chartName )
 %LOOKUPDESCRIPTION Return the chart description.
@@ -870,6 +888,9 @@ end % arguments ( Output )
 
 if isfile( file )
     content = readlines( file );
+    copyrightLine = contains( content, "Copyright" ) & ...
+        contains( content, "The MathWorks, Inc." );
+    content(copyrightLine) = [];
 else
     content = "Missing file: " + file;
 end % if
@@ -896,20 +917,6 @@ end % arguments ( Output )
 testFile = "";
 candidate = fullfile( testFolder, "t" + chartName + ".m" );
 if isfile( candidate )
-    testFile = candidate;
-    return
-end % if
-
-switch chartName
-    case "ScatterFitChart"
-        candidate = fullfile( testFolder, "tScatterFit.m" );
-    case "WaterfallChart"
-        candidate = fullfile( testFolder, "tWaterfallChart.m" );
-    otherwise
-        candidate = "";
-end % switch
-
-if strlength( candidate ) > 0 && isfile( candidate )
     testFile = candidate;
 end % if
 

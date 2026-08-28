@@ -1,6 +1,8 @@
 classdef NodeEventData < event.EventData
     %NODEEVENTDATA Data for a node label clicked event.
 
+    % Copyright 2026 The MathWorks, Inc.
+
     properties ( SetAccess = immutable )
         % Node ID.
         NodeID

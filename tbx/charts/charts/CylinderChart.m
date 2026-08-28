@@ -2,7 +2,7 @@ classdef CylinderChart < ...
         matlab.graphics.chartcontainer.ChartContainer
     %CYLINDERCHART Chart representing a stacked cylinder graph.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart data.
@@ -31,7 +31,7 @@ classdef CylinderChart < ...
         Data_(:, :) double {mustBeNonnegative, mustBeFinite} = ...
             double.empty( 0, 0 )
         % Internal storage for the FaceColors property.
-        FaceColors_(:, 3) double {mustBeInRange( FaceColors_, 0, 1 )} = ...
+        FaceColors_(:, 3) double {mustBeBetween( FaceColors_, 0, 1 )} = ...
             cool()
         % Logical scalar specifying whether a computation is required.
         ComputationRequired(1, 1) logical = false
@@ -118,13 +118,13 @@ classdef CylinderChart < ...
             arguments ( Input )
                 namedArgs.?CylinderChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
             figureCleanup = onCleanup( @() delete( f ) );
             obj@matlab.graphics.chartcontainer.ChartContainer( ...
                 "Parent", f )
             obj.Parent = [];
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

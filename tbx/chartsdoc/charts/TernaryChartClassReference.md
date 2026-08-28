@@ -170,7 +170,8 @@ colorbar( TC, "off" )
 
 ## See Also
 
-* [`TernaryChart`](TernaryChart.md)
+* [Ternary Chart](TernaryChart.md)
 * [Source Code Listing](TernaryChartSourceCode.md)
+* [Unit Test Listing](TernaryChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

@@ -67,7 +67,8 @@ GHC = plotkids( f, "Parent", fchart );
 
 ## See Also
 
-* [`GraphicsHierarchyChart`](GraphicsHierarchyChart.md)
+* [Graphics Hierarchy Chart](GraphicsHierarchyChart.md)
 * [Source Code Listing](GraphicsHierarchyChartSourceCode.md)
+* [Unit Test Listing](GraphicsHierarchyChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

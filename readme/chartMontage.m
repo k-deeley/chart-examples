@@ -1,6 +1,8 @@
 function chartMontage()
 %CHARTMONTAGE Create chart montage for use in the README.md file.
 
+% Copyright 2026 The MathWorks, Inc.
+
 % Create a datastore for all chart images.
 chartImages = fullfile( chartsRoot(), "app", "images" );
 ds = imageDatastore( chartImages );

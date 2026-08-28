@@ -1,4 +1,4 @@
-# `GraphicsHierarchyChart`
+# Graphics Hierarchy Chart
 
 Visualize the graphics hierarchy below a graphics object.
 
@@ -6,5 +6,4 @@ Visualize the graphics hierarchy below a graphics object.
 
 * [Class Documentation and Examples](GraphicsHierarchyChartClassReference.md)
 * [Source Code Listing](GraphicsHierarchyChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](GraphicsHierarchyChartUnitTest.md)

@@ -8,7 +8,6 @@ classdef tWaterfallChart < tChart
     %
     % See also WaterfallChart, tChart
 
-    % Copyright 2025 The MathWorks, Inc.
 
     properties ( TestParameter )
         % Tick/tick label methods.
@@ -462,7 +461,7 @@ classdef tWaterfallChart < tChart
                 "correctly after setting the 'ColorData' property." )
 
         end % tSettingColorDataUpdatesFaceColor
-        
+
         function tGlobalLineWidthRelatesToIndividualLineWidths( testCase )
 
             % Verify the initial state is correct.
@@ -535,10 +534,11 @@ classdef tWaterfallChart < tChart
     end % methods ( Test )
 
 end % classdef
+
 ````
 
 ## See Also
 
-* [`WaterfallChart`](WaterfallChart.md)
+* [Waterfall Chart](WaterfallChart.md)
 * [Chart Reference](ChartsIndex.md)
 

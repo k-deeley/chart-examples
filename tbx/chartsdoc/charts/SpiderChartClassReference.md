@@ -168,7 +168,8 @@ set( SC, "LineColors", hsv( SC.NumLines ), ...
 
 ## See Also
 
-* [`SpiderChart`](SpiderChart.md)
+* [Spider Chart](SpiderChart.md)
 * [Source Code Listing](SpiderChartSourceCode.md)
+* [Unit Test Listing](SpiderChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

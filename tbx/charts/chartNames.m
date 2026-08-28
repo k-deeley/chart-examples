@@ -2,6 +2,8 @@ function [allChartNames, accessibleChartNames] = chartNames()
 %CHARTNAMES Return string arrays of (a) all chart names, and (b) all chart
 %names accessible to the end user based on their installed toolboxes.
 
+% Copyright 2026 The MathWorks, Inc.
+
 arguments ( Output )
     allChartNames(1, :) string
     accessibleChartNames(1, :) string

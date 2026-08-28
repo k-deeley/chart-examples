@@ -100,7 +100,8 @@ EBC.Quantity2 = 8;
 
 ## See Also
 
-* [`EdgeworthBowleyChart`](EdgeworthBowleyChart.md)
+* [Edgeworth Bowley Chart](EdgeworthBowleyChart.md)
 * [Source Code Listing](EdgeworthBowleyChartSourceCode.md)
+* [Unit Test Listing](EdgeworthBowleyChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

@@ -96,7 +96,8 @@ end % for
 
 ## See Also
 
-* [`RadarScope`](RadarScope.md)
+* [Radar Scope](RadarScope.md)
 * [Source Code Listing](RadarScopeSourceCode.md)
+* [Unit Test Listing](RadarScopeUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

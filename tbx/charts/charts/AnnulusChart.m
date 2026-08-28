@@ -2,7 +2,7 @@ classdef AnnulusChart < ...
         matlab.ui.componentcontainer.ComponentContainer
     %ANNULUSCHART Annulus (ring) chart, similar to a 3D pie chart.
 
-    % Copyright 2019-2025 The MathWorks, Inc.
+    % Copyright 2019-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart data, comprising a positive vector.
@@ -46,14 +46,14 @@ classdef AnnulusChart < ...
     properties ( Dependent, SetAccess = private )
         % Chart data, in percentage form.
         DataPercentages(:, 1) double {mustBeNonempty, ...
-            mustBeInRange( DataPercentages, 0, 100 )}
+            mustBeBetween( DataPercentages, 0, 100 )}
     end % properties ( Dependent, SetAccess = private )
 
     properties ( Access = private )
         % Internal storage for the Data property.
         Data_(:, 1) double {mustBeNonempty, mustBePositive} = 1
         % Internal storage for the FaceColor property.
-        FaceColor_(:, 3) double {mustBeInRange( FaceColor_, 0, 1 )} = ...
+        FaceColor_(:, 3) double {mustBeBetween( FaceColor_, 0, 1 )} = ...
             [0, 0, 0]
         % Internal storage for the Label property.
         LabelText_(:, 1) string = string.empty( 0, 1 )
@@ -460,12 +460,12 @@ classdef AnnulusChart < ...
             arguments ( Input )
                 namedArgs.?AnnulusChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer( ...
                 "Parent", [], ...
                 "Units", "normalized", ...
                 "Position", [0, 0, 1, 1] )
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

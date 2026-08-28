@@ -2,7 +2,7 @@ classdef ScatterBoxChart < ...
         matlab.ui.componentcontainer.ComponentContainer
     %SCATTERBOXCHART Bivariate scatter plot with marginal boxplots.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart x-data.
@@ -15,7 +15,7 @@ classdef ScatterBoxChart < ...
         % Size data for the scatter series.
         ScatterSizeData(:, 1) double {mustBePositive, mustBeFinite}
         % Color data for the scatter series.
-        ScatterCData(:, 3) double {mustBeInRange( ScatterCData, 0, 1 )}
+        ScatterCData(:, 3) double {mustBeBetween( ScatterCData, 0, 1 )}
         % Marker style for the scatter series.
         ScatterMarker(1, 1) string {mustBeMarker}
         % Filled marker state for the scatter series.
@@ -502,12 +502,12 @@ classdef ScatterBoxChart < ...
             arguments ( Input )
                 namedArgs.?ScatterBoxChart
             end % arguments ( Input )
+
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer( ...
                 "Parent", [], ...
                 "Units", "normalized", ...
                 "Position", [0, 0, 1, 1] )
-
 
             % Set any user-defined properties.
             set( obj, namedArgs )

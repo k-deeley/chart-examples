@@ -8,7 +8,7 @@ function folder = chartsRoot()
 % >> folder = chartsRoot()
 % folder = 'C:\MATLAB\Chart Development Toolbox\charts'
 
-% Copyright 2018-2024 The MathWorks, Inc.
+% Copyright 2018-2026 The MathWorks, Inc.
 
 folder = fileparts( mfilename( "fullpath" ) );
 

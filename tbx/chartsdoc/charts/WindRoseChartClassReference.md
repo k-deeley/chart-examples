@@ -182,7 +182,8 @@ The patches making up the polar histogram are interactive. When the user clicks 
 
 ## See Also
 
-* [`WindRoseChart`](WindRoseChart.md)
+* [Wind Rose Chart](WindRoseChart.md)
 * [Source Code Listing](WindRoseChartSourceCode.md)
+* [Unit Test Listing](WindRoseChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 

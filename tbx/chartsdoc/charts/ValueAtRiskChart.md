@@ -1,4 +1,4 @@
-# `ValueAtRiskChart`
+# Value At Risk Chart
 
 Show a return distribution and value-at-risk metrics.
 
@@ -6,5 +6,4 @@ Show a return distribution and value-at-risk metrics.
 
 * [Class Documentation and Examples](ValueAtRiskChartClassReference.md)
 * [Source Code Listing](ValueAtRiskChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](ValueAtRiskChartUnitTest.md)

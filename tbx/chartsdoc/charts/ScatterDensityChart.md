@@ -1,4 +1,4 @@
-# `ScatterDensityChart`
+# Scatter Density Chart
 
 Use color to show relative point density.
 
@@ -6,5 +6,4 @@ Use color to show relative point density.
 
 * [Class Documentation and Examples](ScatterDensityChartClassReference.md)
 * [Source Code Listing](ScatterDensityChartSourceCode.md)
-* No chart-specific test code listing exists.
-
+* [Unit Test Listing](ScatterDensityChartUnitTest.md)

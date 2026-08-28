@@ -166,7 +166,8 @@ grid( SDC, "off" )
 
 ## See Also
 
-* [`ScatterDensityChart`](ScatterDensityChart.md)
+* [Scatter Density Chart](ScatterDensityChart.md)
 * [Source Code Listing](ScatterDensityChartSourceCode.md)
+* [Unit Test Listing](ScatterDensityChartUnitTest.md)
 * [Chart Reference](ChartsIndex.md)
 
