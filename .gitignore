@@ -3,3 +3,5 @@
 *.mltbx
 *.html
 *.xml
+tbx/chartsdoc/helpsearch*
+tbx/chartsdoc/resources

@@ -6,13 +6,7 @@ path = [
     "tbx/charts",
     "tbx/charts/charts",
     "tbx/charts/tests",
-    "tbx/chartsdoc",
-    "tbx/chartsdoc/notes",
-    "tbx/chartsdoc/charts",
-    "tbx/chartsdoc/charts/landing",
-    "tbx/chartsdoc/charts/references",
-    "tbx/chartsdoc/charts/source",
-    "tbx/chartsdoc/charts/tests",
+    "tbx/chartsdoc",   
 ]
 test = [
     "tbx/charts/tests",
