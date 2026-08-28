@@ -41,5 +41,6 @@
 %   chartsRoot
 %   exampleFigure
 %   kids2graph
+%   money
 %   plotkids
 %   polarDistance

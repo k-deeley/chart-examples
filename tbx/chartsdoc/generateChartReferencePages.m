@@ -12,11 +12,10 @@ projectRoot = fullfile( docRoot, "..", ".." );
 chartFolder = fullfile( projectRoot, "tbx", "charts", "charts" );
 testFolder = fullfile( projectRoot, "tbx", "charts", "tests" );
 exampleFolder = fullfile( docRoot, "examples" );
-outputFolder = fullfile( docRoot, "charts" );
+outputRoot = fullfile( docRoot, "charts" );
+outputFolders = chartOutputFolders( outputRoot );
 
-if ~isfolder( outputFolder )
-    mkdir( outputFolder )
-end % if
+ensureOutputFolders( outputFolders )
 
 chartInfo = dir( fullfile( chartFolder, "*.m" ) );
 chartNames = sort( erase( string( {chartInfo.name} ), ".m" ) ).';
@@ -24,14 +23,14 @@ descriptions = getChartDescriptions( docRoot );
 
 generatedFiles = strings( 0, 1 );
 generatedFiles(end + 1, 1) = writeChartIndex( ...
-    outputFolder, chartNames, descriptions );
+    outputRoot, chartNames, descriptions );
 generatedFiles(end + 1, 1) = writeHelpToc( ...
     docRoot, chartNames, testFolder );
 
 for chartIdx = 1 : numel( chartNames )
     chartName = chartNames(chartIdx);
     newFiles = writeChartPages( ...
-        outputFolder, chartName, descriptions, chartFolder, ...
+        outputFolders, chartName, descriptions, chartFolder, ...
         exampleFolder, testFolder );
     generatedFiles = [generatedFiles; newFiles]; %#ok<AGROW>
 end % for
@@ -40,6 +39,50 @@ fprintf( 1, "[+] Generated %d chart reference pages.\n", ...
     numel( generatedFiles ) )
 
 end % generateChartReferencePages
+
+function outputFolders = chartOutputFolders( outputRoot )
+%CHARTOUTPUTFOLDERS Return chart documentation output folders.
+
+arguments ( Input )
+    outputRoot(1, 1) string
+end % arguments ( Input )
+
+arguments ( Output )
+    outputFolders(1, 1) struct
+end % arguments ( Output )
+
+outputFolders.Root = outputRoot;
+outputFolders.Landing = fullfile( outputRoot, "landing" );
+outputFolders.References = fullfile( outputRoot, "references" );
+outputFolders.Source = fullfile( outputRoot, "source" );
+outputFolders.Tests = fullfile( outputRoot, "tests" );
+outputFolders.Images = fullfile( outputRoot, "images" );
+
+end % chartOutputFolders
+
+function ensureOutputFolders( outputFolders )
+%ENSUREOUTPUTFOLDERS Create chart documentation output folders.
+
+arguments ( Input )
+    outputFolders(1, 1) struct
+end % arguments ( Input )
+
+folderNames = [
+    "Root"
+    "Landing"
+    "References"
+    "Source"
+    "Tests"
+    "Images"];
+
+for folderName = folderNames.'
+    folder = outputFolders.(folderName);
+    if ~isfolder( folder )
+        mkdir( folder )
+    end % if
+end % for
+
+end % ensureOutputFolders
 
 function descriptions = getChartDescriptions( docRoot )
 %GETCHARTDESCRIPTIONS Read chart descriptions from the chart index.
@@ -97,7 +140,8 @@ for chartName = chartNames.'
     description = lookupDescription( descriptions, chartName );
     displayName = chartDisplayName( chartName );
     lines(end + 1, 1) = "* [" + displayName + "](" + ...
-        chartName + ".md) - " + description; %#ok<AGROW>
+        "landing/" + chartName + ".md) - " + ...
+        description; %#ok<AGROW>
 end % for
 
 lines = [
@@ -145,15 +189,17 @@ for chartName = chartNames.'
     testFile = findTestFile( testFolder, chartName );
     displayName = chartDisplayName( chartName );
     lines(end + 1, 1) = "    * [" + displayName + "](charts/" + ...
-        chartName + ".md)"; %#ok<AGROW>
+        "landing/" + chartName + ".md)"; %#ok<AGROW>
     lines(end + 1, 1) = "      * [Class Documentation and " + ...
-        "Examples](charts/" + chartName + ...
+        "Examples](charts/references/" + chartName + ...
         "ClassReference.md)"; %#ok<AGROW>
-    lines(end + 1, 1) = "      * [Source Code Listing](charts/" + ...
-        chartName + "SourceCode.md)"; %#ok<AGROW>
+    lines(end + 1, 1) = "      * [Source Code " + ...
+        "Listing](charts/source/" + chartName + ...
+        "SourceCode.md)"; %#ok<AGROW>
     if strlength( testFile ) > 0
-        lines(end + 1, 1) = "      * [Unit Test Listing](charts/" + ...
-            chartName + "UnitTest.md)"; %#ok<AGROW>
+        lines(end + 1, 1) = "      * [Test Code " + ...
+            "Listing](charts/tests/" + chartName + ...
+            "UnitTest.md)"; %#ok<AGROW>
     end % if
 end % for
 
@@ -162,12 +208,12 @@ writeTextFile( outputFile, lines )
 
 end % writeHelpToc
 
-function outputFiles = writeChartPages( outputFolder, chartName, ...
+function outputFiles = writeChartPages( outputFolders, chartName, ...
         descriptions, chartFolder, exampleFolder, testFolder )
 %WRITECHARTPAGES Write chart reference pages.
 
 arguments ( Input )
-    outputFolder(1, 1) string
+    outputFolders(1, 1) struct
     chartName(1, 1) string
     descriptions containers.Map
     chartFolder(1, 1) string
@@ -186,24 +232,24 @@ testFile = findTestFile( testFolder, chartName );
 
 outputFiles = strings( 3, 1 );
 outputFiles(1) = writeChartPage( ...
-    outputFolder, chartName, description, exampleFile, testFile );
+    outputFolders, chartName, description, exampleFile, testFile );
 outputFiles(2) = writeClassReferencePage( ...
-    outputFolder, chartName, description, exampleFile, testFile );
+    outputFolders, chartName, description, exampleFile, testFile );
 outputFiles(3) = writeSourceCodePage( ...
-    outputFolder, chartName, sourceFile );
+    outputFolders, chartName, sourceFile );
 if strlength( testFile ) > 0
     outputFiles(end + 1, 1) = writeUnitTestPage( ...
-        outputFolder, chartName, testFile );
+        outputFolders, chartName, testFile );
 end % if
 
 end % writeChartPages
 
 function outputFile = writeChartPage( ...
-        outputFolder, chartName, description, exampleFile, testFile )
+        outputFolders, chartName, description, exampleFile, testFile )
 %WRITECHARTPAGE Write one chart reference landing page.
 
 arguments ( Input )
-    outputFolder(1, 1) string
+    outputFolders(1, 1) struct
     chartName(1, 1) string
     description(1, 1) string
     exampleFile(1, 1) string
@@ -220,7 +266,11 @@ lines = [
     capitalizeFirstLetter( description )
     ""];
 
-imageLink = extractImageLink( exampleFile );
+imageLink = extractImageLink( exampleFile, "../images" );
+if strlength( imageLink ) == 0
+    imageLink = chartImageLink( ...
+        outputFolders.Images, "../images", chartName );
+end % if
 if strlength( imageLink ) > 0
     lines = [lines; imageLink; ""];
 end % if
@@ -228,12 +278,14 @@ end % if
 lines = [
     lines
     "* [Class Documentation and Examples](" + ...
-    chartName + "ClassReference.md)"
-    "* [Source Code Listing](" + chartName + "SourceCode.md)"];
+    "../references/" + chartName + "ClassReference.md)"
+    "* [Source Code Listing](../source/" + ...
+    chartName + "SourceCode.md)"];
 if strlength( testFile ) > 0
     lines = [
         lines
-        "* [Unit Test Listing](" + chartName + "UnitTest.md)"];
+        "* [Test Code Listing](../tests/" + chartName + ...
+        "UnitTest.md)"];
 else
     lines = [
         lines
@@ -241,17 +293,17 @@ else
         ""];
 end % if
 
-outputFile = fullfile( outputFolder, chartName + ".md" );
+outputFile = fullfile( outputFolders.Landing, chartName + ".md" );
 writeTextFile( outputFile, lines )
 
 end % writeChartPage
 
-function outputFile = writeClassReferencePage( outputFolder, chartName, ...
-        description, exampleFile, testFile )
+function outputFile = writeClassReferencePage( ...
+        outputFolders, chartName, description, exampleFile, testFile )
 %WRITECLASSREFERENCEPAGE Write one chart class reference page.
 
 arguments ( Input )
-    outputFolder(1, 1) string
+    outputFolders(1, 1) struct
     chartName(1, 1) string
     description(1, 1) string
     exampleFile(1, 1) string
@@ -262,9 +314,10 @@ arguments ( Output )
     outputFile(1, 1) string
 end % arguments ( Output )
 
+outputFile = fullfile( ...
+    outputFolders.References, chartName + "ClassReference.md" );
 classInfo = meta.class.fromName( chartName );
-overview = extractOverviewSummary( exampleFile );
-exampleLines = extractExampleSection( exampleFile );
+exampleSections = extractExampleSections( exampleFile, outputFile );
 propertyRows = publicPropertyRows( classInfo, chartName );
 methodRows = publicMethodRows( classInfo, chartName );
 outputName = constructorOutputName( chartName, exampleFile );
@@ -274,16 +327,14 @@ lines = [
     ""
     capitalizeFirstLetter( description )
     ""
-    "## Description"
-    ""
-    overview
+    exampleSections.Overview
     ""
     "## Syntax"
     ""
     "```matlab"
     chartName + "()"
     chartName + "(name, value, ...)"
-    outputName + " = " + chartName + "(name, value, ...)"
+    outputName + " = " + chartName + "(name, value, ...) "
     "```"
     ""
     "## Input Arguments"
@@ -302,37 +353,39 @@ lines = [
     "| --- | --- |"
     methodRows
     ""
-    "## Examples"
+    exampleSections.Documentation
     ""
-    exampleLines
+    exampleSections.Examples
     ""
     "## See Also"
     ""
-    "* [" + chartDisplayName( chartName ) + "](" + chartName + ".md)"
-    "* [Source Code Listing](" + chartName + "SourceCode.md)"];
+    "* [" + chartDisplayName( chartName ) + "](../landing/" + ...
+    chartName + ".md)"
+    "* [Source Code Listing](../source/" + ...
+    chartName + "SourceCode.md)"];
 
 if strlength( testFile ) > 0
     lines = [
         lines
-        "* [Unit Test Listing](" + chartName + "UnitTest.md)"];
+        "* [Test Code Listing](../tests/" + chartName + ...
+        "UnitTest.md)"];
 end % if
 
 lines = [
     lines
-    "* [Chart Reference](ChartsIndex.md)"
+    "* [Chart Reference](../ChartsIndex.md)"
     ""];
 
-outputFile = fullfile( outputFolder, chartName + "ClassReference.md" );
 writeTextFile( outputFile, lines )
 
 end % writeClassReferencePage
 
-function outputFile = writeSourceCodePage( outputFolder, chartName, ...
+function outputFile = writeSourceCodePage( outputFolders, chartName, ...
         sourceFile )
 %WRITESOURCECODEPAGE Write one chart source code listing page.
 
 arguments ( Input )
-    outputFolder(1, 1) string
+    outputFolders(1, 1) struct
     chartName(1, 1) string
     sourceFile(1, 1) string
 end % arguments ( Input )
@@ -344,28 +397,29 @@ end % arguments ( Output )
 lines = [
     "# `" + chartName + "` Source Code"
     ""
-    "Source file: [`" + chartName + ".m`](../../charts/charts/" + ...
-    chartName + ".m)."
+    "Source file: `" + chartName + ".m`."
     ""
     codeListing( sourceFile )
     ""
     "## See Also"
     ""
-    "* [" + chartDisplayName( chartName ) + "](" + chartName + ".md)"
-    "* [Chart Reference](ChartsIndex.md)"
+    "* [" + chartDisplayName( chartName ) + "](../landing/" + ...
+    chartName + ".md)"
+    "* [Chart Reference](../ChartsIndex.md)"
     ""];
 
-outputFile = fullfile( outputFolder, chartName + "SourceCode.md" );
+outputFile = fullfile( ...
+    outputFolders.Source, chartName + "SourceCode.md" );
 writeTextFile( outputFile, lines )
 
 end % writeSourceCodePage
 
 function outputFile = writeUnitTestPage( ...
-        outputFolder, chartName, testFile )
+        outputFolders, chartName, testFile )
 %WRITEUNITTESTPAGE Write one chart unit test listing page.
 
 arguments ( Input )
-    outputFolder(1, 1) string
+    outputFolders(1, 1) struct
     chartName(1, 1) string
     testFile(1, 1) string
 end % arguments ( Input )
@@ -376,20 +430,20 @@ end % arguments ( Output )
 
 [~, testName, ext] = fileparts( testFile );
 lines = [
-    "# `" + chartName + "` Unit Test"
+    "# `" + chartName + "` Test Class"
     ""
-    "Test file: [`" + testName + ext + "`](../../charts/tests/" + ...
-    testName + ext + ")."
+    "Test file: `" + testName + ext + "`."
     ""
     codeListing( testFile )
     ""
     "## See Also"
     ""
-    "* [" + chartDisplayName( chartName ) + "](" + chartName + ".md)"
-    "* [Chart Reference](ChartsIndex.md)"
+    "* [" + chartDisplayName( chartName ) + "](../landing/" + ...
+    chartName + ".md)"
+    "* [Chart Reference](../ChartsIndex.md)"
     ""];
 
-outputFile = fullfile( outputFolder, chartName + "UnitTest.md" );
+outputFile = fullfile( outputFolders.Tests, chartName + "UnitTest.md" );
 writeTextFile( outputFile, lines )
 
 end % writeUnitTestPage
@@ -494,79 +548,6 @@ firstLetter = extractBefore( text, 2 );
 text = upper( firstLetter ) + extractAfter( text, 1 );
 
 end % capitalizeFirstLetter
-
-function overview = extractOverviewSummary( exampleFile )
-%EXTRACTOVERVIEWSUMMARY Extract the first overview paragraph.
-
-arguments ( Input )
-    exampleFile(1, 1) string
-end % arguments ( Input )
-
-arguments ( Output )
-    overview(:, 1) string
-end % arguments ( Output )
-
-overview = strings( 0, 1 );
-if ~isfile( exampleFile )
-    overview = "See the runnable example for chart usage details.";
-    return
-end % if
-
-lines = readlines( exampleFile );
-startIdx = find( strtrim( lines ) == "## Overview", 1, "first" );
-if isempty( startIdx )
-    overview = "See the runnable example for chart usage details.";
-    return
-end % if
-
-for idx = startIdx + 1:numel( lines )
-    line = strip( lines(idx) );
-    if startsWith( line, "## " ) || startsWith( line, "!" )
-        break
-    elseif strlength( line ) == 0 && ~isempty( overview )
-        break
-    elseif strlength( line ) > 0
-        overview(end + 1, 1) = line; %#ok<AGROW>
-    end % if
-end % for
-
-if isempty( overview )
-    overview = "See the runnable example for chart usage details.";
-end % if
-
-end % extractOverviewSummary
-
-function examples = extractExampleSection( exampleFile )
-%EXTRACTEXAMPLESECTION Extract example content from an example page.
-
-arguments ( Input )
-    exampleFile(1, 1) string
-end % arguments ( Input )
-
-arguments ( Output )
-    examples(:, 1) string
-end % arguments ( Output )
-
-examples = "No example content is available.";
-if ~isfile( exampleFile )
-    return
-end % if
-
-lines = readlines( exampleFile );
-startIdx = find( strtrim( lines ) == "## Examples", 1, "first" );
-if isempty( startIdx ) || startIdx == numel( lines )
-    return
-end % if
-
-examples = lines(startIdx + 1:end);
-examples = stripBlankBoundaryLines( examples );
-examples = fixExampleRelativeLinks( examples );
-
-if isempty( examples )
-    examples = "No example content is available.";
-end % if
-
-end % extractExampleSection
 
 function lines = stripBlankBoundaryLines( lines )
 %STRIPBLANKBOUNDARYLINES Remove leading and trailing blank lines.
@@ -848,11 +829,12 @@ text = replace( text, newline(), " " );
 
 end % tableText
 
-function imageLink = extractImageLink( exampleFile )
+function imageLink = extractImageLink( exampleFile, imageLinkFolder )
 %EXTRACTIMAGELINK Extract the first image from an example page.
 
 arguments ( Input )
     exampleFile(1, 1) string
+    imageLinkFolder(1, 1) string
 end % arguments ( Input )
 
 arguments ( Output )
@@ -868,12 +850,39 @@ lines = readlines( exampleFile );
 for idx = 1:numel( lines )
     line = strip( lines(idx) );
     if startsWith( line, "![" )
-        imageLink = fixExampleRelativeLinks( line );
+        imageLink = fixChartRelativeLinks( line, imageLinkFolder );
         return
     end % if
 end % for
 
 end % extractImageLink
+
+function imageLink = chartImageLink( ...
+        imageFolder, imageLinkFolder, chartName )
+%CHARTIMAGELINK Return the local chart image link, if it exists.
+
+arguments ( Input )
+    imageFolder(1, 1) string
+    imageLinkFolder(1, 1) string
+    chartName(1, 1) string
+end % arguments ( Input )
+
+arguments ( Output )
+    imageLink(1, 1) string
+end % arguments ( Output )
+
+imageLink = "";
+extensions = [".svg", ".png"];
+for extension = extensions
+    imageFile = fullfile( imageFolder, chartName + extension );
+    if isfile( imageFile )
+        imageLink = "![](" + imageLinkFolder + "/" + ...
+            chartName + extension + ")";
+        return
+    end % if
+end % for
+
+end % chartImageLink
 
 function listing = codeListing( file )
 %CODELISTING Return a non-executable Markdown code listing.
@@ -896,11 +905,89 @@ else
 end % if
 
 listing = [
-    "````text"
+    "````text "
     content
     "````"];
 
 end % codeListing
+
+function sections = extractExampleSections( exampleFile, fallbackFile )
+%EXTRACTEXAMPLESECTIONS Extract embedded example page sections.
+
+arguments ( Input )
+    exampleFile(1, 1) string
+    fallbackFile(1, 1) string
+end % arguments ( Input )
+
+arguments ( Output )
+    sections(1, 1) struct
+end % arguments ( Output )
+
+if isfile( exampleFile )
+    lines = readlines( exampleFile );
+    overviewStop = ["## Documentation", "## Examples"];
+elseif isfile( fallbackFile )
+    lines = readlines( fallbackFile );
+    overviewStop = "## Syntax";
+else
+    lines = strings( 0, 1 );
+    overviewStop = ["## Documentation", "## Examples"];
+end % if
+
+sections.Overview = sectionLines( ...
+    lines, "## Overview", overviewStop, ...
+    "## Overview" + newline() + ...
+    "See the runnable example for chart usage details." );
+sections.Documentation = sectionLines( ...
+    lines, "## Documentation", "## Examples", ...
+    "## Documentation" + newline() + ...
+    "No related documentation is available." );
+sections.Examples = sectionLines( ...
+    lines, "## Examples", "## See Also", ...
+    "## Examples" + newline() + ...
+    "No example content is available." );
+
+sections.Overview = fixChartRelativeLinks( ...
+    sections.Overview, "../images" );
+sections.Documentation = fixChartRelativeLinks( ...
+    sections.Documentation, "../images" );
+sections.Examples = fixChartRelativeLinks( ...
+    sections.Examples, "../images" );
+
+end % extractExampleSections
+
+function section = sectionLines( lines, heading, stopHeadings, fallback )
+%SECTIONLINES Extract one Markdown section, including its heading.
+
+arguments ( Input )
+    lines(:, 1) string
+    heading(1, 1) string
+    stopHeadings(1, :) string
+    fallback(1, 1) string
+end % arguments ( Input )
+
+arguments ( Output )
+    section(:, 1) string
+end % arguments ( Output )
+
+startIdx = find( strtrim( lines ) == heading, 1, "first" );
+if isempty( startIdx )
+    section = splitlines( fallback );
+    return
+end % if
+
+stopIdx = numel( lines ) + 1;
+for idx = startIdx + 1:numel( lines )
+    line = strtrim( lines(idx) );
+    if any( startsWith( line, stopHeadings ) )
+        stopIdx = idx;
+        break
+    end % if
+end % for
+
+section = stripBlankBoundaryLines( lines(startIdx:stopIdx - 1) );
+
+end % sectionLines
 
 function testFile = findTestFile( testFolder, chartName )
 %FINDTESTFILE Find the chart-specific test file, if it exists.
@@ -922,21 +1009,26 @@ end % if
 
 end % findTestFile
 
-function lines = fixExampleRelativeLinks( lines )
-%FIXEXAMPLERELATIVELINKS Update example-relative image links.
+function lines = fixChartRelativeLinks( lines, imageLinkFolder )
+%FIXCHARTRELATIVELINKS Update image links for chart pages.
 
 arguments ( Input )
     lines(:, 1) string
+    imageLinkFolder(1, 1) string
 end % arguments ( Input )
 
 arguments ( Output )
     lines(:, 1) string
 end % arguments ( Output )
 
-lines = replace( lines, "](./images/", "](../examples/images/" );
-lines = replace( lines, "](images/", "](../examples/images/" );
+replacement = "](" + imageLinkFolder + "/";
+lines = replace( lines, "](./images/", replacement );
+lines = replace( lines, "](images/", replacement );
+lines = replace( lines, "](../charts/images/", replacement );
+lines = replace( lines, "](../charts/", replacement );
+lines = replace( lines, "](../examples/images/", replacement );
 
-end % fixExampleRelativeLinks
+end % fixChartRelativeLinks
 
 function writeTextFile( file, lines )
 %WRITETEXTFILE Write text lines to a UTF-8 file.
