@@ -23,7 +23,3 @@ MATLAB charts.
 
 Browse the chart reference pages, including class documentation, examples,
 source code listings, and chart-specific tests when available.
-
-## [Chart Examples](ChartExamples.md)
-
-Open the chart reference pages for each chart.

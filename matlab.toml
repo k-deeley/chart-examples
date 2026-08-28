@@ -6,7 +6,8 @@ path = [
     "tbx/charts",
     "tbx/charts/charts",
     "tbx/charts/tests",
-    "tbx/chartsdoc",   
+    "tbx/chartsdoc",
+    "tbx/chartsdoc/charts/images",
 ]
 test = [
     "tbx/charts/tests",
@@ -78,4 +79,3 @@ provider.name = "Ken Deeley"
 provider.email = "kdeeley@mathworks.com"
 provider.organization = "MathWorks"
 provider.url = "https://github.com/k-deeley/chart-examples"
-
