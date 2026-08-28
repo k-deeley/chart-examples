@@ -15,7 +15,7 @@ nargoutchk( 0, 1 )
 
 % Auto-parent if needed.
 if ~isfield( namedArgs, "Parent" )
-    namedArgs.Parent = gcf();
+    namedArgs.Parent = figure();
 end % if
 
 % Create the chart.
