@@ -780,5 +780,5 @@ end % classdef
 ## See Also
 
 * [Value At Risk Chart](../landing/ValueAtRiskChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

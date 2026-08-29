@@ -133,5 +133,5 @@ end % classdef
 ## See Also
 
 * [Implied Volatility Chart](../landing/ImpliedVolatilityChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

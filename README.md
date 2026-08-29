@@ -1,7 +1,8 @@
 # Chart Examples
 
 [![View Chart Examples on File Exchange](readme/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/65857-chart-development-toolbox)
-[![Open in MATLAB Online](readme/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=mathworks/chart-examples&project=Charts.prj)
+[![Open in MATLAB Online](readme/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=mathworks/chart-examples&project=matlab.toml)
+[![Chart Examples Actions](https://github.com/k-deeley/chart-examples/actions/workflows/charts-ci.yml/badge.svg)](https://github.com/k-deeley/chart-examples/actions/workflows/charts-ci.yml)
 
 ## Overview
 
@@ -43,20 +44,31 @@ You can inspect the source code, explore the features and functionality, and run
 * `WaterfallChart`: Cumulative bar chart visualizing the evolution of an initial value
 * `WindRoseChart`: Display wind speed and direction data on a polar histogram
 
+The documentation provides examples of how to develop and use these charts.
+
 ## Installation and Getting Started
-This submission is a MATLAB toolbox.
-1. Double-click on the toolbox installer (the `.mltbx` file) to install the toolbox.
-2. See the `GettingStarted.m` guide for introductory information.
-3. Open the `Chart Browser` app from the Apps gallery to access further documentation resources and view the example charts.
+1. Chart Examples is provided as a [MATLAB Toolbox](https://www.mathworks.com/help/matlab/creating-help.html). Download the toolbox file (`Chart_Example.mltbx`) from the [Releases](https://github.com/k-deeley/chart-examples/releases/tag/latest) section on GitHub.
+2. Double-click on the toolbox installer (the `Chart_Examples.mltbx` file) to install the toolbox.
+3. Verify the toolbox installation by entering `>> ver charts` at the MATLAB command line.
+4. See the `GettingStarted.m` guide for introductory information.
+5. Open the documentation (`>> doc`) under **Supplemental Software** -> **Chart Examples Toolbox** to browse the example charts.
 
 ## [MathWorks](https://www.mathworks.com) Product Requirements
 
 This toolbox requires MATLAB release R2025a or later.
 - [MATLAB](https://www.mathworks.com/products/matlab.html)
 
+Development workflows, namely running tests and automated builds, require the following toolboxes, respectively:
+- [Test Framework Extensions](https://github.com/mathworks/test-framework-extensions)
+- [MATLAB DocMaker](https://github.com/mathworks/docmaker)
+
 Some example charts in the toolbox rely on additional toolboxes.
+- [Statistics and Machine Learning Toolbox&trade;](https://www.mathworks.com/products/statistics.html)
+- [Financial Toolbox&trade;](https://www.mathworks.com/products/finance.html)
+- [Financial Instruments Toolbox&trade;](https://www.mathworks.com/products/financial-instruments.html)
+- [Optimization Toolbox&trade;](https://www.mathworks.com/products/optimization.html)
 
 ## License
 The license is available in the [LICENSE.txt](LICENSE.txt) file in this GitHub repository.
 
-_Copyright 2018-2025 The MathWorks, Inc._
+_Copyright 2018-2026 The MathWorks, Inc._

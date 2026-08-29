@@ -92,5 +92,5 @@ end % classdef
 ## See Also
 
 * [Aircraft Chart](../landing/AircraftChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

@@ -566,5 +566,5 @@ end % defaultLinkData
 ## See Also
 
 * [Circular Net Flow Chart](../landing/CircularNetFlowChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

@@ -106,5 +106,5 @@ CNFC.FaceAlpha = 0.25;
 * [Circular Net Flow Chart](../landing/CircularNetFlowChart.md)
 * [Source Code Listing](../source/CircularNetFlowChartSourceCode.md)
 * [Test Code Listing](../tests/CircularNetFlowChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

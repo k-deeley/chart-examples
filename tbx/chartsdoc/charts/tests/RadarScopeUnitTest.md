@@ -105,5 +105,5 @@ end % classdef
 ## See Also
 
 * [Radar Scope](../landing/RadarScope.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

@@ -108,5 +108,5 @@ end % classdef
 ## See Also
 
 * [Line Gradient Chart](../landing/LineGradientChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

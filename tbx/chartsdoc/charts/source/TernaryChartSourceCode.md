@@ -1460,5 +1460,5 @@ end % mustBeMarker
 ## See Also
 
 * [Ternary Chart](../landing/TernaryChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

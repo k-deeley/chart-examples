@@ -656,5 +656,5 @@ end % classdef
 ## See Also
 
 * [Edgeworth Bowley Chart](../landing/EdgeworthBowleyChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

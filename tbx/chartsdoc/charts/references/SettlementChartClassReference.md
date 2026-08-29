@@ -214,5 +214,5 @@ reset( SC )
 * [Settlement Chart](../landing/SettlementChart.md)
 * [Source Code Listing](../source/SettlementChartSourceCode.md)
 * [Test Code Listing](../tests/SettlementChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

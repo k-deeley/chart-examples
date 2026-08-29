@@ -515,5 +515,5 @@ end % mustBeFontWeight
 ## See Also
 
 * [Spider Chart](../landing/SpiderChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

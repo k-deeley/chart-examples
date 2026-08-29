@@ -82,5 +82,5 @@ AC.reset()
 * [Aircraft Chart](../landing/AircraftChart.md)
 * [Source Code Listing](../source/AircraftChartSourceCode.md)
 * [Test Code Listing](../tests/AircraftChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

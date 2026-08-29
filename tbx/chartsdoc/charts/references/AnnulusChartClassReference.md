@@ -235,5 +235,5 @@ AC.Controls = "on";
 * [Annulus Chart](../landing/AnnulusChart.md)
 * [Source Code Listing](../source/AnnulusChartSourceCode.md)
 * [Test Code Listing](../tests/AnnulusChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

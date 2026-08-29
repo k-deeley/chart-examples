@@ -157,5 +157,5 @@ deselect( LSC )
 * [Line Selector Chart](../landing/LineSelectorChart.md)
 * [Source Code Listing](../source/LineSelectorChartSourceCode.md)
 * [Test Code Listing](../tests/LineSelectorChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

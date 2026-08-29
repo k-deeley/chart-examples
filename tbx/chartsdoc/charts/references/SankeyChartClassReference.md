@@ -167,7 +167,7 @@ For nodes that have different incoming and outgoing flows, the label will show t
 
 Let's display a more complex graph representing an energy flow diagram.
 Load sample chart data, obtained from figure 1 in:
-- Hay, B. & Hameury, Jacques & Scoarnec, V & DavÃ©e, G & Grelard, M. (2011). *The Contribution of the Metrology of Thermophysical Properties of Materials in Automotive Design.*
+- Hay, B. & Hameury, Jacques & Scoarnec, V & DavÃƒÂ©e, G & Grelard, M. (2011). *The Contribution of the Metrology of Thermophysical Properties of Materials in Automotive Design.*
 
 ```matlab
 load( fullfile( chartsRoot(), "data", "Graph.mat" ) )
@@ -203,5 +203,5 @@ title( SC, "Diesel Engine Energy Flow" )
 * [Sankey Chart](../landing/SankeyChart.md)
 * [Source Code Listing](../source/SankeyChartSourceCode.md)
 * [Test Code Listing](../tests/SankeyChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

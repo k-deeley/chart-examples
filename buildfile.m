@@ -6,64 +6,75 @@ function plan = buildfile()
 % Define the build plan.
 plan = buildplan( localfunctions() );
 
+% Folders of interest.
+prj = plan.RootFolder;
+api = fullfile( prj, "tbx" );
+tests = fullfile( prj, "tbx", tbxname(), "tests" );
+charts = fullfile( prj, "tbx", tbxname(), tbxname() );
+doc = fullfile( prj, "tbx", tbxname() + "doc" );
+
 % Set the package task to run by default.
 plan.DefaultTasks = "package";
 
 % Add the clean task.
 plan("clean") = matlab.buildtool.tasks.CleanTask();
 
-% Add the package task.
-plan("package") = matlab.buildtool.tasks.PackageTask( "Chart_Examples" );
+% Add the check task group.
+plan("check:code") = matlab.buildtool.tasks.CodeIssuesTask( prj, ...
+    "IncludeSubfolders", true, ...
+    "Configuration", "factory", ...
+    "Description", ...
+    "Assert that there are no code issues in the project.", ...
+    "ErrorThreshold", 0, ...
+    "WarningThreshold", 0, ...
+    "InfoThreshold", 0 );
+
+plan("check:project") = matlab.buildtool.Task( ...
+    "Description", "Run MATLAB project checks.", ...
+    "Actions", @checkProject, ...
+    "Inputs", api );
 
 % Add a test task to run the unit tests for the project. Generate and save
 % a coverage report.
-projectRoot = plan.RootFolder;
-testFolder = fullfile( projectRoot, "tbx", "charts", "tests" );
-codeFolder = fullfile( projectRoot, "tbx", "charts", "charts"  );
-plan("test") = matlab.buildtool.tasks.TestTask( testFolder, ...
+plan("test") = matlab.buildtool.tasks.TestTask( tests, ...
+    "Dependencies", "check", ...
     "Strict", true, ...
     "RunOnlyImpactedTests", true, ...
     "Description", "Assert that all impacted tests " + ...
     "across the project pass.", ...
-    "SourceFiles", codeFolder, ...
+    "SourceFiles", charts, ...
     "TestResults", "reports/Results.html");    
 plan("test").addCodeCoverage( "reports/Coverage.html", ...
     "MetricLevel", "mcdc" );
-
-% The test task depends on the check task.
-plan("test").Dependencies = "check";
 
 % The doc task depends on the test task.
 plan("doc").Dependencies = "test";
 
 % Skip the doc task if the documentation files are up to date.
-docFolder = fullfile( projectRoot, "tbx", "chartsdoc" );
-plan("doc").Inputs = docFolder;
+plan("doc").Inputs = [doc; charts; tests];
 plan("doc").Outputs = [
-    fullfile( docFolder, "**", "*.html" );
-    fullfile( docFolder, "*.xml" );
-    fullfile( docFolder, "resources" );
-    fullfile( docFolder, "helpsearch-v*" )];
+    fullfile( doc, "**", "*.html" );
+    fullfile( doc, "*.xml" );
+    fullfile( doc, "resources" );
+    fullfile( doc, "helpsearch-v*" )];
 
-% The package task depends on the doc task.
-plan("package").Dependencies = "doc";
+% Add the package task (this depends on the doc task).
+plan("package") = matlab.buildtool.tasks.PackageTask( ...
+    "Chart_Examples", ...
+    "Dependencies", "doc" );
+plan("package").Actions(end+1) = @versionPackage;
 
 end % buildfile
 
-function checkTask( context )
-% Check the source code and project for any issues.
+function name = tbxname()
+%TBXNAME Toolbox short name.
 
-% Set the project root as the folder in which to check for any static code
-% issues.
-projectRoot = context.Plan.RootFolder;
-codeIssuesTask = matlab.buildtool.tasks.CodeIssuesTask( projectRoot, ...
-    "IncludeSubfolders", true, ...
-    "Configuration", "factory", ...
-    "Description", ...
-    "Assert that there are no code issues in the project.", ...
-    "WarningThreshold", 0, ...
-    "InfoThreshold", 0 );
-codeIssuesTask.analyze( context )
+name = "charts";
+
+end % tbxname
+
+function checkProject( ~ )
+% Check the source code and project for any issues.
 
 % Update the project dependencies.
 prj = currentProject();
@@ -86,28 +97,29 @@ assert( all( passed ), "buildfile:ProjectIssue", ...
     "At least one project check has failed. " + ...
     "Resolve the failures shown above to continue." )
 
-end % checkTask
+end % checkProject
 
 function docTask( context )
 % Build the documentation.
 
+% Generate the chart reference pages.
 docFolder = context.Task.Inputs(1).Path;
 generatedMarkdownFiles = generateChartReferencePages();
+
+% Convert the Markdown files to HTML.
 markdownInfo = dir( fullfile( docFolder, "**", "*.md" ) );
 markdownFiles = fullfile( string( {markdownInfo.folder} ), ...
     string( {markdownInfo.name} ) ).';
-exampleFolder = fullfile( docFolder, "examples" ) + filesep();
-markdownFiles = markdownFiles( ~startsWith( markdownFiles, ...
-    exampleFolder ) );
-
 htmlFiles = docconvert( markdownFiles, ...
     "Theme", "light", ...
     "Root", docFolder );
 fprintf( 1, "** Converted Markdown documentation to HTML.\n" )
 
+% Insert the MATLAB output.
 docrun( htmlFiles, "Theme", "light", "FigureSize", [600, 400] )
 fprintf( 1, "** Inserted MATLAB output into doc.\n" )
 
+% Build the doc index.
 docindex( docFolder )
 fprintf( 1, "** Indexed documentation.\n" )
 
@@ -131,3 +143,34 @@ for file = files
 end % for
 
 end % addGeneratedFilesToProject
+
+function versionPackage( ~ )
+%VERSIONPACKAGE Ensure consistency between version sources.
+
+v = ver( tbxname() );
+versionName = v(1).Name;
+versionString = v(1).Version;
+
+% Check package version for consistency.
+toml = string( splitlines( fileread( "matlab.toml" ) ) );
+versionLine = toml(startsWith( toml, "version = " ));
+tomlVersion = strip( extractAfter( versionLine, "version = " ), ...
+    "both", """" );
+assert( versionString == tomlVersion, ...
+    "build:package:VersionPackageMismatch", ...
+    "%s version %s (from Contents.m) does not " + ...
+    "match the package version %s (in matlab.toml).", ...
+    versionName, versionString, tomlVersion )
+
+% Check version and tag compatibility for release
+if strcmp( getenv( "GITHUB_ACTIONS" ), "true" )    
+    ref = string( getenv( "GITHUB_REF" ) );
+    gitTagNumber = extractAfter( ref, "refs/tags/v" );
+    assert( versionString == gitTagNumber, ...
+        "build:package:VersionTagMismatch", ...
+        "%s package version %s (from Contents.m) does not " + ...
+        "match the current Git tag number (%s).", ...
+        versionName, versionString, gitTagNumber )    
+end % if
+
+end % versionPackage

@@ -71,5 +71,5 @@ CC = ClockChart( "Parent", f );
 * [Clock Chart](../landing/ClockChart.md)
 * [Source Code Listing](../source/ClockChartSourceCode.md)
 * [Test Code Listing](../tests/ClockChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

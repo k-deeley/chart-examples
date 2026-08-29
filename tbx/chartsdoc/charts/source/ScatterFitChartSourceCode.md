@@ -689,5 +689,5 @@ end % mustBeMarker
 ## See Also
 
 * [Scatter Fit Chart](../landing/ScatterFitChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

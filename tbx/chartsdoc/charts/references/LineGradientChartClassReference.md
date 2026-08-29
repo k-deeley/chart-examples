@@ -110,5 +110,5 @@ LGC.YData = cumsum( randn( size( LGC.XData ) ) );
 * [Line Gradient Chart](../landing/LineGradientChart.md)
 * [Source Code Listing](../source/LineGradientChartSourceCode.md)
 * [Test Code Listing](../tests/LineGradientChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

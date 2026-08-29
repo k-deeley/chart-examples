@@ -1108,5 +1108,5 @@ end % mustBeLegendLocation
 ## See Also
 
 * [Annulus Chart](../landing/AnnulusChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

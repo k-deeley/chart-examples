@@ -18,35 +18,7 @@ MATLAB_DocMaker = {version = "0.7.0", id = "ae82d5d2-45be-4fc5-a01b-70d8bb905ca2
 
 [project.labels.Classification]
 Test = [
-    "tbx/charts/tests/tAircraftChart.m",
-    "tbx/charts/tests/tAnnulusChart.m",
-    "tbx/charts/tests/tChart.m",
-    "tbx/charts/tests/tChartDocumentation.m",
-    "tbx/charts/tests/chartDefinedPublicMembers.m",
-    "tbx/charts/tests/tCircularNetFlowChart.m",
-    "tbx/charts/tests/tClockChart.m",
-    "tbx/charts/tests/tCylinderChart.m",
-    "tbx/charts/tests/tEdgeworthBowleyChart.m",
-    "tbx/charts/tests/tGraphicsHierarchyChart.m",
-    "tbx/charts/tests/tImpliedVolatilityChart.m",
-    "tbx/charts/tests/tInductionMotorChart.m",
-    "tbx/charts/tests/tLineGradientChart.m",
-    "tbx/charts/tests/tLineSelectorChart.m",
-    "tbx/charts/tests/tPolarChart.m",
-    "tbx/charts/tests/tRadarScope.m",
-    "tbx/charts/tests/tRangefinderChart.m",
-    "tbx/charts/tests/tSankeyChart.m",
-    "tbx/charts/tests/tScatterBoxChart.m",
-    "tbx/charts/tests/tScatterDensityChart.m",
-    "tbx/charts/tests/tScatterFitChart.m",
-    "tbx/charts/tests/tSettlementChart.m",
-    "tbx/charts/tests/tSignalTraceChart.m",
-    "tbx/charts/tests/tSnailTrailChart.m",
-    "tbx/charts/tests/tSpiderChart.m",
-    "tbx/charts/tests/tTernaryChart.m",
-    "tbx/charts/tests/tValueAtRiskChart.m",
-    "tbx/charts/tests/tWaterfallChart.m",
-    "tbx/charts/tests/tWindRoseChart.m",
+    "tbx/charts/tests/*.m",
 ]
 
 [[package]]
@@ -78,3 +50,4 @@ provider.name = "Ken Deeley"
 provider.email = "kdeeley@mathworks.com"
 provider.organization = "MathWorks"
 provider.url = "https://github.com/k-deeley/chart-examples"
+

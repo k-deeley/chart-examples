@@ -168,5 +168,5 @@ set( chartsByGroup{3}, "Marker", "square", ...
 * [Implied Volatility Chart](../landing/ImpliedVolatilityChart.md)
 * [Source Code Listing](../source/ImpliedVolatilityChartSourceCode.md)
 * [Test Code Listing](../tests/ImpliedVolatilityChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

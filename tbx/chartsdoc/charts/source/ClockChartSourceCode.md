@@ -292,5 +292,5 @@ end % handxy
 ## See Also
 
 * [Clock Chart](../landing/ClockChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

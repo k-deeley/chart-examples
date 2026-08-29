@@ -489,5 +489,5 @@ end % mustBeMarker
 ## See Also
 
 * [Scatter Density Chart](../landing/ScatterDensityChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

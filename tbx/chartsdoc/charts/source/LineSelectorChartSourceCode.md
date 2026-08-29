@@ -439,5 +439,5 @@ end % classdef
 ## See Also
 
 * [Line Selector Chart](../landing/LineSelectorChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

@@ -139,5 +139,5 @@ end % classdef
 ## See Also
 
 * [Sankey Chart](../landing/SankeyChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

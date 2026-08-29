@@ -662,5 +662,5 @@ end % mustBeMarker
 ## See Also
 
 * [Settlement Chart](../landing/SettlementChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

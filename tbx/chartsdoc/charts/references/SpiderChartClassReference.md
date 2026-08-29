@@ -173,5 +173,5 @@ set( SC, "LineColors", hsv( SC.NumLines ), ...
 * [Spider Chart](../landing/SpiderChart.md)
 * [Source Code Listing](../source/SpiderChartSourceCode.md)
 * [Test Code Listing](../tests/SpiderChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

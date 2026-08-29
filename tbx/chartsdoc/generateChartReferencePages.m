@@ -22,8 +22,8 @@ chartNameList = sort( allChartNames(:) );
 descriptions = getChartDescriptions( chartNameList );
 
 generatedFiles = strings( 0, 1 );
-generatedFiles(end + 1, 1) = writeChartIndex( ...
-    outputRoot, chartNameList, descriptions );
+generatedFiles(end + 1, 1) = writeChartExamples( ...
+    docRoot, chartNameList, descriptions );
 generatedFiles(end + 1, 1) = writeHelpToc( ...
     docRoot, chartNameList, testFolder );
 
@@ -105,12 +105,12 @@ descriptions = dictionary( chartNames, chartDescriptions );
 
 end % getChartDescriptions
 
-function outputFile = writeChartIndex( ...
-        outputFolder, chartNames, descriptions )
-%WRITECHARTINDEX Write the chart reference index.
+function outputFile = writeChartExamples( ...
+        docRoot, chartNames, descriptions )
+%WRITECHARTEXAMPLES Write the chart examples landing page.
 
 arguments ( Input )
-    outputFolder(1, 1) string
+    docRoot(1, 1) string
     chartNames(:, 1) string
     descriptions(1, 1) dictionary
 end % arguments ( Input )
@@ -120,9 +120,9 @@ arguments ( Output )
 end % arguments ( Output )
 
 lines = [
-    "# Chart Reference"
+    "# Chart Examples"
     ""
-    "Each chart reference page links to the class documentation and " + ...
+    "Each chart page links to the class documentation and " + ...
     "examples, source code listing, and chart-specific test code " + ...
     "listing when a matching test exists."
     ""
@@ -133,7 +133,7 @@ for chartName = chartNames.'
     description = lookupDescription( descriptions, chartName );
     displayName = chartDisplayName( chartName );
     lines(end + 1, 1) = "* [" + displayName + "](" + ...
-        "landing/" + chartName + ".md) - " + ...
+        "charts/landing/" + chartName + ".md) - " + ...
         description; %#ok<AGROW>
 end % for
 
@@ -142,14 +142,14 @@ lines = [
     ""
     "## Shared Test Infrastructure"
     ""
-    "* [`tChart`](../../charts/tests/tChart.m) - common " + ...
+    "* [`tChart`](../charts/tests/tChart.m) - common " + ...
     "constructor and parentage tests used by chart-specific tests."
     ""];
 
-outputFile = fullfile( outputFolder, "ChartsIndex.md" );
+outputFile = fullfile( docRoot, "ChartExamples.md" );
 writeTextFile( outputFile, lines )
 
-end % writeChartIndex
+end % writeChartExamples
 
 function outputFile = writeHelpToc( docRoot, chartNames, testFolder )
 %WRITEHELPTOC Write the documentation table of contents.
@@ -175,8 +175,7 @@ lines = [
     "    * [Chart Development Guide](notes/ChartDevelopmentGuide.md)"
     "    * [Creating Specialized Charts with MATLAB " + ...
     "Object-Oriented Programming](notes/TechnicalArticle.md)"
-    "  * [Chart Examples](ChartExamples.md)"
-    "    * [Chart Reference](charts/ChartsIndex.md)"];
+    "  * [Chart Examples](ChartExamples.md)"];
 
 for chartName = chartNames.'
     testFile = findTestFile( testFolder, chartName );
@@ -366,7 +365,7 @@ end % if
 
 lines = [
     lines
-    "* [Chart Reference](../ChartsIndex.md)"
+    "* [Chart Examples](../../ChartExamples.md)"
     ""];
 
 writeTextFile( outputFile, lines )
@@ -398,7 +397,7 @@ lines = [
     ""
     "* [" + chartDisplayName( chartName ) + "](../landing/" + ...
     chartName + ".md)"
-    "* [Chart Reference](../ChartsIndex.md)"
+    "* [Chart Examples](../../ChartExamples.md)"
     ""];
 
 outputFile = fullfile( ...
@@ -433,7 +432,7 @@ lines = [
     ""
     "* [" + chartDisplayName( chartName ) + "](../landing/" + ...
     chartName + ".md)"
-    "* [Chart Reference](../ChartsIndex.md)"
+    "* [Chart Examples](../../ChartExamples.md)"
     ""];
 
 outputFile = fullfile( outputFolders.Tests, chartName + "UnitTest.md" );

@@ -149,5 +149,5 @@ end % classdef
 ## See Also
 
 * [Snail Trail Chart](../landing/SnailTrailChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

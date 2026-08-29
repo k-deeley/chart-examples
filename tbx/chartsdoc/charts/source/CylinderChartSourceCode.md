@@ -302,5 +302,5 @@ end % classdef
 ## See Also
 
 * [Cylinder Chart](../landing/CylinderChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

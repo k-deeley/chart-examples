@@ -368,5 +368,5 @@ end % mustBeMarker
 ## See Also
 
 * [Rangefinder Chart](../landing/RangefinderChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

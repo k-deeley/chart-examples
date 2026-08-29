@@ -790,5 +790,5 @@ end % mustBeFontWeight
 ## See Also
 
 * [Wind Rose Chart](../landing/WindRoseChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

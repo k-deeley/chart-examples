@@ -1058,5 +1058,5 @@ end % mustBeMarker
 ## See Also
 
 * [Scatter Box Chart](../landing/ScatterBoxChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

@@ -289,5 +289,5 @@ end % mustBeIncreasing
 ## See Also
 
 * [Signal Trace Chart](../landing/SignalTraceChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

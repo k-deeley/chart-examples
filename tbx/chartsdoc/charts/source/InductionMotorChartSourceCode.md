@@ -314,5 +314,5 @@ end % inNormalRegion
 ## See Also
 
 * [Induction Motor Chart](../landing/InductionMotorChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

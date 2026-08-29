@@ -8,7 +8,7 @@ The `WindRoseChart` displays the distribution and intensities of a windspeed val
 The chart data comprises a table `WindData` containing two variables:
 - a nonnegative numeric vector `Speed`, and
 - a numeric vector `Direction` (taking values between 0 and 360 degrees).
-To create the graphics, the chart performs binning on the windspeed and wind direction data, similar to the 2D binning performed by [`histcounts2`](https://www.mathworks.com/help/matlab/ref/histcounts2.html). However, due to the need to wrap directions correctly at 360Â°, the chart bins the observations lying in each wind direction interval separately using [`histcounts`](https://www.mathworks.com/help/matlab/ref/histcounts.html). The binning process is as follows.
+To create the graphics, the chart performs binning on the windspeed and wind direction data, similar to the 2D binning performed by [`histcounts2`](https://www.mathworks.com/help/matlab/ref/histcounts2.html). However, due to the need to wrap directions correctly at 360Ã‚Â°, the chart bins the observations lying in each wind direction interval separately using [`histcounts`](https://www.mathworks.com/help/matlab/ref/histcounts.html). The binning process is as follows.
 - The speed data is divided into bins, using the chart parameter `SpeedBinEdges`. This is a strictly increasing vector of the form $\\mathbf{e}=\[0, v\_1, v\_2, \\dots, v\_n, \\infty\]$, where $v\_i\<v\_{i+1}$ for $i=1, 2, \\dots, n-1$. The first and last elements of $\\mathbf{e}$ are 0 and $\\infty$, respectively, to ensure that all windspeeds present in the data set are included in the wind rose.
 - The direction data is divided into 36 bins of equal angular size (10 degrees).
 - The chart property `ObservationCounts` contains the number of observations in each speed-direction bin. These counts are also converted to percentages and accumulated in the speed direction for display in the wind rose.
@@ -189,5 +189,5 @@ The patches making up the polar histogram are interactive. When the user clicks 
 * [Wind Rose Chart](../landing/WindRoseChart.md)
 * [Source Code Listing](../source/WindRoseChartSourceCode.md)
 * [Test Code Listing](../tests/WindRoseChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

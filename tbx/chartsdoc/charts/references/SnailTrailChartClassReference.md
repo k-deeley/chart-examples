@@ -118,5 +118,5 @@ STC.Returns = sampleRets;
 * [Snail Trail Chart](../landing/SnailTrailChart.md)
 * [Source Code Listing](../source/SnailTrailChartSourceCode.md)
 * [Test Code Listing](../tests/SnailTrailChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

@@ -103,5 +103,5 @@ IMC.OperatingPoint = [2000, -450];
 * [Induction Motor Chart](../landing/InductionMotorChart.md)
 * [Source Code Listing](../source/InductionMotorChartSourceCode.md)
 * [Test Code Listing](../tests/InductionMotorChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

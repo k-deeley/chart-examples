@@ -110,5 +110,5 @@ end % for
 * [Radar Scope](../landing/RadarScope.md)
 * [Source Code Listing](../source/RadarScopeSourceCode.md)
 * [Test Code Listing](../tests/RadarScopeUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

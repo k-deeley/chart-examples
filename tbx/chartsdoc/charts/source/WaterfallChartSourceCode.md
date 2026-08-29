@@ -637,5 +637,5 @@ end % mustBeFontWeight
 ## See Also
 
 * [Waterfall Chart](../landing/WaterfallChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

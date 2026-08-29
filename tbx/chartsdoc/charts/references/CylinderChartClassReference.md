@@ -125,5 +125,5 @@ set( CC, "View", [-14, 12], "FaceColors", hsv( 3 ) )
 * [Cylinder Chart](../landing/CylinderChart.md)
 * [Source Code Listing](../source/CylinderChartSourceCode.md)
 * [Test Code Listing](../tests/CylinderChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

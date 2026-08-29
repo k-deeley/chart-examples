@@ -268,5 +268,5 @@ end % mustBeNonDecreasing
 ## See Also
 
 * [Polar Chart](../landing/PolarChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

@@ -210,5 +210,5 @@ SBC.YData = (-1) * SBC.XData + randn( size( SBC.XData ) );
 * [Scatter Box Chart](../landing/ScatterBoxChart.md)
 * [Source Code Listing](../source/ScatterBoxChartSourceCode.md)
 * [Test Code Listing](../tests/ScatterBoxChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

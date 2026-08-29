@@ -171,5 +171,5 @@ grid( SDC, "off" )
 * [Scatter Density Chart](../landing/ScatterDensityChart.md)
 * [Source Code Listing](../source/ScatterDensityChartSourceCode.md)
 * [Test Code Listing](../tests/ScatterDensityChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

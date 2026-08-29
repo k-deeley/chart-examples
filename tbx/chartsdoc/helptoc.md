@@ -8,7 +8,6 @@
     * [Chart Development Guide](notes/ChartDevelopmentGuide.md)
     * [Creating Specialized Charts with MATLAB Object-Oriented Programming](notes/TechnicalArticle.md)
   * [Chart Examples](ChartExamples.md)
-    * [Chart Reference](charts/ChartsIndex.md)
     * [Aircraft Chart](charts/landing/AircraftChart.md)
       * [Class Documentation and Examples](charts/references/AircraftChartClassReference.md)
       * [Source Code Listing](charts/source/AircraftChartSourceCode.md)

@@ -143,5 +143,5 @@ title( PC, "Mean Quarterly Temperatures" )
 * [Polar Chart](../landing/PolarChart.md)
 * [Source Code Listing](../source/PolarChartSourceCode.md)
 * [Test Code Listing](../tests/PolarChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

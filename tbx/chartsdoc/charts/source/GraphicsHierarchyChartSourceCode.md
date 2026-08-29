@@ -177,5 +177,5 @@ end % mustBeValidGraphics
 ## See Also
 
 * [Graphics Hierarchy Chart](../landing/GraphicsHierarchyChart.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 

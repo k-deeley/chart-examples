@@ -176,5 +176,5 @@ colorbar( TC, "off" )
 * [Ternary Chart](../landing/TernaryChart.md)
 * [Source Code Listing](../source/TernaryChartSourceCode.md)
 * [Test Code Listing](../tests/TernaryChartUnitTest.md)
-* [Chart Reference](../ChartsIndex.md)
+* [Chart Examples](../../ChartExamples.md)
 
