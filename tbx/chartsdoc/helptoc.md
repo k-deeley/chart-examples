@@ -1,7 +1,6 @@
 # Chart Examples
 
 * [Chart Examples](index.md)
-  * [Getting Started](GettingStarted.md)
   * [Release Notes](Changelog.md)
   * [Development Notes](DevelopmentNotes.md)
     * [What is a Chart?](notes/WhatIsAChart.md)

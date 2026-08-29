@@ -1,25 +1,26 @@
 # Chart Examples
 
-The Chart Examples toolbox contains MATLAB code and examples for creating
-custom chart classes. Each chart encapsulates a visualization workflow behind
-a task-specific API, so users can create and update complex graphics without
-manipulating the underlying graphics objects directly.
+This toolbox contains MATLAB code and examples for the technical article
+[Creating Specialized Charts with MATLAB Object-Oriented Programming](https://www.mathworks.com/company/newsletters/articles/creating-specialized-charts-with-matlab-object-oriented-programming.html).
 
-## [Getting Started](GettingStarted.md)
+A chart provides a task-specific application programming interface (API) for
+creating custom visualizations. Designing and implementing a chart not only
+provides a convenient API for end users, but also removes the need for users
+to manipulate low-level graphics objects.
 
-Start here for toolbox installation notes, product requirements, and the full
-chart list.
+The toolbox includes several diverse examples of custom MATLAB charts. You can
+inspect the source code, explore the features and functionality, and run
+examples demonstrating the use of each chart.
 
-## [Release Notes](Changelog.md)
+## Release Notes
 
-Review changes by toolbox version.
+Open [Release Notes](Changelog.md) to review changes by toolbox version.
 
-## [Development Notes](DevelopmentNotes.md)
+## Development Notes
 
-Read background material and implementation guidance for developing custom
-MATLAB charts.
+Open [Development Notes](DevelopmentNotes.md) for background material and
+implementation guidance for custom charts.
 
-## [Chart Examples](ChartExamples.md)
+## Chart Examples
 
-Browse the chart reference pages, including class documentation, examples,
-source code listings, and chart-specific tests when available.
+Open [Chart Examples](ChartExamples.md) to browse the available charts.

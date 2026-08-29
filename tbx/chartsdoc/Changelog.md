@@ -1,6 +1,6 @@
-# Release notes
+# Release Notes
 
-## Version 2.3
+## Version 2.3.0
 
 * Upgrade to use TOML-based projects in R2026b
 * Generate documentation using DocMaker
