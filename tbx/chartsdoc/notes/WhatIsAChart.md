@@ -10,7 +10,7 @@ Charts may be used in casual scripting workflows, or with more advanced procedur
 
 The concept of a [custom user-interface component](https://www.mathworks.com/help/matlab/developing-custom-ui-component-classes.html) is similar to the chart design pattern. The main difference is that charts usually contain one or more axes together with their children, whereas custom components are usually built from control objects such as buttons, dropdown menus, check boxes, and so on.
 
-## Introduction.
+## Introduction
 
 In this example, we'll create 2D scattered data and plot the best-fit line. We assume that we're in a situation where the data updates frequently. For example, we might be building a web dashboard that monitors a live data stream and updates periodically.
 
@@ -22,7 +22,7 @@ x = linspace( 0, 1, 1000 ).';
 y = 2 * x + 1 + 0.25 * randn( size( x ) );
 ```
 
-## Create a scatter plot of the data.
+## Create a scatter plot of the data
 
 We use the [`scatter`](https://www.mathworks.com/help/search.html?q=scatter) function to create a discrete plot.
 
@@ -31,9 +31,7 @@ figure
 s = scatter( x, y, "filled" );
 ```
 
-![](./images/WhatIsAChart_figure_0.png)
-
-## Compute and add the best-fit line.
+## Compute and add the best-fit line
 
 We use [`fitlm`](https://www.mathworks.com/help/search.html?q=fitlm) to fit a linear model to the $(x,y)$ data. The default model assumes that $y$ is a linear function of $x$ subject to some random measurement error.
 
@@ -48,9 +46,7 @@ hold on
 p = plot( x, model.Fitted, "LineWidth", 3 );
 ```
 
-![](./images/WhatIsAChart_figure_1.png)
-
-## Suppose that our x-data changes.
+## Suppose that our x-data changes
 
 Now suppose that we receive updated $x$ -data in our application. It's easy to update the `scatter` object in our visualization by setting its `XData` property.
 
@@ -58,13 +54,11 @@ Now suppose that we receive updated $x$ -data in our application. It's easy to u
 s.XData = s.XData + 2;
 ```
 
-![](./images/WhatIsAChart_figure_2.png)
-
 As we expect, this updates the scatter plot, but not the best-fit line associated with the $(x,y)$ -data.
 
 This demonstrates an important issue: the scatter plot and the best-fit line are not synchronized.
 
-## Suppose that our x-data now has a different size.
+## Suppose that our x-data now has a different size
 
 Next, we assume that we receive new $x$ -data with a different size to the data that we have already. For example, the new $x$ -data could have length 500, compared to our original data length of 1000.
 
@@ -73,15 +67,13 @@ xnew = x(1:500);
 s.XData = xnew;
 ```
 
-![](./images/WhatIsAChart_figure_3.png)
-
 Attempting to update the scatter plot causes a warning to be issued, since the `XData` and `YData` properties of the scatter plot now have different lengths. 
 
 The scatter plot is no longer rendered. This illustrates another issue: when updating the scatter plot, both the $x$ -data and the $y$ -data must have the same length. 
 
 Changing the $x$ -data or $y$ -data individually may cause the scatter plot to disappear.
 
-## Now update the y-data.
+## Now update the y-data
 
 Suppose that we now receive new $y$ -data, and we attempt to update the scatter plot. This update will render the scatter object as long as the new y-data has the same length as the new x-data.
 
@@ -89,19 +81,15 @@ Suppose that we now receive new $y$ -data, and we attempt to update the scatter 
 s.YData = - 2 * xnew + 0.5 + randn( size( xnew ) );
 ```
 
-![](./images/WhatIsAChart_figure_4.png)
-
 However, the best-fit line is still incorrect and must be refreshed.
 
-## Refresh the best-fit line.
+## Refresh the best-fit line
 ```matlab
 model = fitlm( s.XData, s.YData );
 set( p, "XData", s.XData, "YData", model.Fitted )
 ```
 
-![](./images/WhatIsAChart_figure_5.png)
-
-## Summary.
+## Summary
 
 We've seen that even for a simple visualization example, there are challenges associated with managing data updates:
 

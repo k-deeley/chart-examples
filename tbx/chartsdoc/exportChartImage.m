@@ -37,7 +37,7 @@ arguments ( Output )
     p(1, 1) string {mustBeFolder}
 end % arguments ( Output )
 
-p = fullfile( chartsRoot(), "..", "chartsdoc", "charts", "images" );
+p = fullfile( chartsDocRoot(), "charts", "images" );
 
 end % exportPath
 

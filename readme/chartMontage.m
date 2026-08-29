@@ -1,14 +1,14 @@
 function chartMontage()
 %CHARTMONTAGE Create chart montage for use in the README.md file.
 
-% Copyright 2026 The MathWorks, Inc.
+% Copyright 2025-2026 The MathWorks, Inc.
 
 % Create a datastore for all chart images.
-chartImages = fullfile( chartsRoot(), "app", "images" );
+chartImages = fullfile( chartsDocRoot(), "charts", "images" );
 ds = imageDatastore( chartImages );
 
-% Remove smaller icons and the toolbox logo.
-tf = endsWith( ds.Files, "40.png" ) | endsWith( ds.Files, "Logo.png" );
+% Remove the toolbox logo.
+tf = endsWith( ds.Files, "Logo.png" );
 ds.Files(tf) = [];
 
 % Create the tiled image.
