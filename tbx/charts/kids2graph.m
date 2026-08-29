@@ -1,6 +1,5 @@
 function [G, nodeLabels] = kids2graph( graphicsObject, namedArgs )
-%KIDS2GRAPH Construct a graph listing the descendants of the given graphics
-%object.
+%KIDS2GRAPH Graph listing the descendants of the given graphics object.
 
 % Copyright 2026 The MathWorks, Inc.
 
