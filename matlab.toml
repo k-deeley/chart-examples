@@ -14,7 +14,7 @@ test = [
 
 [dependencies]
 Test_Framework_Extensions = {version = "1.0.7", id = "609722db-8fd7-4bbd-b440-c413f25e08c0"}
-MATLAB_DocMaker = {version = "0.7.0", id = "ae82d5d2-45be-4fc5-a01b-70d8bb905ca2"}
+MATLAB_DocMaker = {version = ">=0.7.0", id = "ae82d5d2-45be-4fc5-a01b-70d8bb905ca2"}
 
 [project.labels.Classification]
 Test = [
