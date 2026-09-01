@@ -4,7 +4,7 @@ function f = exampleFigure( namedArgs )
 % different chart examples. Any of the preset properties (Units, Position)
 % may be overridden by passing name-value pairs to the function.
 
-% Copyright 2018-2025 The MathWorks, Inc.
+% Copyright 2018-2026 The MathWorks, Inc.
 
 arguments ( Input )
     namedArgs.?matlab.ui.Figure

@@ -1,8 +1,9 @@
-classdef ValueAtRiskChart < Component
+classdef ValueAtRiskChart < ...
+        matlab.ui.componentcontainer.ComponentContainer
     %VALUEATRISKCHART Chart displaying the distribution of a return series
     %together with value at risk metrics and a distribution fit.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
    properties ( Dependent )
         % Underlying data for the chart, typically a series of returns.
@@ -12,7 +13,7 @@ classdef ValueAtRiskChart < Component
     properties ( Dependent, AbortSet )
         % Value at risk level, used for both the VaR and CVaR metrics.
         VaRLevel(1, 1) double {mustBeReal, ...
-            mustBeInRange( VaRLevel, 0.90, 1.00, "exclude-upper" )}
+            mustBeBetween( VaRLevel, 0.90, 1.00, "closedleft" )}
         % Probability distribution name.
         DistributionName(1, 1) string ...
             {mustBeMember( DistributionName, ["Kernel", "Normal", ...
@@ -40,11 +41,11 @@ classdef ValueAtRiskChart < Component
         % Width of distribution fit curve and risk lines.
         LineWidth(1, 1) double {mustBePositive, mustBeFinite} = 2
         % Histogram edge transparency.
-        EdgeAlpha(1, 1) double {mustBeInRange( EdgeAlpha, 0, 1 )}
+        EdgeAlpha(1, 1) double {mustBeBetween( EdgeAlpha, 0, 1 )}
         % Histogram edge color.
         EdgeColor
         % Histogram bar face transparency.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )}
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )}
         % Histogram bar face color.
         FaceColor
         % Visibility of the chart controls.
@@ -61,7 +62,7 @@ classdef ValueAtRiskChart < Component
         Data_(:, 1) double {mustBeReal, mustBeNonempty, mustBeFinite} = 0
         % Internal storage for the VaR level.
         VaRLevel_(1, 1) double {mustBeReal, ...
-            mustBeInRange( VaRLevel_, 0.90, 1.00, "exclude-upper" )} = 0.95
+            mustBeBetween( VaRLevel_, 0.90, 1.00, "closedleft" )} = 0.95
         % Internal storage for the distribution name.
         DistributionName_(1, 1) string ...
             {mustBeMember( DistributionName_, ["Kernel", "Normal", ...
@@ -234,7 +235,7 @@ classdef ValueAtRiskChart < Component
             value = obj.VaRLabelCheckBox.Value;
 
         end % get.VaRLabelVisible
-        
+
         function set.VaRLabelVisible( obj, value )
 
             obj.VaRLabelCheckBox.Value = value;
@@ -278,7 +279,7 @@ classdef ValueAtRiskChart < Component
 
             % Update the spinner control.
             obj.EdgeAlphaSpinner.Value = value;
-            
+
             % Update the histogram.
             obj.Histogram.EdgeAlpha = value;
 
@@ -293,7 +294,7 @@ classdef ValueAtRiskChart < Component
         function set.EdgeColor( obj, value )
 
             % Update the histogram.
-            value = validatecolor( value );            
+            value = validatecolor( value );
             obj.Histogram.EdgeColor = value;
 
             % Update the color picker.
@@ -344,7 +345,7 @@ classdef ValueAtRiskChart < Component
 
             % Update the toggle button.
             obj.ToggleButton.Value = value;
-            
+
             % Invoke the toggle button callback.
             obj.onToggleButtonPressed()
 
@@ -361,6 +362,12 @@ classdef ValueAtRiskChart < Component
             arguments ( Input )
                 namedArgs.?ValueAtRiskChart
             end % arguments ( Input )
+
+            % Call the superclass constructor.
+            obj@matlab.ui.componentcontainer.ComponentContainer( ...
+                "Parent", [], ...
+                "Units", "normalized", ...
+                "Position", [0, 0, 1, 1] )
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -389,7 +396,7 @@ classdef ValueAtRiskChart < Component
 
             % Invoke grid on the axes.
             grid( obj.Axes, varargin{:} )
-            
+
             % Update the chart's grid properties.
             obj.XGrid = obj.Axes.XGrid;
             obj.YGrid = obj.Axes.YGrid;
@@ -478,7 +485,7 @@ classdef ValueAtRiskChart < Component
             g = uigridlayout( p, [8, 2], ...
                 "RowHeight", repelem( "fit", 8 ), ...
                 "ColumnWidth", ["fit", "1x"] );
-            
+
             % Add the distribution selection dropdown.
             uilabel( g, "Text", "Distribution fit: ", ...
                 "HorizontalAlignment", "right" );
@@ -488,7 +495,7 @@ classdef ValueAtRiskChart < Component
                 "Tooltip", ...
                 "Select the probability distribution to fit to the data", ...
                 "ValueChangedFcn", @obj.onDistributionSelected );
-            
+
             % Add checkboxes to control visibility of the PDF and value at
             % risk lines.
             obj.FittedPDFCheckBox = uicheckbox( g, ...
@@ -537,7 +544,7 @@ classdef ValueAtRiskChart < Component
                 "UpperLimitInclusive", "off", ...
                 "Value", 2, ...
                 "ValueChangedFcn", @obj.onLineWidthEdited );
-                        
+
             % Place the histogram controls in a separate panel.
             p = uipanel( g, "Title", "Histogram Appearance", ...
                 "FontWeight", "bold" );
@@ -545,14 +552,14 @@ classdef ValueAtRiskChart < Component
             g = uigridlayout( p, [4, 2], ...
                 "RowHeight", repmat( "fit", 4, 1 ), ...
                 "ColumnWidth", ["fit", "1x"] );
-            
+
             % Add controls for the edge and face transparency and color.
             uilabel( g, "Text", "Edge color:", ...
                 "HorizontalAlignment", "right" );
             obj.EdgeColorPicker = uicolorpicker( "Parent", g, ...
                 "Tooltip", "Select the histogram edge color", ...
                 "Value", obj.EdgeColor, ...
-                "ValueChangedFcn", @obj.onEdgeColorPicked );            
+                "ValueChangedFcn", @obj.onEdgeColorPicked );
             uilabel( g, "Text", "Edge alpha:", ...
                 "HorizontalAlignment", "right" );
             obj.EdgeAlphaSpinner = uispinner( g, ...
@@ -566,7 +573,7 @@ classdef ValueAtRiskChart < Component
             obj.FaceColorPicker = uicolorpicker( "Parent", g, ...
                 "Value", obj.FaceColor, ...
                 "Tooltip", "Select the histogram face color", ...
-                "ValueChangedFcn", @obj.onFaceColorPicked );            
+                "ValueChangedFcn", @obj.onFaceColorPicked );
             uilabel( g, "Text", "Face alpha:", ...
                 "HorizontalAlignment", "right" );
             obj.FaceAlphaSpinner = uispinner( g, ...
@@ -609,7 +616,7 @@ classdef ValueAtRiskChart < Component
 
                 % Update the VaR lines only.
                 obj.updateVaRLines()
-                
+
                 % Mark the chart clean.
                 obj.ComputationRequired(2) = false;
 

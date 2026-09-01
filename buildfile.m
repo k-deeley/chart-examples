@@ -1,10 +1,17 @@
 function plan = buildfile()
 %BUILDFILE Chart Examples build file.
 
-% Copyright 2024-2025 The MathWorks, Inc.
+% Copyright 2024-2026 The MathWorks, Inc.
 
 % Define the build plan.
 plan = buildplan( localfunctions() );
+
+% Folders of interest.
+prj = plan.RootFolder;
+api = fullfile( prj, "tbx" );
+tests = fullfile( prj, "tbx", tbxname(), "tests" );
+charts = fullfile( prj, "tbx", tbxname(), tbxname() );
+doc = fullfile( prj, "tbx", tbxname() + "doc" );
 
 % Set the package task to run by default.
 plan.DefaultTasks = "package";
@@ -12,61 +19,62 @@ plan.DefaultTasks = "package";
 % Add the clean task.
 plan("clean") = matlab.buildtool.tasks.CleanTask();
 
-% Add a test task to run the unit tests for the project. Generate and save
-% a coverage report.
-projectRoot = plan.RootFolder;
-testFolder = fullfile( projectRoot, "tbx", "charts", "tests" );
-codeFolder = fullfile( projectRoot, "tbx", "charts", "charts"  );
-plan("test") = matlab.buildtool.tasks.TestTask( testFolder, ...
-    "Strict", true, ...
-    "RunOnlyImpactedTests", true, ...
-    "Description", "Assert that all impacted tests " + ...
-    "across the project pass.", ...
-    "SourceFiles", codeFolder, ...
-    "TestResults", "reports/Results.html", ...
-    "LoggingLevel", "Verbose", ...
-    "OutputDetail", "Verbose" );
-plan("test").addCodeCoverage( "reports/Coverage.html", ...
-    "MetricLevel", "mcdc" );
-
-% The test task depends on the check task.
-plan("test").Dependencies = "check";
-
-% The doc task depends on the test task.
-plan("doc").Dependencies = "test";
-
-% Skip the doc task if the charts, examples, and doc files are up to date.
-plan("doc").Inputs = [
-    fullfile( chartsRoot(), "charts" );
-    fullfile( chartsRoot(), "examples" );
-    fullfile( chartsRoot(), "doc" )];
-
-% Obfuscate the required files.
-appFolder = fullfile( chartsRoot(), "app" );
-sourceFile = fullfile( appFolder, "ChartBrowserLauncher.m" );
-plan("pcode") = matlab.buildtool.tasks.PcodeTask( ...
-    sourceFile, appFolder, ...
-    "Description", "Obfuscate the required code files.", ...
-    "Dependencies", "doc" );
-
-% The package task depends on the p-code task.
-plan("package").Dependencies = "pcode";
-
-end % buildfile
-
-function checkTask( context )
-% Check the source code and project for any issues.
-
-% Set the project root as the folder in which to check for any static code
-% issues.
-projectRoot = context.Plan.RootFolder;
-codeIssuesTask = matlab.buildtool.tasks.CodeIssuesTask( projectRoot, ...
+% Add the check task group.
+plan("check:code") = matlab.buildtool.tasks.CodeIssuesTask( prj, ...
     "IncludeSubfolders", true, ...
     "Configuration", "factory", ...
     "Description", ...
     "Assert that there are no code issues in the project.", ...
-    "WarningThreshold", 0 );
-codeIssuesTask.analyze( context )
+    "ErrorThreshold", 0, ...
+    "WarningThreshold", 0, ...
+    "InfoThreshold", 0 );
+
+plan("check:project") = matlab.buildtool.Task( ...
+    "Description", "Run MATLAB project checks.", ...
+    "Actions", @checkProject, ...
+    "Inputs", api );
+
+% Add a test task to run the unit tests for the project. Generate and save
+% a coverage report.
+plan("test") = matlab.buildtool.tasks.TestTask( tests, ...
+    "Dependencies", "check", ...
+    "Strict", true, ...
+    "RunOnlyImpactedTests", true, ...
+    "Description", "Assert that all impacted tests " + ...
+    "across the project pass.", ...
+    "SourceFiles", charts, ...
+    "TestResults", "reports/TestResults.html");    
+plan("test").addCodeCoverage( "reports/TestCoverage.html", ...
+    "MetricLevel", "mcdc" );
+
+% The doc task depends on the test task.
+plan("doc").Dependencies = "test";
+
+% Skip the doc task if the documentation files are up to date.
+plan("doc").Inputs = [doc; charts; tests];
+plan("doc").Outputs = [
+    fullfile( doc, "**", "*.html" );
+    fullfile( doc, "*.xml" );
+    fullfile( doc, "resources" );
+    fullfile( doc, "helpsearch-v*" )];
+
+% Add the package task.
+plan("package") = matlab.buildtool.tasks.PackageTask( ...
+    "Chart_Examples", ...
+    "Dependencies", "doc" );
+plan("package").Actions(end+1) = @versionPackage;
+
+end % buildfile
+
+function name = tbxname()
+%TBXNAME Toolbox short name.
+
+name = "charts";
+
+end % tbxname
+
+function checkProject( ~ )
+% Check the source code and project for any issues.
 
 % Update the project dependencies.
 prj = currentProject();
@@ -89,187 +97,80 @@ assert( all( passed ), "buildfile:ProjectIssue", ...
     "At least one project check has failed. " + ...
     "Resolve the failures shown above to continue." )
 
-end % checkTask
+end % checkProject
 
 function docTask( context )
-% Build the documentation and examples.
+% Build the documentation.
 
-% Publish the chart classes as HTML documents.
-chartsFolder = context.Task.Inputs(1).Path;
-chartsInfo = struct2table( dir( fullfile( chartsFolder, "*.m" ) ) );
-chartNames = string( chartsInfo.name );
-chartFullPaths = fullfile( chartsFolder, chartNames );
-chartNames = erase( chartNames, ".m" );
-htmlOutputFolder = fullfile( chartsRoot(), "app", "html", "charts" );
+% Generate the chart reference pages.
+docFolder = context.Task.Inputs(1).Path;
+generatedMarkdownFiles = generateChartReferencePages();
 
-for chartIdx = 1 : numel( chartNames )
+% Convert the Markdown files to HTML.
+markdownInfo = dir( fullfile( docFolder, "**", "*.md" ) );
+markdownFiles = fullfile( string( {markdownInfo.folder} ), ...
+    string( {markdownInfo.name} ) ).';
+htmlFiles = docconvert( markdownFiles, ...
+    "Theme", "light", ...
+    "Root", docFolder );
+fprintf( 1, "** Converted Markdown documentation to HTML.\n" )
 
-    % Export the chart classdef file to an HTML document.
-    publishedFile = publish( chartFullPaths(chartIdx), ...
-        "format", "html", ...
-        "outputDir", htmlOutputFolder, ...
-        "evalCode", false );
+% Insert the MATLAB output.
+docrun( htmlFiles, "Theme", "light", "FigureSize", [600, 400] )
+fprintf( 1, "** Inserted MATLAB output into doc.\n" )
 
-    % Open it for editing.
-    htmlFileContents = fileread( publishedFile );
+% Build the doc index.
+docindex( docFolder )
+fprintf( 1, "** Indexed documentation.\n" )
 
-    % Insert the JavaScript code.
-    jsFile = fullfile( chartsRoot(), "app", "html", ...
-        "respondToThemeChanges.js" );
-    jsCode = fileread( jsFile );
-    htmlFileContents = insertBefore( htmlFileContents, "</body>", ...
-        "<script type=""text/javascript"">" + jsCode + "</script>" );
-
-    % Replace the file contents.
-    fileID = fopen( publishedFile, "w" );
-    fprintf( fileID, "%s", htmlFileContents );
-    fclose( fileID );
-
-    % Report progress.
-    fprintf( 1, "[+] %s\n", publishedFile )
-
-end % for
-
-% Publish the examples as HTML documents.
-examplesFolder = context.Task.Inputs(2).Path;
-examplesInfo = struct2table( dir( fullfile( ...
-    examplesFolder, "*Examples.m" ) ) );
-exampleNames = string( examplesInfo.name );
-exampleFullPaths = fullfile( examplesFolder, exampleNames );
-exampleNames = erase( exampleNames, ".m" );
-htmlOutputFolder = fullfile( chartsRoot(), "app", "html", "examples" );
-
-for exampleIdx = 1 : numel( exampleNames )
-
-    % Export the script to HTML.
-    exportName = fullfile( htmlOutputFolder, ...
-        exampleNames(exampleIdx) + ".html" );
-    export( exampleFullPaths(exampleIdx), exportName, ...
-        "Format", "html", ...
-        "Run", false );
-
-    % Activate the hyperlinks.
-    activateLinks( exportName )
-
-    % Report progress.
-    fprintf( 1, "[+] %s\n", exportName )
-
-end % for
-
-% Write down the doc source and output folders.
-docFolder = context.Task.Inputs(3).Path;
-htmlOutputFolder = fullfile( chartsRoot(), "app", "html", "doc" );
-
-% Publish the documentation files.
-docInfo = struct2table( dir( fullfile( docFolder, "*.m" ) ) );
-docFilenames = string( docInfo.name );
-for fileIdx = 1 : numel( docFilenames )
-    exportToHTML( docFilenames(fileIdx) )
-end % for
-
-    function exportToHTML( scriptName )
-        %EXPORTTOHTML Export the given script to HTML format.
-
-        scriptFullPath = fullfile( docFolder, scriptName );
-        [~, scriptNameNoExt] = fileparts( scriptName );
-        exportName = fullfile( htmlOutputFolder, ...
-            scriptNameNoExt + ".html" );
-        export( scriptFullPath, exportName, ...
-            "Format", "html", ...
-            "Run", false );
-        activateLinks( exportName )
-
-    end % exportToHTML
+addGeneratedFilesToProject( generatedMarkdownFiles )
 
 end % docTask
 
-function packageTask( context )
-% Package the Chart Development Toolbox.
-
-% Toolbox short name.
-toolboxShortName = "charts";
-
-% Project root directory.
-projectRoot = context.Plan.RootFolder;
-
-% Import and tweak the toolbox metadata.
-toolboxJSON = fullfile( projectRoot, toolboxShortName + ".json" );
-meta = jsondecode( fileread( toolboxJSON ) );
-meta.ToolboxMatlabPath = fullfile( projectRoot, meta.ToolboxMatlabPath );
-meta.ToolboxFolder = fullfile( projectRoot, meta.ToolboxFolder );
-meta.ToolboxImageFile = fullfile( projectRoot, meta.ToolboxImageFile );
-versionString = feval( @(s) s(1).Version, ...
-    ver( toolboxShortName ) ); %#ok<FVAL>
-meta.ToolboxVersion = versionString;
-meta.ToolboxGettingStartedGuide = fullfile( projectRoot, ...
-    meta.ToolboxGettingStartedGuide );
-mltbx = fullfile( projectRoot, ...
-    meta.ToolboxName + " " + versionString + ".mltbx" );
-meta.OutputFile = mltbx;
-
-% Define the toolbox packaging options.
-toolboxFolder = meta.ToolboxFolder;
-toolboxID = meta.Identifier;
-meta = rmfield( meta, ["Identifier", "ToolboxFolder"] );
-opts = matlab.addons.toolbox.ToolboxOptions( ...
-    toolboxFolder, toolboxID, meta );
-
-% Remove unnecessary files.
-tf = endsWith( opts.ToolboxFiles, "ChartBrowserLauncher.m" ) | ...
-    endsWith( opts.ToolboxFiles, ...
-    "app\images\" + lettersPattern() + "Chart.png" );
-opts.ToolboxFiles(tf) = [];
-
-% Package the toolbox.
-matlab.addons.toolbox.packageToolbox( opts )
-fprintf( 1, "[+] %s\n", opts.OutputFile )
-
-% Add the license.
-licenseText = fileread( fullfile( projectRoot, "LICENSE.txt" ) );
-mlAddonSetLicense( char( opts.OutputFile ), ...
-    struct( "type", 'BSD', "text", licenseText ) );
-
-end % packageTask
-
-function activateLinks( file )
-%ACTIVATELINKS Convert the Live Script hyperlinks to JavaScript-enabled
-%links within the specified HTML file.
+function addGeneratedFilesToProject( files )
+%ADDGENERATEDFILESTOPROJECT Add generated files to the current project.
 
 arguments ( Input )
-    file(1, 1) string {mustBeFile}
+    files(1, :) string
 end % arguments ( Input )
 
-% Read the file contents.
-htmlFileContents = string( fileread( file ) );
-
-% Replace the commands within the anchors.
-
-% Extract the anchors.
-anchors = extractBetween( htmlFileContents, "<a href = ""matlab:", ">", ...
-    "Boundaries", "inclusive" );
-
-% Extract the commands.
-commands = extractBetween( anchors, """", """" );
-
-% Format the JavaScript-enabled anchors.
-replacementAnchors = "<a href = ""#"" onclick=""handleClick(" + ...
-    "'" + commands + "'" + "); return false;"">";
-
-% Replace the original anchors with the new anchors.
-for k = 1 : numel( anchors )
-    htmlFileContents = replace( htmlFileContents, ...
-        anchors(k), replacementAnchors(k) );
+prj = currentProject();
+projectFiles = string( {prj.Files.Path} );
+for file = files
+    if isfile( file ) && ~any( projectFiles == file )
+        addFile( prj, file );
+    end % if
 end % for
 
-% Insert the JavaScript block.
-jsFile = fullfile( chartsRoot(), "app", "html", "activateLinks.js" );
-jsCode = fileread( jsFile );
-htmlFileContents = insertBefore( htmlFileContents, "</body>", ...
-    "<script type = ""text/javascript"">" + jsCode + "</script>" );
+end % addGeneratedFilesToProject
 
-% Replace the file contents.
-fileID = fopen( file, "w" );
-fprintf( fileID, "%s", htmlFileContents );
-fclose( fileID );
+function versionPackage( ~ )
+%VERSIONPACKAGE Ensure consistency between version sources.
 
-end % activateLinks
+v = ver( tbxname() );
+versionName = v(1).Name;
+versionString = v(1).Version;
+
+% Check package version for consistency.
+toml = string( splitlines( fileread( "matlab.toml" ) ) );
+versionLine = toml(startsWith( toml, "version = " ));
+tomlVersion = strip( extractAfter( versionLine, "version = " ), ...
+    "both", """" );
+assert( versionString == tomlVersion, ...
+    "build:package:VersionPackageMismatch", ...
+    "%s version %s (from Contents.m) does not " + ...
+    "match the package version %s (in matlab.toml).", ...
+    versionName, versionString, tomlVersion )
+
+% Check version and tag compatibility for release
+if strcmp( getenv( "GITHUB_ACTIONS" ), "true" )    
+    ref = string( getenv( "GITHUB_REF" ) );
+    gitTagNumber = extractAfter( ref, "refs/tags/v" );
+    assert( versionString == gitTagNumber, ...
+        "build:package:VersionTagMismatch", ...
+        "%s package version %s (from Contents.m) does not " + ...
+        "match the current Git tag number (%s).", ...
+        versionName, versionString, gitTagNumber )    
+end % if
+
+end % versionPackage

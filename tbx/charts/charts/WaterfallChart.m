@@ -1,16 +1,17 @@
-classdef WaterfallChart < Chart
+classdef WaterfallChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %WATERFALLCHART Cumulative bar chart visualizing the evolution of an
     %initial value.
 
-    % Copyright 2025 The MathWorks, Inc.
+    % Copyright 2025-2026 The MathWorks, Inc.
 
     properties
         % Bar edge alpha.
-        BarEdgeAlpha(1, 1) double {mustBeInRange( BarEdgeAlpha, 0, 1 )} = 1
+        BarEdgeAlpha(1, 1) double {mustBeBetween( BarEdgeAlpha, 0, 1 )} = 1
         % Bar edge color.
         BarEdgeColor {validatecolor} = [0.5, 0.5, 0.5]
         % Bar face alpha.
-        BarFaceAlpha(1, 1) double {mustBeInRange( BarFaceAlpha, 0, 1 )} = 1        
+        BarFaceAlpha(1, 1) double {mustBeBetween( BarFaceAlpha, 0, 1 )} = 1
         % Bar line width.
         BarLineWidth(1, 1) double {mustBePositive, mustBeFinite} = 1
         % Bar line style.
@@ -65,12 +66,12 @@ classdef WaterfallChart < Chart
         TargetLineLabel(1, 1) string = ""
         % Total bar edge alpha.
         TotalBarEdgeAlpha(1, 1) double ...
-            {mustBeInRange( TotalBarEdgeAlpha, 0, 1 )} = 1
+            {mustBeBetween( TotalBarEdgeAlpha, 0, 1 )} = 1
         % Total bar edge color.
         TotalBarEdgeColor {validatecolor} = [0.5, 0.5, 0.5]
         % Total bar face alpha.
         TotalBarFaceAlpha(1, 1) double ...
-            {mustBeInRange( TotalBarFaceAlpha, 0, 1 )} = 1
+            {mustBeBetween( TotalBarFaceAlpha, 0, 1 )} = 1
         % Total bar face color.
         TotalBarFaceColor = [0, 0.4470, 0.7410]
         % Total bar line width.
@@ -91,7 +92,7 @@ classdef WaterfallChart < Chart
         % Global line width.
         LineWidth(1, 1) double {mustBePositive, mustBeFinite}
         % Bar width.
-        BarWidth(1, 1) double {mustBeInRange( BarWidth, 0, 1 )}
+        BarWidth(1, 1) double {mustBeBetween( BarWidth, 0, 1 )}
     end % properties ( Dependent )
 
     properties ( GetAccess = ?Testable, SetAccess = private )
@@ -123,7 +124,7 @@ classdef WaterfallChart < Chart
         ColorData_(:, 1) double {mustBePositive, mustBeInteger} = ...
             double.empty( 0, 1 )
         % Internal storage for BarWidth.
-        BarWidth_(1, 1) double {mustBeInRange( BarWidth_, 0, 1 )} = 0.5
+        BarWidth_(1, 1) double {mustBeBetween( BarWidth_, 0, 1 )} = 0.5
         % Logical flag specifying whether a full update is needed.
         ComputationRequired(1, 1) logical = false
     end % properties ( Access = private )
@@ -145,6 +146,13 @@ classdef WaterfallChart < Chart
             arguments ( Input )
                 namedArgs.?WaterfallChart
             end % arguments ( Input )
+
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -223,7 +231,7 @@ classdef WaterfallChart < Chart
 
         end % box
 
-        function colororder( obj, colorarray )            
+        function colororder( obj, colorarray )
 
             colorarray = validatecolor( colorarray, "multiple" );
             obj.ColorOrder = colorarray;
@@ -260,7 +268,7 @@ classdef WaterfallChart < Chart
                 obj.ColorData_ = ones( size( obj.Data_ ) );
                 negativeIdx = obj.Data_ < 0;
                 obj.ColorData_(negativeIdx) = 2;
-            end % if            
+            end % if
 
         end % set.BarFaceColor
 
@@ -300,7 +308,7 @@ classdef WaterfallChart < Chart
                 obj.ColorData_ = ones( size( obj.Data_ ) );
                 negativeIdx = obj.Data_ < 0;
                 obj.ColorData_(negativeIdx) = 2;
-                
+
             else % "flat" or single color
 
                 ny = numel( obj.Data_ );
@@ -318,7 +326,7 @@ classdef WaterfallChart < Chart
 
                 end % if
 
-            end % if        
+            end % if
 
         end % set.Data
 
@@ -419,7 +427,7 @@ classdef WaterfallChart < Chart
                 % Write down the length of the current data vector and the
                 % previous number of colors.
                 y = obj.Data;
-                ny = numel( y );                
+                ny = numel( y );
 
                 % Handle the special case when the length is zero.
                 if ny == 0
@@ -434,7 +442,7 @@ classdef WaterfallChart < Chart
                         "VerticalAlignment", "bottom", ...
                         "String", "" );
                     set( obj.Axes, "XTick", [], "XLim", [0, 1] )
-                    set( obj.Bar, "XData", NaN, "YData", NaN )                    
+                    set( obj.Bar, "XData", NaN, "YData", NaN )
                     return
                 end % if
 
@@ -461,7 +469,7 @@ classdef WaterfallChart < Chart
                     yl = [yl, cy(k+1), cy(k+1), NaN];
                 end % for
                 xl = [xl, ny, ny+1];
-                yl = [yl, cy(ny+1), cy(ny+1)];                
+                yl = [yl, cy(ny+1), cy(ny+1)];
 
                 % Compute the bar label coordinates and evaluate the new
                 % text values.
@@ -504,7 +512,7 @@ classdef WaterfallChart < Chart
             % remaining case is a single color, which is applied to all
             % faces in the patch. The axes' colormap is the stored
             % 'ColorOrder' property when 'BarFaceColor' is 'flat', and is
-            % the default color order when 'BarFaceColor' is 'updown'. 
+            % the default color order when 'BarFaceColor' is 'updown'.
             if isequal( obj.BarFaceColor, "flat" )
                 patchCData = obj.ColorData_;
                 axesColormap = obj.ColorOrder;
@@ -515,7 +523,7 @@ classdef WaterfallChart < Chart
                 patchCData = reshape( obj.BarFaceColor, [1, 1, 3] );
                 axesColormap = defaultColorOrder();
             end % if
-            
+
             obj.Axes.Colormap = axesColormap;
             set( obj.Patch, "EdgeAlpha", obj.BarEdgeAlpha, ...
                 "EdgeColor", obj.BarEdgeColor, ...
@@ -550,7 +558,7 @@ classdef WaterfallChart < Chart
             else
                 totalBarLabel = "";
             end % if
-            
+
             set( obj.Bar, "EdgeAlpha", obj.TotalBarEdgeAlpha, ...
                 "EdgeColor", obj.TotalBarEdgeColor, ...
                 "FaceAlpha", obj.TotalBarFaceAlpha, ...
@@ -595,3 +603,27 @@ colors = [0.2310, 0.6660, 0.1960;
     0.8660, 0.3290, 0];
 
 end % defaultColorOrder
+
+function mustBeLineStyle( style )
+%MUSTBELINESTYLE Validate a line style value.
+
+lineStyleValues = set( groot(), "DefaultLineLineStyle" );
+mustBeMember( style, lineStyleValues )
+
+end % mustBeLineStyle
+
+function mustBeFontAngle( fontAngle )
+%MUSTBEFONTANGLE Validate a text object font angle value.
+
+fontAngleValues = set( groot(), "DefaultTextFontAngle" );
+mustBeMember( fontAngle, fontAngleValues )
+
+end % mustBeFontAngle
+
+function mustBeFontWeight( fontWeight )
+%MUSTBEFONTWEIGHT Validate a text object font weight value.
+
+fontWeightValues = set( groot(), "DefaultTextFontWeight" );
+mustBeMember( fontWeight, fontWeightValues )
+
+end % mustBeFontWeight

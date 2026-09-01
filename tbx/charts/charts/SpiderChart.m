@@ -1,9 +1,10 @@
-classdef SpiderChart < Chart
+classdef SpiderChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %SPIDERCHART Manages the display of values from distinct measurements
     %plotted around a web. The number of nodes in the web is equal to the
     %number of distinct measurements.
 
-    % Copyright 2019-2025 The MathWorks, Inc.
+    % Copyright 2019-2026 The MathWorks, Inc.
 
     properties
         % Web line width.
@@ -14,11 +15,11 @@ classdef SpiderChart < Chart
         %DATA Matrix of chart data: each row represents a distinct property
         %and corresponds to a node in the web. Each column contains the
         %measured property values and contains the data for each line.
-        Data(:, :) double {mustBeInRange( Data, 0, 1 )}
+        Data(:, :) double {mustBeBetween( Data, 0, 1 )}
         %TARGETDATA Target data vector, containing the same number of
         %elements as there are nodes in the web. Each element represents
         %the target value for that particular property.
-        TargetData(:, 1) double {mustBeInRange( TargetData, 0, 1 )}
+        TargetData(:, 1) double {mustBeBetween( TargetData, 0, 1 )}
         % Node labels.
         LabelText(:, 1) string
     end % properties ( Dependent )
@@ -44,7 +45,7 @@ classdef SpiderChart < Chart
 
     properties ( Dependent )
         % Line colors.
-        LineColors(:, 3) double {mustBeInRange( LineColors, 0, 1 )}
+        LineColors(:, 3) double {mustBeBetween( LineColors, 0, 1 )}
     end % properties ( Dependent )
 
     properties ( Dependent, SetAccess = private )
@@ -56,9 +57,9 @@ classdef SpiderChart < Chart
 
     properties ( Access = private )
         % Internal storage for the Data property.
-        Data_(:, :) double {mustBeInRange( Data_, 0, 1 )} = 0
+        Data_(:, :) double {mustBeBetween( Data_, 0, 1 )} = 0
         % Internal storage for the TargetData property.
-        TargetData_(:, 1) double {mustBeInRange( TargetData_, 0, 1 )} = 0
+        TargetData_(:, 1) double {mustBeBetween( TargetData_, 0, 1 )} = 0
         % Internal storage for the Labels property.
         LabelText_(:, 1) string = string.empty( 0, 1 )
         % Logical scalar specifying whether a computation is required.
@@ -215,7 +216,14 @@ classdef SpiderChart < Chart
 
             arguments ( Input )
                 namedArgs.?SpiderChart
-            end % arguments ( Input )            
+            end % arguments ( Input )
+
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -473,3 +481,27 @@ classdef SpiderChart < Chart
     end % methods ( Access = private )
 
 end % classdef
+
+function mustBeLineStyle( style )
+%MUSTBELINESTYLE Validate a line style value.
+
+lineStyleValues = set( groot(), "DefaultLineLineStyle" );
+mustBeMember( style, lineStyleValues )
+
+end % mustBeLineStyle
+
+function mustBeFontAngle( fontAngle )
+%MUSTBEFONTANGLE Validate a text object font angle value.
+
+fontAngleValues = set( groot(), "DefaultTextFontAngle" );
+mustBeMember( fontAngle, fontAngleValues )
+
+end % mustBeFontAngle
+
+function mustBeFontWeight( fontWeight )
+%MUSTBEFONTWEIGHT Validate a text object font weight value.
+
+fontWeightValues = set( groot(), "DefaultTextFontWeight" );
+mustBeMember( fontWeight, fontWeightValues )
+
+end % mustBeFontWeight

@@ -1,9 +1,10 @@
-classdef EdgeworthBowleyChart < Chart
+classdef EdgeworthBowleyChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %EDGEWORTHBOWLEYCHART Creates an Edgeworth-Bowley chart based on the
     %utility curves of two individuals and the Pareto-efficient contract
     %curve.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties
         % Contract line width.
@@ -186,7 +187,14 @@ classdef EdgeworthBowleyChart < Chart
 
             arguments ( Input )
                 namedArgs.?EdgeworthBowleyChart
-            end % arguments ( Input )            
+            end % arguments ( Input )
+
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -218,7 +226,7 @@ classdef EdgeworthBowleyChart < Chart
         end % grid
 
         function varargout = axis( obj, varargin )
-            
+
             [varargout{1:nargout}] = axis( obj.Axes, varargin{:} );
 
         end % axis

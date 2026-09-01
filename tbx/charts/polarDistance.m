@@ -3,11 +3,22 @@ function d = polarDistance( point, pointArray )
 %polar coordinates (theta, rho), where the angular coordinate theta is
 %measured in radians.
 
+% Copyright 2026 The MathWorks, Inc.
+
+arguments ( Input )
+    point(1, 2) double {mustBeReal} 
+    pointArray(:, 2) double {mustBeReal}
+end % arguments ( Input )
+
+arguments ( Output )
+    d(:, 1) double {mustBeReal, mustBeNonnegative}
+end % arguments ( Output )
+
 % Extract the (theta, rho) coordinates.
 theta1 = point(1);
 theta2 = pointArray(:, 1);
-rho1   = abs( point(2) );
-rho2   = abs( pointArray(:, 2) );
+rho1 = abs( point(2) );
+rho2 = abs( pointArray(:, 2) );
 
 % Evaluate the squared distances.
 d = rho1 ^ 2 + rho2 .^ 2 - 2 * rho1 * rho2 .* cos( theta1 - theta2 );

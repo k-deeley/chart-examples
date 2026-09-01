@@ -1,8 +1,9 @@
-classdef RadarScope < Component
+classdef RadarScope < ...
+        matlab.ui.componentcontainer.ComponentContainer
     %RADARSCOPE Component managing a radar scope and a set of blips
     %representing objects detected on the scope.
 
-    % Copyright 2021-2025 The MathWorks, Inc.
+    % Copyright 2021-2026 The MathWorks, Inc.
 
     properties
         % Backdrop color.
@@ -12,7 +13,7 @@ classdef RadarScope < Component
         % Grid line width.
         GridLineWidth(1, 1) double {mustBePositive, mustBeFinite} = 1.5
         % Grid line transparency.
-        GridAlpha(1, 1) double {mustBeInRange( GridAlpha, 0, 1 )} = 0.25
+        GridAlpha(1, 1) double {mustBeBetween( GridAlpha, 0, 1 )} = 0.25
         % Specify whether the lamp is shown.
         ShowProximityLamp(1, 1) matlab.lang.OnOffSwitchState = "on"
     end % properties
@@ -59,6 +60,12 @@ classdef RadarScope < Component
                 namedArgs.?RadarScope
             end % arguments ( Input )
 
+            % Call the superclass constructor.
+            obj@matlab.ui.componentcontainer.ComponentContainer( ...
+                "Parent", [], ...
+                "Units", "normalized", ...
+                "Position", [0, 0, 1, 1] )
+
             % Set any user-defined properties.
             set( obj, namedArgs )
 
@@ -99,12 +106,9 @@ classdef RadarScope < Component
                 % Store a reference to the blip in the scope.
                 obj.Blips(end+1, 1) = blip;
                 % Update the position listeners.
-                weakObj = matlab.lang.WeakReference( obj );
-                callback = @( varargin ) weakObj.Handle...
-                    .onBlipPositionChanged( varargin{:} );
                 obj.BlipPositionListeners(end+1, 1) = ...
                     listener( obj.Blips(end), ...
-                    "Position", "PostSet", callback );
+                    "Position", "PostSet", @obj.onBlipPositionChanged );
                 % Update the proximity status.
                 obj.onBlipPositionChanged()
             end % if

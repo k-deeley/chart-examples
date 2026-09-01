@@ -1,9 +1,10 @@
-classdef ScatterDensityChart < Chart
+classdef ScatterDensityChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %SCATTERDENSITYCHART Bivariate scatter plot using color to indicate
     %relative density of the data points.
-    
-    % Copyright 2019-2025 The MathWorks, Inc.
-    
+
+    % Copyright 2019-2026 The MathWorks, Inc.
+
     properties ( Dependent )
         % Chart x-data.
         XData(:, 1) double {mustBeReal}
@@ -15,7 +16,7 @@ classdef ScatterDensityChart < Chart
         DensityMethod(1, 1) string ...
             {mustBeMember( DensityMethod, ["boundary", "noboundary"] ) }
     end % properties ( Dependent )
-    
+
     properties
         % Marker for the scatter series.
         Marker(1, 1) string {mustBeMarker} = "."
@@ -24,14 +25,14 @@ classdef ScatterDensityChart < Chart
         % Axes x-grid.
         XGrid(1, 1) matlab.lang.OnOffSwitchState = "on"
         % Axes y-grid.
-        YGrid(1, 1) matlab.lang.OnOffSwitchState = "on"        
+        YGrid(1, 1) matlab.lang.OnOffSwitchState = "on"
     end % properties
-    
+
     properties ( Dependent )
         % Axes color limits.
         CLim(1, 2) double {mustBeReal, mustBeIncreasing}
     end % properties ( Dependent )
-    
+
     properties ( Access = private )
         % Internal storage for the XData property.
         XData_(:, 1) double {mustBeReal} = double.empty( 0, 1 )
@@ -45,7 +46,7 @@ classdef ScatterDensityChart < Chart
         % Logical scalar specifying whether a computation is required.
         ComputationRequired(1, 1) logical = false
     end % properties ( Access = private )
-    
+
     properties ( Access = private, Transient, NonCopyable )
         % Chart axes.
         Axes(:, 1) matlab.graphics.axis.Axes {mustBeScalarOrEmpty}
@@ -56,7 +57,7 @@ classdef ScatterDensityChart < Chart
         BoundingBox(:, 1) matlab.graphics.primitive.Rectangle ...
             {mustBeScalarOrEmpty}
     end % properties ( Access = private, Transient, NonCopyable )
-    
+
     properties ( Constant, Hidden )
         % Product dependencies.
         Dependencies(1, :) string = ["MATLAB", ...
@@ -65,24 +66,24 @@ classdef ScatterDensityChart < Chart
         ShortDescription(1, 1) string = "Bivariate scatter plot " + ...
             "using color to indicate relative density of the data points"
     end % properties ( Constant, Hidden )
-    
+
     methods
-        
+
         function value = get.XData( obj )
-            
+
             value = obj.XData_;
-            
+
         end % get.XData
-        
+
         function set.XData( obj, value )
-            
+
             % Mark the chart for an update.
             obj.ComputationRequired = true;
-            
+
             % Decide how to modify the chart data.
             nX = numel( value );
             nY = numel( obj.YData_ );
-            
+
             if nX < nY % If the new x-data is too short ...
                 % ... then chop the chart y-data.
                 obj.YData_ = obj.YData_(1:nX);
@@ -90,33 +91,33 @@ classdef ScatterDensityChart < Chart
                 % Otherwise, if nX >= nY, then pad the y-data.
                 obj.YData_(end+1:nX, 1) = NaN;
             end % if
-            
+
             % Set the internal x-data.
             obj.XData_ = value;
-            
+
             % Reset the scatter series' size data if necessary.
             nS = numel( obj.SizeData );
             if nS > 1 && nX ~= nS
                 obj.SizeData = 36;
             end % if
-            
+
         end % set.XData
-        
+
         function value = get.YData( obj )
-            
+
             value = obj.YData_;
-            
+
         end % get.YData
-        
+
         function set.YData( obj, value )
-            
+
             % Mark the chart for an update.
             obj.ComputationRequired = true;
-            
+
             % Decide how to modify the chart data.
             nY = numel( value );
             nX = numel( obj.XData_ );
-            
+
             if nY < nX % If the new y-data is too short ...
                 % ... then chop the chart x-data.
                 obj.XData_ = obj.XData_(1:nY);
@@ -124,64 +125,64 @@ classdef ScatterDensityChart < Chart
                 % Otherwise, if nY >= nX, then pad the x-data.
                 obj.XData_(end+1:nY, 1) = NaN;
             end % if
-            
+
             % Set the internal y-data.
             obj.YData_ = value(:);
-            
+
             % Reset the scatter series' size data if necessary.
             nS = numel( obj.SizeData );
             if nS > 1 && nY ~= nS
                 obj.SizeData = 36;
             end % if
-            
+
         end % set.YData
-        
+
         function value = get.Radius( obj )
-            
+
             value = obj.Radius_;
-            
+
         end % get.Radius
-        
+
         function set.Radius( obj, value )
-            
+
             % Mark the chart for an update.
             obj.ComputationRequired = true;
-            
+
             % Set the internal value.
             obj.Radius_ = value;
-            
+
         end % set.Radius
-        
+
         function value = get.DensityMethod( obj )
-            
+
             value = obj.DensityMethod_;
-            
+
         end % get.DensityMethod
-        
+
         function set.DensityMethod( obj, value )
-            
+
             % Mark the chart for an update.
             obj.ComputationRequired = true;
-            
+
             % Set the internal value.
             obj.DensityMethod_ = value;
-            
+
         end % set.DensityMethod
-        
+
         function value = get.CLim( obj )
-            
+
             value = obj.Axes.CLim;
-            
+
         end % get.CLim
-        
+
         function set.CLim( obj, value )
-            
+
             obj.Axes.CLim = value;
-            
+
         end % set.CLim
-        
+
     end % methods
-    
+
     methods
 
         function obj = ScatterDensityChart( namedArgs )
@@ -190,58 +191,65 @@ classdef ScatterDensityChart < Chart
 
             arguments ( Input )
                 namedArgs.?ScatterDensityChart
-            end % arguments ( Input )           
+            end % arguments ( Input )
+
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
 
             % Set any user-defined properties.
             set( obj, namedArgs )
 
         end % constructor
-        
+
         function varargout = xlabel( obj, varargin )
-            
+
             [varargout{1:nargout}] = xlabel( obj.Axes, varargin{:} );
-            
+
         end % xlabel
-        
+
         function varargout = ylabel( obj, varargin )
-            
+
             [varargout{1:nargout}] = ylabel( obj.Axes, varargin{:} );
-            
+
         end % ylabel
-        
+
         function varargout = title( obj, varargin )
-            
+
             [varargout{1:nargout}] = title( obj.Axes, varargin{:} );
-            
+
         end % title
-        
+
         function grid( obj, varargin )
-            
+
             % Invoke grid on the axes.
             grid( obj.Axes, varargin{:} )
-            
+
             % Update the chart's decorative properties.
             obj.XGrid = obj.Axes.XGrid;
             obj.YGrid = obj.Axes.YGrid;
-            
+
         end % grid
-        
+
         function varargout = legend( obj, varargin )
-            
+
             [varargout{1:nargout}] = legend( obj.Axes, varargin{:} );
-            
+
         end % legend
-        
+
         function varargout = colorbar( obj, varargin )
-            
+
             [varargout{1:nargout}] = colorbar( obj.Axes, varargin{:} );
-            
+
         end % colorbar
-        
+
         function varargout = colormap( obj, varargin )
-            
+
             [varargout{1:nargout}] = colormap( obj.Axes, varargin{:} );
-            
+
         end % colormap
 
         function varargout = axis( obj, varargin )
@@ -249,44 +257,44 @@ classdef ScatterDensityChart < Chart
             [varargout{1:nargout}] = axis( obj.Axes, varargin{:} );
 
         end % axis
-        
+
     end % methods
-    
+
     methods ( Access = protected )
-        
+
         function setup( obj )
             %SETUP Initialize the chart graphics.
-            
+
             % Create the chart's axes.
             obj.Axes = axes( "Parent", obj.getLayout(), ...
                 "Colormap", parula() );
             % Add the colorbar.
             colorbar( obj )
-            
+
             % Create the scatter plot.
             hold( obj.Axes, "on" )
             obj.ScatterSeries = scatter( obj.Axes, NaN, NaN, "." );
-            
+
             % Create the bounding box.
             obj.BoundingBox = rectangle( obj.Axes, ...
                 "Visible", "off", ...
                 "Position", zeros( 1, 4 ), ...
                 "LineWidth", 3 );
             hold( obj.Axes, "off" )
-            
+
         end % setup
-        
+
         function update( obj )
             %UPDATE Refresh the chart graphics.
-            
+
             if obj.ComputationRequired
-                
+
                 % Evaluate the new color data for the scatter series.
-                
+
                 % First, extract the chart data.
                 x = obj.XData_;
                 y = obj.YData_;
-                
+
                 % Deal with the case where all the x-data or all the y-data
                 % is missing.
                 if all( isnan( x ) ) || all( isnan( y ) )
@@ -303,12 +311,12 @@ classdef ScatterDensityChart < Chart
                     maxRad = sqrt( (xmax-xmin)^2 + (ymax-ymin)^2 );
                     % Update the internal radius value.
                     obj.Radius_ = min( obj.Radius_, maxRad );
-                    
+
                     % Compute the density at each data point, excluding the
                     % point itself.
                     pointCounts = ...
                         sum( pointDistances <= obj.Radius_, 2 ) - 1;
-                    
+
                     % Depending on the selected density method, compute the
                     % intersection area.
                     switch obj.DensityMethod_
@@ -331,33 +339,33 @@ classdef ScatterDensityChart < Chart
                             normArea = 2 * pi * obj.Radius_^2;
                             obj.BoundingBox.Visible = "off";
                     end % switch/case
-                    
+
                     % Normalize the point counts by the area.
                     newCData = pointCounts ./ normArea;
-                    
+
                 end % if
-                
+
                 % Update the scatter series with the new chart data and
                 % color data.
                 set( obj.ScatterSeries, "XData", obj.XData_, ...
                     "YData", obj.YData_, "CData", newCData )
                 obj.Axes.CLimMode = "auto";
-                
+
                 % Mark the chart clean.
                 obj.ComputationRequired = false;
-                
+
             end % if
-            
+
             % Refresh the chart's decorative properties.
             set( obj.ScatterSeries, "Marker", obj.Marker, ...
                 "SizeData", obj.SizeData )
             set( obj.Axes, "XGrid", obj.XGrid, "YGrid", obj.YGrid, ...
                 "CLim", obj.CLim )
-            
+
         end % update
-        
+
     end % methods ( Access = protected )
-    
+
 end % classdef
 
 function A = intersectionArea( xc, yc, r, xmin, xmax, ymin, ymax )
@@ -376,7 +384,7 @@ else
     c(2) = sqrt( (xc - xmin)^2 + (yc - ymax)^2 ); % Bottom right vertex
     c(3) = sqrt( (xc - xmax)^2 + (yc - ymax)^2 ); % Top right vertex
     c(4) = sqrt( (xc - xmax)^2 + (yc - ymin)^2 ); % Top left vertex
-    
+
     if r >= max( c )
         % Return the area of the box.
         A = (xmax-xmin) * (ymax-ymin);
@@ -420,13 +428,13 @@ else
             dy = yc - ymin;
             A = addExternalIntersectionArea( dx, dy, r, A );
         end % if
-        
+
     end % if
-    
+
 end % if
 
     function newArea = subtractExternalArea( r, d, oldArea )
-        
+
         % Compute the area outside the rectangle and inside the circle in
         % either the x or y direction (a "half-moon").
         theta = acos( d/r );
@@ -435,11 +443,11 @@ end % if
         externalArea = sectorArea - triangleArea;
         % Subtract this area from the input area.
         newArea = oldArea - externalArea;
-        
+
     end % subtractExternalArea
 
     function newArea = addExternalIntersectionArea( dx, dy, r, oldArea )
-        
+
         % Evaluate the area of the "quarter-moon".
         thetax = asin( dy/r );
         thetay = asin( dx/r );
@@ -452,7 +460,22 @@ end % if
         externalArea = sectorArea - triangleArea1 - triangleArea2;
         % Add this area to the input area.
         newArea = oldArea + externalArea;
-        
+
     end % addExternalIntersectionArea
 
 end % intersectionArea
+
+function mustBeIncreasing( v )
+%MUSTBEINCREASING Validate that the input vector is increasing.
+
+validateattributes( v, "double", "increasing" )
+
+end % mustBeIncreasing
+
+function mustBeMarker( marker )
+%MUSTBEMARKER Validate a line or scatter marker value.
+
+markerValues = set( groot(), "DefaultLineMarker" );
+mustBeMember( marker, markerValues )
+
+end % mustBeMarker

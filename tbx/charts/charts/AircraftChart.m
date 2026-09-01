@@ -1,16 +1,18 @@
-classdef AircraftChart < Chart
+classdef AircraftChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %AIRCRAFTCHART Custom chart for displaying a 3D rendering of an
     %aircraft. The chart also provides roll, pitch and yaw methods for
     %modifying the attitude of the aircraft.
 
-    % Copyright 2024-2025 The MathWorks, Inc.
+    % Copyright 2024-2026 The MathWorks, Inc.
 
     properties
         % Aircraft triangulation coordinate data.
         Triangulation(:, 3) triangulation = defaultAircraft()
     end % properties
 
-    properties ( Access = private, Transient, NonCopyable )
+    properties ( GetAccess = ?Testable, SetAccess = private, ...
+            Transient, NonCopyable )
         % Chart axes.
         Axes(:, 1) matlab.graphics.axis.Axes {mustBeScalarOrEmpty}
         % Transform object.
@@ -31,11 +33,17 @@ classdef AircraftChart < Chart
     methods
 
         function obj = AircraftChart( namedArgs )
-
             arguments ( Input )
                 namedArgs.?AircraftChart
-            end % arguments            
-            
+            end % arguments
+
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
+
             % Set any user-defined properties.
             set( obj, namedArgs )
 
@@ -203,10 +211,10 @@ arguments ( Output )
     tr(:, 3) triangulation
 end % arguments ( Output )
 
-% Import the triangulation. 
+% Import the triangulation.
 % Reference:
-% Airplane by Yorchmur, https://www.printables.com/model/34767-airplane, 
-% licensed under the Creative Commons Attribution 4.0 International 
+% Airplane by Yorchmur, https://www.printables.com/model/34767-airplane,
+% licensed under the Creative Commons Attribution 4.0 International
 % License.
 url = "https://files.printables.com/media/prints/34767/stls/" + ...
     "343468_b085a064-c28f-4861-b1a0-6a559929a7e2/avion31.stl";

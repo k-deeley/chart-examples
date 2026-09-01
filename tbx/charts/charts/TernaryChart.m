@@ -1,8 +1,9 @@
-classdef TernaryChart < Component
+classdef TernaryChart < ...
+        matlab.ui.componentcontainer.ComponentContainer
     %TERNARYCHART Chart managing a barycentric plot of three variables
     %which sum to a constant.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Table of data: columns 1-3 are inputs and column 4 is the output.
@@ -30,9 +31,9 @@ classdef TernaryChart < Component
         % Surface edge color.
         EdgeColor = [0, 0, 0]
         % Surface face alpha.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )} = 1
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )} = 1
         % Surface edge alpha.
-        EdgeAlpha(1, 1) double {mustBeInRange( EdgeAlpha, 0, 1 )} = 1
+        EdgeAlpha(1, 1) double {mustBeBetween( EdgeAlpha, 0, 1 )} = 1
         % Surface line style.
         LineStyle(1, 1) string {mustBeLineStyle} = "-"
         % Surface line width.
@@ -132,7 +133,7 @@ classdef TernaryChart < Component
         GridCheckBox(:, 1) matlab.ui.control.CheckBox {mustBeScalarOrEmpty}
         % Check box for the tick visibility.
         TicksCheckBox(:, 1) matlab.ui.control.CheckBox ...
-            {mustBeScalarOrEmpty}        
+            {mustBeScalarOrEmpty}
         % Dropdown menu for selecting the surface type.
         SurfaceTypeDropDown(:, 1) matlab.ui.control.DropDown ...
             {mustBeScalarOrEmpty}
@@ -583,7 +584,13 @@ classdef TernaryChart < Component
 
             arguments ( Input )
                 namedArgs.?TernaryChart
-            end % arguments ( Input )           
+            end % arguments ( Input )
+
+            % Call the superclass constructor.
+            obj@matlab.ui.componentcontainer.ComponentContainer( ...
+                "Parent", [], ...
+                "Units", "normalized", ...
+                "Position", [0, 0, 1, 1] )
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -685,16 +692,16 @@ classdef TernaryChart < Component
                 string( obj.YLabel(1, 2).String )];
 
             switch dir
-                
+
                 case "clockwise"
-                    
+
                     obj.Data = obj.Data_(:, [3, 1, 2, 4]);
                     obj.xlabel( labels(3, :) )
                     obj.ylabel( "left", labels(1, :) )
                     obj.ylabel( "right", labels(2, :) )
 
                 case "counterclockwise"
-                    
+
                     obj.Data = obj.Data_(:, [2, 3, 1, 4]);
                     obj.xlabel( labels(2, :) )
                     obj.ylabel( "left", labels(3, :) )
@@ -1259,17 +1266,17 @@ classdef TernaryChart < Component
 
             tickPos = 1 : obj.TickRate_ : obj.GridResolution_;
             ticks(numel( tickPos ), 3) = matlab.graphics.primitive.Text;
-            
+
             switch obj.Direction_
-                
+
                 case "clockwise"
-                
+
                     ticks(:, 1) = text( obj.Axes, ...
                         1/2 - (tickPos-1) ./ obj.GridResolution_, ...
                         -0.03 * ones( 1, numel( tickPos ) ), ...
                         num2str( round( (tickPos-1) ./ ...
                         obj.GridResolution_, 2 ).' ), ...
-                        "HorizontalAlignment", "center" );                        
+                        "HorizontalAlignment", "center" );
                     ticks(:, 2) = text( obj.Axes, ...
                         -1/2 + 1/2 * (tickPos-1) ./ ...
                         obj.GridResolution_ - 0.03, ...
@@ -1277,7 +1284,7 @@ classdef TernaryChart < Component
                         / obj.GridResolution_, ...
                         num2str( round( (tickPos-1) ./ ...
                         obj.GridResolution_, 2 ).' ), ...
-                        "HorizontalAlignment", "center", ...                        
+                        "HorizontalAlignment", "center", ...
                         "Rotation", 60 );
                     ticks(:, 3) = text( obj.Axes, ...
                         1/2 * (tickPos-1) ./ ...
@@ -1286,11 +1293,11 @@ classdef TernaryChart < Component
                         (1 - (tickPos-1) ./ obj.GridResolution_ ), ...
                         num2str( round( (tickPos-1) ./ ...
                         obj.GridResolution_, 2 ).' ), ...
-                        "HorizontalAlignment", "center", ...                        
+                        "HorizontalAlignment", "center", ...
                         "Rotation", -60 );
-                
+
                 case "counterclockwise"
-                    
+
                     ticks(tickPos, 1) = text( obj.Axes, ...
                         - 1/2 + (tickPos-1) ./ obj.GridResolution_, ...
                         -0.03 * ones( 1, numel( tickPos ) ), ...
@@ -1327,7 +1334,7 @@ classdef TernaryChart < Component
 
             % Create an equally-spaced vector.
             t = 1 : (obj.GridResolution_-1);
-            
+
             % First, assemble the x-coordinates.
             x1 = [1/2 - t / obj.GridResolution_;
                 -1/2 * t / obj.GridResolution_;
@@ -1340,7 +1347,7 @@ classdef TernaryChart < Component
                 NaN( 2, obj.GridResolution_-1 )];
             x = [x1; x2; x3];
             x = x(:);
-            
+
             % Next, assemble the y-coordinates.
             y1 = [zeros( 1, obj.GridResolution_-1 );
                 sqrt( 3 ) / 2 * (1 - t / obj.GridResolution_);
@@ -1419,3 +1426,27 @@ end % if
     end % mustBeFiniteDoubleVector
 
 end % mustBeTernaryData
+
+function mustBeLighting( option )
+%MUSTBELIGHTING Validate a surface lighting option.
+
+lightingValues = set( groot(), "DefaultSurfaceFaceLighting" );
+mustBeMember( option, lightingValues )
+
+end % mustBeLighting
+
+function mustBeLineStyle( style )
+%MUSTBELINESTYLE Validate a line style value.
+
+lineStyleValues = set( groot(), "DefaultLineLineStyle" );
+mustBeMember( style, lineStyleValues )
+
+end % mustBeLineStyle
+
+function mustBeMarker( marker )
+%MUSTBEMARKER Validate a line or scatter marker value.
+
+markerValues = set( groot(), "DefaultLineMarker" );
+mustBeMember( marker, markerValues )
+
+end % mustBeMarker

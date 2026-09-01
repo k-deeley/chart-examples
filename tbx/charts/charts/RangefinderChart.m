@@ -1,10 +1,11 @@
-classdef RangefinderChart < Chart
+classdef RangefinderChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %RANGEFINDERCHART Rangefinder chart for bivariate scattered data.
     %The rangefinder chart displays a 2D scatter plot overlaid with a
     %marker at the crossover point of the marginal medians and lines
     %indicating the marginal adjacent values.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart x-data.
@@ -19,7 +20,7 @@ classdef RangefinderChart < Chart
         % Size data for the discrete plot.
         SizeData(:, 1) double {mustBePositive, mustBeFinite} = 36
         % Color of the discrete plot.
-        CData(:, 3) double {mustBeInRange( CData, 0, 1 )} = ...
+        CData(:, 3) double {mustBeBetween( CData, 0, 1 )} = ...
             [0, 0.4470, 0.7410]
         % Axes x-grid.
         XGrid(1, 1) matlab.lang.OnOffSwitchState = "on"
@@ -150,6 +151,13 @@ classdef RangefinderChart < Chart
                 namedArgs.?RangefinderChart
             end % arguments ( Input )
 
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
+
             % Set any user-defined properties.
             set( obj, namedArgs )
 
@@ -207,14 +215,14 @@ classdef RangefinderChart < Chart
                     "MarkerSize", crossoverMarkerSizes(k), ...
                     "LineWidth", lineWidths(k) );
             end % for
-            
+
             hold( obj.Axes, "on" )
-            
+
             for k = 1 : 4
-                
-                % Create the line segments for the adjacent values.                        
-                obj.AdjacentLines(k) = plot( obj.Axes, NaN, NaN, ...                    
-                    "LineWidth", obj.LineWidth );                
+
+                % Create the line segments for the adjacent values.
+                obj.AdjacentLines(k) = plot( obj.Axes, NaN, NaN, ...
+                    "LineWidth", obj.LineWidth );
 
                 % Define the labels for the custom datatips.
                 if k <= 2
@@ -239,7 +247,7 @@ classdef RangefinderChart < Chart
             end % for
 
             hold( obj.Axes, "off" )
-            
+
         end % setup
 
         function update( obj )
@@ -342,3 +350,11 @@ classdef RangefinderChart < Chart
     end % methods ( Access = protected )
 
 end % classdef
+
+function mustBeMarker( marker )
+%MUSTBEMARKER Validate a line or scatter marker value.
+
+markerValues = set( groot(), "DefaultLineMarker" );
+mustBeMember( marker, markerValues )
+
+end % mustBeMarker

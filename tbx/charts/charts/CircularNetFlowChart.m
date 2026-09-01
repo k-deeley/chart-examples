@@ -1,23 +1,24 @@
-classdef CircularNetFlowChart < Chart
-    %CIRCULARNETFLOWCHART Illustrates the directed to/from relationships 
+classdef CircularNetFlowChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
+    %CIRCULARNETFLOWCHART Illustrates the directed to/from relationships
     %between pairs of categories.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
-    
+    % Copyright 2018-2026 The MathWorks, Inc.
+
     properties ( Dependent )
         % Chart data table.
         LinkData(:, :) table {mustBeLinkData}
         % Offset for the outer labels.
         OuterLabelOffset(1, 1) double {mustBeFinite, mustBePositive}
     end % properties ( Dependent )
-    
+
     properties
         % Transparency of the link patches.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )} = 0.5
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )} = 0.5
         % Visibility of the text labels.
         ShowLabels(1, 1) matlab.lang.OnOffSwitchState = "on"
     end % properties
-    
+
     properties ( Dependent, SetAccess = private )
         % Derived net flow, presented as a table.
         NetFlow(:, :) table
@@ -28,16 +29,16 @@ classdef CircularNetFlowChart < Chart
         % Chart data labels.
         Labels(1, :) string
     end % properties ( Dependent, SetAccess = private )
-    
+
     properties ( Dependent, Access = private )
         % Number of sources/sinks.
         NumSources(1, 1) double {mustBeInteger, mustBePositive}
         % Row/column indices and values of the positive net flow.
         PositiveNetFlow(:, 3) double {mustBePositive, mustBeFinite}
         % List of colors used for the various graphics objects.
-        Colors(:, 3) double {mustBeInRange( Colors, 0, 1 )}
+        Colors(:, 3) double {mustBeBetween( Colors, 0, 1 )}
         % Colormap used for the patch objects.
-        PatchColormap(:, 3) double {mustBeInRange( PatchColormap, 0, 1 )}
+        PatchColormap(:, 3) double {mustBeBetween( PatchColormap, 0, 1 )}
         % Angular positions of the arc endpoints, measured in radians
         % anticlockwise from the easterly direction.
         AngularPositions(:, 1) double {mustBeReal, mustBeFinite}
@@ -47,7 +48,7 @@ classdef CircularNetFlowChart < Chart
         % Angular positions of the nodes.
         NodePositions(:, 1) double {mustBeReal, mustBeFinite}
     end % properties ( Dependent, Access = private )
-    
+
     properties ( Access = private, Transient, NonCopyable )
         % Chart axes.
         Axes(:, 1) matlab.graphics.axis.Axes {mustBeScalarOrEmpty}
@@ -64,7 +65,7 @@ classdef CircularNetFlowChart < Chart
         % Inner labels for each node.
         NodeLabels(:, 1) matlab.graphics.primitive.Text
     end % properties ( Access = private, Transient, NonCopyable )
-    
+
     properties ( Access = private )
         % Backing property for the chart data table.
         LinkData_(:, :) table {mustBeLinkData} = defaultLinkData()
@@ -90,12 +91,12 @@ classdef CircularNetFlowChart < Chart
         PatchLabelOffset(1, 1) double {mustBePositive, mustBeFinite} = 10
         % Patch label font size.
         PatchLabelFontSize(1, 1) double ...
-            {mustBeInRange( PatchLabelFontSize, 0, 1 )} = 0.03        
+            {mustBeBetween( PatchLabelFontSize, 0, 1 )} = 0.03
         % Outer label font size.
         OuterLabelFontSize(1, 1) double ...
-            {mustBeInRange( OuterLabelFontSize, 0, 1 )} = 0.04
+            {mustBeBetween( OuterLabelFontSize, 0, 1 )} = 0.04
     end % properties ( Constant, GetAccess = private )
-    
+
     properties ( Constant, Hidden )
         % Product dependencies.
         Dependencies(1, :) string = "MATLAB"
@@ -103,7 +104,7 @@ classdef CircularNetFlowChart < Chart
         ShortDescription(1, 1) string = "Show directed " + ...
             "to/from relationships between pairs of categories"
     end % properties ( Constant, Hidden )
-    
+
     methods
 
         function obj = CircularNetFlowChart( namedArgs )
@@ -113,42 +114,49 @@ classdef CircularNetFlowChart < Chart
             arguments ( Input )
                 namedArgs.?CircularNetFlowChart
             end % arguments ( Input )
-            
+
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
+
             % Set any user-defined properties.
             set( obj, namedArgs )
 
         end % constructor
-        
+
         function value = get.LinkData( obj )
-            
+
             value = obj.LinkData_;
-            
+
         end % get.LinkData
-        
+
         function set.LinkData( obj, value )
-            
+
             % Mark the chart for an update.
-            obj.ComputationRequired = true;            
-            
+            obj.ComputationRequired = true;
+
             % Set the internal data property.
             obj.LinkData_ = value;
-            
+
         end % set.LinkData
-        
+
         function value = get.Labels( obj )
-            
+
             value = string( obj.LinkData_.Properties.VariableNames );
-            
+
         end % get.Labels
-        
+
         function value = get.OuterLabelOffset( obj )
-            
+
             value = obj.OuterLabelOffset_;
-            
+
         end % get.OuterLabelOffset
-        
+
         function set.OuterLabelOffset( obj, value )
-            
+
             % Update the internal property.
             obj.OuterLabelOffset_ = value;
 
@@ -159,11 +167,11 @@ classdef CircularNetFlowChart < Chart
                 set( obj.OuterLabels(k), "Position", ...
                     [outerLabelX(k), outerLabelY(k), 0] )
             end % for
-            
+
         end % set.OuterLabelOffset
-        
+
         function value = get.NetFlow( obj )
-            
+
             % Compute the net flow from each source (row) to every sink
             % (column). The set of sources is the same as the set of sinks.
             d = obj.LinkData{:, :};
@@ -172,44 +180,44 @@ classdef CircularNetFlowChart < Chart
 
             % Compute the net flow, as an upper triangular matrix.
             netflow = flowFromSink - flowFromSource.';
-            
+
             % Ensure the net flow matrix is skew-symmetric, i.e., populate
             % the lower triangular part.
             netflow = netflow - triu( netflow ).';
-            
+
             % Tabulate the result.
             value = array2table( netflow, "VariableNames", obj.Labels, ...
                 "RowNames", obj.Labels );
-            
+
         end % get.NetFlow
-        
+
         function value = get.NetSent( obj )
-            
+
             % Sum the positive values in each row.
             nf = obj.NetFlow{:, :};
             nf(nf < 0) = 0;
             value = sum( nf, 2 );
-            
+
         end % get.NetSent
-        
+
         function value = get.NetReceived( obj )
-            
+
             % Sum the positive values in each column, returning the results
             % as a column vector.
             nf = obj.NetFlow{:, :};
             nf(nf < 0) = 0;
             value = sum( nf ).';
-            
+
         end % get.NetReceived
-        
+
         function value = get.NumSources( obj )
-            
+
             value = height( obj.LinkData );
-            
+
         end % get.NumSources
-        
+
         function value = get.PositiveNetFlow( obj )
-            
+
             % Return a three-column matrix containing the row and column
             % indices of the positive net flow values (1st and 2nd
             % columns), together with the positive net flow values.
@@ -217,11 +225,11 @@ classdef CircularNetFlowChart < Chart
             posIdx = nf > 0;
             [value(:, 1), value(:, 2)] = find( posIdx );
             value(:, 3) = nf(posIdx);
-            
+
         end % get.PositiveNetFlow
-        
+
         function value = get.Colors( obj )
-            
+
             % Default list of colors used for plotting.
             value = obj.Axes.ColorOrder;
 
@@ -230,11 +238,11 @@ classdef CircularNetFlowChart < Chart
             colIdx = 1 : height( value );
             colQueryIdx = linspace( 1, colIdx(end), obj.NumSources );
             value = interp1( colIdx, value, colQueryIdx );
-            
+
         end % get.Colors
-        
+
         function value = get.PatchColormap( obj )
-            
+
             % Preallocate for the patch colormap. The number of patches is
             % equal to the number of positive net flow values. Each patch
             % contributes NumTransitionPoints rows to the overall patch
@@ -254,66 +262,66 @@ classdef CircularNetFlowChart < Chart
                     linspace( sourceColor(3), sinkColor(3), N ).'];
                 value((N * (k-1) + 1) : N * k, :) = transitionMap;
             end % for
-            
+
         end % get.PatchColormap
-        
+
         function value = get.AngularPositions( obj )
-            
+
             % Convert the cumulative net sent amounts to radians.
             cumulativeSourceFlows = cumsum( [0; obj.NetSent] );
             value = 2 * pi * cumulativeSourceFlows / ...
                 cumulativeSourceFlows(end);
-            
+
         end % get.AngularSizes
-        
+
         function value = get.NodeSizes( obj )
-            
+
             % Scale the net amounts received by each sink.
             value = obj.NodeScaleFactor * ...
                 obj.NetReceived / sum( obj.NetReceived );
-            
+
         end % get.NodeSizes
-        
+
         function value = get.NodePositions( obj )
-            
+
             % The angular node positions are the midpoints of the angular
             % arc positions.
             value = (obj.AngularPositions(1:end-1) + ...
                 obj.AngularPositions(2:end)) / 2;
-            
+
         end % get.NodePositions
-        
+
     end % methods
-    
+
     methods
-        
+
         function varargout = title( obj, varargin )
-            
+
             [varargout{1:nargout}] = title( obj.Axes, varargin{:} );
-            
+
         end % title
-        
+
     end % methods
-    
+
     methods ( Access = protected )
-        
+
         function setup( obj )
             %SETUP Initialize the chart graphics.
-            
+
             % Create the axes.
-            obj.Axes = axes( "Parent", obj.getLayout(), ...                
+            obj.Axes = axes( "Parent", obj.getLayout(), ...
                 "Visible", "off", ...
                 "DataAspectRatio", [1, 1, 1] );
             obj.Axes.Toolbar = [];
             disableDefaultInteractivity( obj.Axes )
-            
+
         end % setup
-        
+
         function update( obj )
             %UPDATE Refresh the chart graphics.
-            
+
             if obj.ComputationRequired
-                
+
                 % Create the chart graphics.
                 % First, draw the circumferential arcs.
                 hold( obj.Axes, "on" )
@@ -333,7 +341,7 @@ classdef CircularNetFlowChart < Chart
                         "LineWidth", 10, ...
                         "Color", obj.Colors(k, :) );
                 end % for
-                
+
                 % Next, draw the receiving nodes in the interior of the
                 % disk.
                 [nodeX, nodeY] = ...
@@ -350,7 +358,7 @@ classdef CircularNetFlowChart < Chart
                         "MarkerFaceColor", obj.Colors(k, :), ...
                         "MarkerSize", obj.NodeSizes(k) );
                 end % for
-                
+
                 % Draw the patches and their labels. To create the color
                 % transitions for each patch, we need to set the axes
                 % colormap.
@@ -358,16 +366,16 @@ classdef CircularNetFlowChart < Chart
 
                 % Compute the angular differences, including the gap sizes.
                 dtheta = diff( obj.AngularPositions ) - 2 * obj.AngularGap;
-                
+
                 % Compute the angular starting positions.
                 thetaStart = ...
                     obj.AngularPositions(1:end-1) + obj.AngularGap;
-                
+
                 % Extract parameters required for the loop.
                 pnf = obj.PositiveNetFlow;
                 N = obj.NumTransitionPoints;
                 numPosFlow = height( pnf );
-                
+
                 % Prepare the patches and labels.
                 delete( obj.LinkPatches )
                 obj.LinkPatches = ...
@@ -435,7 +443,7 @@ classdef CircularNetFlowChart < Chart
                         "VerticalAlignment", "middle", ...
                         "HorizontalAlignment", "center" );
                 end % for
-                
+
                 % Create the outer labels.
                 [outerLabelX, outerLabelY] = ...
                     pol2cart( obj.NodePositions, ...
@@ -461,7 +469,7 @@ classdef CircularNetFlowChart < Chart
                         "FontUnits", "normalized", ...
                         "FontSize", obj.OuterLabelFontSize );
                 end % for
-                
+
                 % Draw the node labels.
                 netReceivedText = num2str( obj.NetReceived );
                 nodeLabelFontSize = 0.03 + 0.02 * ...
@@ -475,20 +483,20 @@ classdef CircularNetFlowChart < Chart
                         nodeX(k), ...
                         nodeY(k), ...
                         netReceivedText(k, :), ...
-                        "FontWeight", "bold", ...                        
+                        "FontWeight", "bold", ...
                         "HorizontalAlignment", "center", ...
                         "VerticalAlignment", "middle", ...
                         "FontUnits", "normalized", ...
                         "FontSize", nodeLabelFontSize(k) );
                 end % for
-                
+
                 % Add the title.
                 t = title( obj.Axes, "CircularNetFlow Chart", ...
                     "FontUnits", "normalized", ...
                     "FontSize", 0.05, ...
                     "Visible", "on" );
-                t.Position(1) = t.Position(1) - obj.OuterRadius;                
-                
+                t.Position(1) = t.Position(1) - obj.OuterRadius;
+
                 % Ensure all graphics objects are visible.
                 p = vertcat( obj.OuterLabels.Position );
                 p = [p; obj.Axes.Title.Position];
@@ -496,21 +504,21 @@ classdef CircularNetFlowChart < Chart
                     "XLim", [min( p(:, 1) ), max( p(:, 1) )], ...
                     "YLim", [min( p(:, 2) ), max( p(:, 2) )] )
                 hold( obj.Axes, "off" )
-                
+
                 % Mark the chart clean.
                 obj.ComputationRequired = false;
-                
+
             end % if
-            
+
             % Refresh the chart's decorative properties.
             set( obj.LinkPatches, "FaceAlpha", obj.FaceAlpha )
             set( [obj.NodeLabels; obj.PatchLabels; obj.OuterLabels ], ...
                 "Visible", obj.ShowLabels )
-            
+
         end % update
-        
+
     end % methods ( Access = protected )
-    
+
 end % classdef
 
 function mustBeLinkData( t )

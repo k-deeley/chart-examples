@@ -1,9 +1,10 @@
-classdef ImpliedVolatilityChart < Component
+classdef ImpliedVolatilityChart < ...
+        matlab.ui.componentcontainer.ComponentContainer
     %IMPLIEDVOLATILITYCHART Chart managing 3D scattered data comprising
     %strike price, time to expiry and implied volatility, together with an
     %interpolated implied volatility surface.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Table of option data, comprising the time to expiry, strike
@@ -157,10 +158,17 @@ classdef ImpliedVolatilityChart < Component
             % Take the maximal interior domain of the strike prices across
             % each unique expiry time.
             T = obj.UniqueExpiryTimes;
+            if isempty( T )
+                value = double.empty( 0, 1 );
+                return
+            end % if
+
+            mn = zeros( numel( T ), 1 );
+            mx = zeros( numel( T ), 1 );
             for k = numel( T ) : -1 : 1
                 currentTIdx = obj.OptionData_.(1) == T(k);
                 K = obj.OptionData_.(2);
-                [mn(k, 1), mx(k, 1)] = bounds( K(currentTIdx) );
+                [mn(k), mx(k)] = bounds( K(currentTIdx) );
             end % for
             mn = max( mn );
             mx = min( mx );
@@ -213,6 +221,12 @@ classdef ImpliedVolatilityChart < Component
             arguments ( Input )
                 namedArgs.?ImpliedVolatilityChart
             end % arguments ( Input )
+
+            % Call the superclass constructor.
+            obj@matlab.ui.componentcontainer.ComponentContainer( ...
+                "Parent", [], ...
+                "Units", "normalized", ...
+                "Position", [0, 0, 1, 1] )
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -486,7 +500,7 @@ if ~isempty( t )
 
     volatility = t{:, 3};
     mustBeVector( volatility )
-    mustBeInRange( volatility, 0, 100, "exclude-lower" )
+    mustBeBetween( volatility, 0, 100, "openleft" )
 
     assetPrice = t{:, 4};
     mustBeVector( assetPrice )
@@ -496,3 +510,11 @@ if ~isempty( t )
 end % if
 
 end % mustBeOptionData
+
+function mustBeMarker( marker )
+%MUSTBEMARKER Validate a line or scatter marker value.
+
+markerValues = set( groot(), "DefaultLineMarker" );
+mustBeMember( marker, markerValues )
+
+end % mustBeMarker

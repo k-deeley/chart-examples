@@ -1,8 +1,9 @@
-classdef WindRoseChart < Chart
+classdef WindRoseChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %WINDROSECHART Chart for displaying speed and direction data on an
     %angular (polar) histogram.
 
-    % Copyright 2018-2025 The MathWorks, Inc.
+    % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Wind data table, containing direction and speed values.
@@ -16,7 +17,7 @@ classdef WindRoseChart < Chart
         ObservationCounts(:, :) double {mustBeInteger, mustBeNonnegative}
         % Percentage observation counts in each bin.
         PercentageObservationCounts(:, :) double ...
-            {mustBeInRange( PercentageObservationCounts, 0, 100 )}
+            {mustBeBetween( PercentageObservationCounts, 0, 100 )}
         % Cumulative percentages in each bin (by wind direction).
         CumulativePercentageObservationCounts(:, :) double ...
             {mustBeNonnegative, mustBeFinite}
@@ -35,7 +36,7 @@ classdef WindRoseChart < Chart
         % Direction label visibility.
         DirectionLabelVisible(1, 1) matlab.lang.OnOffSwitchState = "on"
         % Patch face transparency.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )} = 1
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )} = 1
         % Patch line width.
         LineWidth(1, 1) double {mustBePositive, mustBeFinite} = 0.5
         % Patch line style.
@@ -44,7 +45,7 @@ classdef WindRoseChart < Chart
         EdgeColor {mustBeColor( EdgeColor, ...
             ["flat", "none", "interp"] )} = [0.5, 0.5, 0.5]
         % Patch edge alpha.
-        EdgeAlpha(1, 1) double {mustBeInRange( EdgeAlpha, 0, 1 )} = 1
+        EdgeAlpha(1, 1) double {mustBeBetween( EdgeAlpha, 0, 1 )} = 1
         % Backdrop color.
         BackdropColor {validatecolor} = [0.85, 0.85, 0.85]
         % Backdrop line width.
@@ -83,7 +84,7 @@ classdef WindRoseChart < Chart
         % Legend font weight.
         LegendFontWeight(1, 1) string {mustBeFontWeight} = "normal"
         % Legend line width.
-        LegendLineWidth(1, 1) double {mustBePositive, mustBeFinite} = 0.5        
+        LegendLineWidth(1, 1) double {mustBePositive, mustBeFinite} = 0.5
         % Legend title string.
         LegendTitle(1, 1) string = "Windspeed (m/s)"
     end % properties
@@ -92,7 +93,7 @@ classdef WindRoseChart < Chart
         % Angular direction in which to display the radial labels.
         RadialLabelDirection(1, 1) string {mustBeDirection}
         % Patch face colors.
-        FaceColors(:, 3) double {mustBeInRange( FaceColors, 0, 1 )}
+        FaceColors(:, 3) double {mustBeBetween( FaceColors, 0, 1 )}
     end % properties ( Dependent )
 
     properties ( Access = private )
@@ -102,7 +103,7 @@ classdef WindRoseChart < Chart
         SpeedBinEdges_(1, :) double {mustBeNonnegative} = [0:5:30, Inf]
         % Internal angle for the radial text labels (clockwise from North).
         RadialLabelAngle(1, 1) double ...
-            {mustBeInRange( RadialLabelAngle, 0, 360 )} = 135
+            {mustBeBetween( RadialLabelAngle, 0, 360 )} = 135
         % Minimum backdrop circle radius.
         MinRadius(1, 1) double {mustBePositive, mustBeFinite} = 1
         % Maximum backdrop circle radius.
@@ -222,7 +223,7 @@ classdef WindRoseChart < Chart
         function set.RadialLabelDirection( obj, value )
 
             % Perform a reverse lookup to determine the required angle
-            % (clockwise from North).            
+            % (clockwise from North).
             directions = values( obj.DirectionLookup );
             obj.RadialLabelAngle = obj.RayAngles(directions == value);
 
@@ -274,6 +275,13 @@ classdef WindRoseChart < Chart
             arguments ( Input )
                 namedArgs.?WindRoseChart
             end % arguments ( Input )
+
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -368,7 +376,7 @@ classdef WindRoseChart < Chart
                     obj.TextBoxes(k1, k2) = text( "Parent", obj.Axes, ...
                         "PickableParts", "none", ...
                         "HorizontalAlignment", "left", ...
-                        "VerticalAlignment", "middle", ...                       
+                        "VerticalAlignment", "middle", ...
                         "LineWidth", 1.5, ...
                         "Visible", "off" );
                 end % for k2
@@ -748,3 +756,27 @@ if ~isstring( c ) || ~ismember( c, opts )
 end % if
 
 end % mustBeColor
+
+function mustBeLineStyle( style )
+%MUSTBELINESTYLE Validate a line style value.
+
+lineStyleValues = set( groot(), "DefaultLineLineStyle" );
+mustBeMember( style, lineStyleValues )
+
+end % mustBeLineStyle
+
+function mustBeFontAngle( fontAngle )
+%MUSTBEFONTANGLE Validate a text object font angle value.
+
+fontAngleValues = set( groot(), "DefaultTextFontAngle" );
+mustBeMember( fontAngle, fontAngleValues )
+
+end % mustBeFontAngle
+
+function mustBeFontWeight( fontWeight )
+%MUSTBEFONTWEIGHT Validate a text object font weight value.
+
+fontWeightValues = set( groot(), "DefaultTextFontWeight" );
+mustBeMember( fontWeight, fontWeightValues )
+
+end % mustBeFontWeight

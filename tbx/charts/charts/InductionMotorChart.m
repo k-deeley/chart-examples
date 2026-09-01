@@ -1,11 +1,12 @@
-classdef InductionMotorChart < Chart
+classdef InductionMotorChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %INDUCTIONMOTORCHART Chart representing the operating performance of an
     %induction motor. Thanks to Chris Armstrong for the idea behind this
     %example.
     %
     % See also InductionMotorParameters.
 
-    % Copyright 2021-2025 The MathWorks, Inc.
+    % Copyright 2021-2026 The MathWorks, Inc.
 
     properties
         % Operating point of the motor.
@@ -15,7 +16,7 @@ classdef InductionMotorChart < Chart
         % Operating point marker size.
         MarkerSize(1, 1) double {mustBePositive, mustBeFinite} = 20
         % Transparency of the patches.
-        FaceAlpha(1, 1) double {mustBeInRange( FaceAlpha, 0, 1 )} = 0.6
+        FaceAlpha(1, 1) double {mustBeBetween( FaceAlpha, 0, 1 )} = 0.6
         % Visibility of the legend.
         LegendVisible(1, 1) matlab.lang.OnOffSwitchState = "on"
     end % properties
@@ -77,7 +78,14 @@ classdef InductionMotorChart < Chart
 
             arguments ( Input )
                 namedArgs.?InductionMotorChart
-            end % arguments ( Input )            
+            end % arguments ( Input )
+
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -238,9 +246,9 @@ classdef InductionMotorChart < Chart
             torque = obj.OperatingPoint(2);
             set( obj.OperatingPointPlot, "XData", speed, "YData", torque )
 
-            % Notify the "AbnormalPerformanceDetected" event if the motor 
+            % Notify the "AbnormalPerformanceDetected" event if the motor
             % performance has gone outside the normal operating region.
-            region = obj.MotorParameters.NormalRegion;            
+            region = obj.MotorParameters.NormalRegion;
             if ~inNormalRegion( speed, torque, region(:, 1), region(:, 2) )
                 obj.notify( "AbnormalPerformanceDetected" )
             end % if

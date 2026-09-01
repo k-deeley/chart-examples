@@ -1,13 +1,14 @@
-classdef AnnulusChart < Component
+classdef AnnulusChart < ...
+        matlab.ui.componentcontainer.ComponentContainer
     %ANNULUSCHART Annulus (ring) chart, similar to a 3D pie chart.
 
-    % Copyright 2019-2025 The MathWorks, Inc.
+    % Copyright 2019-2026 The MathWorks, Inc.
 
     properties ( Dependent )
         % Chart data, comprising a positive vector.
         Data(:, 1) double {mustBeNonempty, mustBePositive}
         % Wedge face colors.
-        FaceColor  
+        FaceColor
         % Wedge label text.
         LabelText(:, 1) string
         % Wedge label font size.
@@ -19,7 +20,7 @@ classdef AnnulusChart < Component
         % Legend text.
         LegendText(:, 1) string
         % Specifies whether percentages are shown in the legend.
-        LegendPercentages(1, 1) matlab.lang.OnOffSwitchState        
+        LegendPercentages(1, 1) matlab.lang.OnOffSwitchState
         % Legend color.
         LegendColor
         % Legend location.
@@ -45,14 +46,14 @@ classdef AnnulusChart < Component
     properties ( Dependent, SetAccess = private )
         % Chart data, in percentage form.
         DataPercentages(:, 1) double {mustBeNonempty, ...
-            mustBeInRange( DataPercentages, 0, 100 )}
+            mustBeBetween( DataPercentages, 0, 100 )}
     end % properties ( Dependent, SetAccess = private )
 
     properties ( Access = private )
         % Internal storage for the Data property.
         Data_(:, 1) double {mustBeNonempty, mustBePositive} = 1
         % Internal storage for the FaceColor property.
-        FaceColor_(:, 3) double {mustBeInRange( FaceColor_, 0, 1 )} = ...
+        FaceColor_(:, 3) double {mustBeBetween( FaceColor_, 0, 1 )} = ...
             [0, 0, 0]
         % Internal storage for the Label property.
         LabelText_(:, 1) string = string.empty( 0, 1 )
@@ -61,7 +62,7 @@ classdef AnnulusChart < Component
         % Internal storage for the LabelPercentages property.
         LabelPercentages_(1, 1) matlab.lang.OnOffSwitchState = "on"
         % Internal storage for the LabelVisible property.
-        LabelVisible_(1, 1) matlab.lang.OnOffSwitchState = "on"        
+        LabelVisible_(1, 1) matlab.lang.OnOffSwitchState = "on"
         % Internal storage for the LegendText property.
         LegendText_(:, 1) string = string.empty( 0, 1 )
         % Internal storage for the LegendPercentages property.
@@ -72,7 +73,8 @@ classdef AnnulusChart < Component
         ComputationRequired(1, 1) logical = true
     end % properties ( Access = private )
 
-    properties ( Access = private, Transient, NonCopyable )
+    properties ( GetAccess = ?Testable, SetAccess = private, ...
+            Transient, NonCopyable )
         % Chart layout.
         LayoutGrid(:, 1) matlab.ui.container.GridLayout ...
             {mustBeScalarOrEmpty}
@@ -87,7 +89,7 @@ classdef AnnulusChart < Component
         % Graphics objects (patches and surfaces) used for the wedges.
         WedgeGraphics(:, 6) matlab.graphics.Graphics = gobjects( 0, 6 )
         % Text objects used for the wedge labels.
-        WedgeLabels(:, 1) matlab.graphics.primitive.Text        
+        WedgeLabels(:, 1) matlab.graphics.primitive.Text
         % Check box for the label visibility.
         VisibleLabelsCheckBox(:, 1) matlab.ui.control.CheckBox ...
             {mustBeScalarOrEmpty}
@@ -181,7 +183,7 @@ classdef AnnulusChart < Component
             obj.ComputationRequired = true;
 
             % Update the internal, stored property.
-            obj.LabelText_ = value;            
+            obj.LabelText_ = value;
 
         end % set.LabelText
 
@@ -237,7 +239,7 @@ classdef AnnulusChart < Component
             obj.LabelPercentages_ = value;
 
             % Update the control.
-            obj.LabelPercentagesCheckBox.Value = value;            
+            obj.LabelPercentagesCheckBox.Value = value;
 
         end % set.LabelPercentages
 
@@ -284,7 +286,7 @@ classdef AnnulusChart < Component
 
             % Store the internal value.
             obj.LegendText_ = value;
-            
+
         end % set.LegendText
 
         function value = get.LegendColor( obj )
@@ -378,7 +380,7 @@ classdef AnnulusChart < Component
             obj.LegendPercentages_ = value;
 
             % Update the control.
-            obj.LegendPercentagesCheckBox.Value = value;            
+            obj.LegendPercentagesCheckBox.Value = value;
 
         end % set.LegendPercentages
 
@@ -459,6 +461,12 @@ classdef AnnulusChart < Component
             arguments ( Input )
                 namedArgs.?AnnulusChart
             end % arguments ( Input )
+
+            % Call the superclass constructor.
+            obj@matlab.ui.componentcontainer.ComponentContainer( ...
+                "Parent", [], ...
+                "Units", "normalized", ...
+                "Position", [0, 0, 1, 1] )
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -628,7 +636,7 @@ classdef AnnulusChart < Component
                 "LowerLimitInclusive", "off", ...
                 "UpperLimitInclusive", "off", ...
                 "ValueChangedFcn", ...
-                @( s, ~ ) set( obj, "LabelFontSize", s.Value ) );            
+                @( s, ~ ) set( obj, "LabelFontSize", s.Value ) );
             obj.ExplodeButton = uibutton( "Parent", wedgeLayout, ...
                 "Text", "Explode", ...
                 "Tooltip", "Explode all wedges", ...
@@ -730,12 +738,12 @@ classdef AnnulusChart < Component
 
                 % Update the colors.
                 currentNumColors = height( obj.FaceColor_ );
-                if currentNumColors < numWedges                    
+                if currentNumColors < numWedges
                     obj.FaceColor_(end+1:numWedges, :) = hsv( ...
                         numWedges - currentNumColors );
                 else
                     obj.FaceColor_ = obj.FaceColor_(1:numWedges, :);
-                end % if                
+                end % if
 
                 if numWedges < currentNumWedges
                     % Delete the appropriate wedges and labels.
@@ -795,13 +803,13 @@ classdef AnnulusChart < Component
                             obj.LabelText_(k, 1) = "Data " + k;
                         end % if
                         if numel( obj.LegendText ) < k
-                            obj.LegendText_(k, 1) = "Data " + k;                        
+                            obj.LegendText_(k, 1) = "Data " + k;
                         end % if
                         obj.WedgeLabels(k, 1) = text( ...
                             "Parent", obj.Axes, ...
                             "Position", NaN( 1, 3 ), ...
                             "String", "", ...
-                            "FontSize", 10, ...                            
+                            "FontSize", 10, ...
                             "Margin", 1 );
                     end % for
 
@@ -810,7 +818,7 @@ classdef AnnulusChart < Component
                     for r = 1 : numWedges
                         for c = 1 : width( obj.WedgeGraphics )
                             set( obj.WedgeGraphics(r, c), ...
-                                "EdgeColor", "none", ...                                
+                                "EdgeColor", "none", ...
                                 "LineWidth", 1.75, ...
                                 "SpecularStrength", 0, ...
                                 "AmbientStrength", 0.45, ...
@@ -885,7 +893,7 @@ classdef AnnulusChart < Component
                 for k = 1 : numel( obj.Data_ )
                     % Extract the current color.
                     currentColor = obj.FaceColor_(k, :);
-                    % Use a darker shade for each text label compared to 
+                    % Use a darker shade for each text label compared to
                     % its associated wedge.
                     obj.WedgeLabels(k).Color = 0.5 * currentColor;
                     % Each wedge comprises four patches and two surfaces.
@@ -904,11 +912,11 @@ classdef AnnulusChart < Component
             end % if
 
             % Update the label text and position.
-            obj.updateWedgeLabels()            
+            obj.updateWedgeLabels()
             obj.updateLabelPositions( 1:numel( obj.Data_ ) )
 
             % Update the legend.
-            obj.updateLegend()            
+            obj.updateLegend()
 
         end % update
 
@@ -1060,7 +1068,7 @@ classdef AnnulusChart < Component
             end % if
             obj.Legend.String = newLegendText;
 
-        end % updateLegend        
+        end % updateLegend
 
         function onToggleButtonPressed( obj, ~, ~ )
             %ONTOGGLEBUTTONPRESSED Hide/show the chart controls.
@@ -1082,3 +1090,11 @@ classdef AnnulusChart < Component
     end % methods ( Access = private )
 
 end % classdef
+
+function mustBeLegendLocation( option )
+%MUSTBELEGENDLOCATION Validate a legend location value.
+
+locationValues = set( groot(), "DefaultLegendLocation" );
+mustBeMember( option, locationValues )
+
+end % mustBeLegendLocation

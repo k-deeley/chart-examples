@@ -3,7 +3,7 @@ classdef InductionMotorParameters
     %
     % See also InductionMotorChart.
 
-    % Copyright 2021-2025 The MathWorks, Inc.
+    % Copyright 2021-2026 The MathWorks, Inc.
 
     properties
         % Speed-torque coordinates of the normal operating region. This is

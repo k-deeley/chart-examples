@@ -1,12 +1,13 @@
-classdef GraphicsHierarchyChart < Chart
+classdef GraphicsHierarchyChart < ...
+        matlab.graphics.chartcontainer.ChartContainer
     %GRAPHICSHIERARCHYCHART Visualize the graphics hierarchy descending
     %from a given graphics object.
 
-    % Copyright 2024-2025 The MathWorks, Inc.
+    % Copyright 2024-2026 The MathWorks, Inc.
 
     properties
         % Edge transparency.
-        EdgeAlpha(1, 1) double {mustBeInRange( EdgeAlpha, 0, 1 )} = 0.7
+        EdgeAlpha(1, 1) double {mustBeBetween( EdgeAlpha, 0, 1 )} = 0.7
         % Edge width.
         LineWidth(1, 1) double {mustBePositive, mustBeFinite} = 3
         % Node size.
@@ -22,7 +23,8 @@ classdef GraphicsHierarchyChart < Chart
         ShowHiddenHandles(1, 1) matlab.lang.OnOffSwitchState
     end % properties ( Dependent )
 
-    properties ( Access = private, Transient, NonCopyable )
+    properties ( GetAccess = ?Testable, SetAccess = private, ...
+            Transient, NonCopyable )
         % Chart axes.
         Axes(:, 1) matlab.graphics.axis.Axes {mustBeScalarOrEmpty}
         % Graph plot.
@@ -58,6 +60,13 @@ classdef GraphicsHierarchyChart < Chart
             arguments ( Input )
                 namedArgs.?GraphicsHierarchyChart
             end % arguments ( Input )
+
+            % Call the superclass constructor.
+            f = figure( "Visible", "off" );
+            figureCleanup = onCleanup( @() delete( f ) );
+            obj@matlab.graphics.chartcontainer.ChartContainer( ...
+                "Parent", f )
+            obj.Parent = [];
 
             % Set any user-defined properties.
             set( obj, namedArgs )
@@ -149,3 +158,12 @@ classdef GraphicsHierarchyChart < Chart
     end % methods ( Access = protected )
 
 end % classdef
+
+function mustBeValidGraphics( gobj )
+%MUSTBEVALIDGRAPHICS Validate that the input is a valid graphics object.
+
+assert( isgraphics( gobj ) && isvalid( gobj ), ...
+    "GraphicsHierarchyChart:InvalidGraphicsObject", ...
+    "The input must be a valid graphics object." )
+
+end % mustBeValidGraphics

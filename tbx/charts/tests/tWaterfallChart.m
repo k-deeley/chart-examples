@@ -3,7 +3,7 @@ classdef tWaterfallChart < tChart
     %
     % See also WaterfallChart, tChart
 
-    % Copyright 2025 The MathWorks, Inc.
+    % Copyright 2025-2026 The MathWorks, Inc.
 
     properties ( TestParameter )
         % Tick/tick label methods.
@@ -51,7 +51,7 @@ classdef tWaterfallChart < tChart
             % Set a nonempty vector.
             initialVector = -5:5;
             testCase.Chart.Data = initialVector;
-            drawnow
+            drawnow()
 
             % Set a shorter vector.
             idx = 1:6;
@@ -111,7 +111,7 @@ classdef tWaterfallChart < tChart
             % Verify that the value has been set correctly.
             actual = feval( TickMethod, testCase.Chart );
             if endsWith( TickMethod, "labels" )
-                constraint = IsEquivalentText( string( expected ) );
+                constraint = IsEquivalentText( compose( "%d", expected ) );
             else
                 constraint = IsEqualVector( expected );
             end % if
@@ -146,10 +146,11 @@ classdef tWaterfallChart < tChart
             gridValues = ["on", "off"];
             for k = 1 : numel( gridValues )
                 grid( testCase.Chart, gridValues(k) )
-                actual = string( [testCase.Chart.Axes.XGrid, ...
-                    testCase.Chart.Axes.YGrid] );
-                expected = [gridValues(k), gridValues(k)];
-                testCase.verifyEqual( actual, expected, ...
+                actual = {testCase.Chart.Axes.XGrid, ...
+                    testCase.Chart.Axes.YGrid};
+                expected = repmat( ...
+                    matlab.lang.OnOffSwitchState( gridValues(k) ), 1, 2 );
+                testCase.verifyEqual( [actual{:}], expected, ...
                     "Calling the chart's grid() method with the " + ...
                     "value '" + gridValues(k) + "' did not update" + ...
                     " the axes' 'XGrid' and 'YGrid' properties." )
@@ -163,8 +164,8 @@ classdef tWaterfallChart < tChart
             boxValues = ["on", "off"];
             for k = 1 : numel( boxValues )
                 box( testCase.Chart, boxValues(k) )
-                actual = string( testCase.Chart.Axes.Box );
-                expected = boxValues(k);
+                actual = testCase.Chart.Axes.Box;
+                expected = matlab.lang.OnOffSwitchState( boxValues(k) );
                 testCase.verifyEqual( actual, expected, ...
                     "Calling the chart's box() method with the " + ...
                     "value '" + boxValues(k) + "' did not update" + ...
@@ -457,7 +458,7 @@ classdef tWaterfallChart < tChart
                 "correctly after setting the 'ColorData' property." )
 
         end % tSettingColorDataUpdatesFaceColor
-        
+
         function tGlobalLineWidthRelatesToIndividualLineWidths( testCase )
 
             % Verify the initial state is correct.
@@ -526,6 +527,16 @@ classdef tWaterfallChart < tChart
                 "set the 'Labels' property of the total bar to """"." )
 
         end % tSwitchingOffBarLabelVisibleUsesEmptyString
+
+        function tTurningOffInteractionsDisablesToolbar( testCase )
+
+            testCase.Chart.Interactions = "off";
+            drawnow()
+            testCase.verifyEmpty( testCase.Chart.Axes.Toolbar, ...
+                "Setting 'Interactions' to 'off' did not remove " + ...
+                "the axes toolbar." )
+
+        end % tTurningOffInteractionsDisablesToolbar
 
     end % methods ( Test )
 
