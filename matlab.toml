@@ -32,7 +32,7 @@ preview-image-file = "./tbx/chartsdoc/charts/images/ToolboxLogo.png"
 getting-started-file = "./tbx/chartsdoc/GettingStarted.m"
 output-file-name = "Chart_Examples.mltbx"
 output-folder = "./releases"
-use-license-bsd = false
+use-license-bsd = true
 supported-platforms = [
     "windows",
     "linux",
