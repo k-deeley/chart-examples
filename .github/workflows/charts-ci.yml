@@ -86,7 +86,8 @@ jobs:
                 'echo "%s" >> $GITHUB_ENV' ], ...
                 delimiter, tempFile, delimiter );
             system( systemCommand );
-            delete( tempFile )            
+            delete( tempFile )
+            openProject( pwd(), "Prompt", false );
             buildtool package -skip test -skip check            
 
     - name: Release toolbox
