@@ -60,6 +60,7 @@ jobs:
     - name: Set up MATLAB on the runner
       uses: matlab-actions/setup-matlab@v3
       with:
+        release: latest-including-prerelease
         products: >
             MATLAB        
             Statistics_and_Machine_Learning_Toolbox
