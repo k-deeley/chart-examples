@@ -64,7 +64,7 @@ Development workflows, namely running tests and automated builds, require the fo
 - [Test Framework Extensions](https://github.com/mathworks/test-framework-extensions)
 - [MATLAB DocMaker](https://github.com/mathworks/docmaker)
 
-Some example charts in the toolbox rely on additional toolboxes.
+Some example charts rely on additional products.
 - [Statistics and Machine Learning Toolbox&trade;](https://www.mathworks.com/products/statistics.html)
 - [Financial Toolbox&trade;](https://www.mathworks.com/products/finance.html)
 - [Financial Instruments Toolbox&trade;](https://www.mathworks.com/products/financial-instruments.html)
