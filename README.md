@@ -47,11 +47,13 @@ You can inspect the source code, explore the features and functionality, and run
 The documentation provides examples of how to develop and use these charts.
 
 ## Installation and Getting Started
-1. Chart Examples is provided as a [MATLAB Toolbox](https://www.mathworks.com/help/matlab/creating-help.html). Download the latest toolbox file here ([`Chart_Example.mltbx`](https://github.com/k-deeley/chart-examples/releases/latest/download/Chart_Examples.mltbx)) or an earlier version from the [Releases](https://github.com/k-deeley/chart-examples/releases/latest) section on GitHub.
+The chart examples are provided as a [MATLAB Toolbox](https://www.mathworks.com/help/matlab/creating-help.html).
+
+1. Download the latest toolbox file here ([`Chart_Example.mltbx`](https://github.com/k-deeley/chart-examples/releases/latest/download/Chart_Examples.mltbx)), or an earlier version from the [Releases](https://github.com/k-deeley/chart-examples/releases/latest) section on GitHub.
 2. Double-click on the toolbox installer (the `Chart_Examples.mltbx` file) to install the toolbox.
 3. Verify the toolbox installation by entering `>> ver charts` at the MATLAB command line.
 4. See the `GettingStarted.m` guide for introductory information.
-5. Open the documentation (`>> doc`) under **Supplemental Software** -> **Chart Examples Toolbox** to browse the example charts.
+5. Open the documentation (`>> doc`) under **Supplemental Software** &rarr; **Chart Examples Toolbox** to browse the example charts.
 
 ## [MathWorks](https://www.mathworks.com) Product Requirements
 
