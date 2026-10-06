@@ -33,6 +33,7 @@ getting-started-file = "./tbx/chartsdoc/GettingStarted.m"
 output-file-name = "Chart_Examples.mltbx"
 output-folder = "./releases"
 use-license-bsd = true
+release-compatibility = ">=R2026a"
 supported-platforms = [
     "windows",
     "linux",

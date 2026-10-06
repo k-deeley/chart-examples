@@ -1,5 +1,9 @@
 # Release Notes
 
+## Version 2.3.2
+
+* Updated `matlab.toml` to include release compatibility
+
 ## Version 2.3.1
 
 * Updated UUID to fix FX issue
