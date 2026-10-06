@@ -13,7 +13,7 @@ test = [
 ]
 
 [dependencies]
-Test_Framework_Extensions = {version = "*", id = "609722db-8fd7-4bbd-b440-c413f25e08c0"}
+test_framework_extensions = {version = "*", id = "609722db-8fd7-4bbd-b440-c413f25e08c0"}
 docmaker = {version = "*", id = "ae82d5d2-45be-4fc5-a01b-70d8bb905ca2"}
 
 [project.labels.Classification]
@@ -23,7 +23,7 @@ Test = [
 
 [[package]]
 name = "Chart_Examples"
-version = "2.3.1"
+version = "2.3.2"
 id = "d47c73c1-4864-4beb-93d4-9642d80fcb1b"
 display-name = "Chart Examples"
 description = "A chart provides a task-specific application programming interface (API) for creating custom visualizations. Designing and implementing a chart not only provides a convenient API for end users, but simultaneously removes the need for the user to manipulate low-level graphics objects. This toolbox comprises multiple diverse examples of custom MATLAB charts. You can inspect the source code, explore the features and functionality, and run examples demonstrating the use of each chart. The toolbox also has documentation and resources to help you develop your own charts."
@@ -33,7 +33,7 @@ getting-started-file = "./tbx/chartsdoc/GettingStarted.m"
 output-file-name = "Chart_Examples.mltbx"
 output-folder = "./releases"
 use-license-bsd = true
-release-compatibility = ">=R2026a"
+release-compatibility = ">=26.1.*"
 supported-platforms = [
     "windows",
     "linux",
