@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        matlab-version: [R2026a, latest-including-prerelease]
+        matlab-version: [R2026a, R2026b, latest-including-prerelease]
     runs-on: ${{ matrix.platform }}    
     continue-on-error: false
     steps:
