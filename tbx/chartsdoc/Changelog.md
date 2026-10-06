@@ -1,5 +1,9 @@
 # Release Notes
 
+## Version 2.3.1
+
+* Updated UUID to fix FX issue
+
 ## Version 2.3.0
 
 * Upgrade to use TOML-based projects in R2026b
