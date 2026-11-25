@@ -75,6 +75,13 @@ jobs:
       uses: matlab-actions/run-command@v3
       with:
         command: |
+
+            % Download and install DocMaker
+            toolboxFile = websave( "MATLAB_DocMaker.mltbx", "https://github.com/mathworks/docmaker/releases/latest/download/MATLAB_DocMaker.mltbx" );
+            fileCleanup = onCleanup( @() delete( toolboxFile ) );
+            matlab.addons.install( toolboxFile, true );
+
+            % Extract the latest release notes
             logLines = readlines( "tbx/chartsdoc/Changelog.md" );
             startIdx = find( logLines == "## Version " + getenv( "TOOLBOX_VERSION" ) );            
             allVersionLines = find( startsWith( logLines, "##" ) );
@@ -90,7 +97,8 @@ jobs:
                 delimiter, tempFile, delimiter );
             system( systemCommand );
             delete( tempFile )
-            openProject( pwd(), "Prompt", false );
+
+            % Package the toolbox            
             buildtool package -skip test -skip check            
 
     - name: Release toolbox
