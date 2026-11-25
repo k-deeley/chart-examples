@@ -1,8 +1,9 @@
 # Release Notes
 
 ## Version 2.3.3
-* Cleaned up H1 lines so that `>> help Chart_Examples` is more informative
+* Cleaned up the charts' H1 lines so that `>> help Chart_Examples` is more informative
 * Removed build-only dependencies; will restore when this is a product feature
+* Updated the `buildfile` to use the `DocMakerTask`
 
 ## Version 2.3.2
 
