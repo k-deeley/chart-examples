@@ -1,8 +1,9 @@
 classdef SnailTrailChart < ...
         matlab.ui.componentcontainer.ComponentContainer
-    %SNAILTRAILCHART Chart for displaying excess return against tracking
-    %error for a given asset return series relative to a given benchmark
-    %return series.
+    %SNAILTRAILCHART Excess return vs. tracking error for a given asset.
+    % This chart displays the excess return against the tracking error for 
+    % a given asset return series relative to a given benchmark return 
+    % series.
 
     % Copyright 2018-2026 The MathWorks, Inc.
 

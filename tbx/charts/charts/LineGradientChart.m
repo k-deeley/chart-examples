@@ -1,7 +1,8 @@
 classdef LineGradientChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %LINEGRADIENTCHART Chart for managing a variable-color curve plotted
-    %against a date/time vector.
+    %LINEGRADIENTCHART Variable-color curve plotted against time.
+    % This chart manages a variable-color curve plotted against a date/time
+    % vector.
 
     % Copyright 2018-2026 The MathWorks, Inc.
 

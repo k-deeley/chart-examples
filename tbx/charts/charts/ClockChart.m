@@ -1,7 +1,10 @@
 classdef ClockChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %CLOCKCHART Display an analog clock, using a timer to schedule regular
+    %CLOCKCHART Display an analog clock.
+    % This chart illustrates the use of a timer object to schedule regular
     %updates.
+    % 
+    % See also timer
 
     % Copyright 2024-2026 The MathWorks, Inc.
 

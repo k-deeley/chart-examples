@@ -106,23 +106,17 @@ function docTask( context )
 docFolder = context.Task.Inputs(1).Path;
 generatedMarkdownFiles = generateChartReferencePages();
 
-% Convert the Markdown files to HTML.
+% Generate the HTML documentation.
 markdownInfo = dir( fullfile( docFolder, "**", "*.md" ) );
 markdownFiles = fullfile( string( {markdownInfo.folder} ), ...
     string( {markdownInfo.name} ) ).';
-htmlFiles = docconvert( markdownFiles, ...
+task = DocMakerTask( markdownFiles, ...
     "Theme", "light", ...
-    "Root", docFolder );
-fprintf( 1, "** Converted Markdown documentation to HTML.\n" )
+    "FigureSize", [600, 400], ...
+    "FigureTheme", "light" );
+task.buildDoc()
 
-% Insert the MATLAB output.
-docrun( htmlFiles, "Theme", "light", "FigureSize", [600, 400] )
-fprintf( 1, "** Inserted MATLAB output into doc.\n" )
-
-% Build the doc index.
-docindex( docFolder )
-fprintf( 1, "** Indexed documentation.\n" )
-
+% Ensure the markdown files are in the project.
 addGeneratedFilesToProject( generatedMarkdownFiles )
 
 end % docTask

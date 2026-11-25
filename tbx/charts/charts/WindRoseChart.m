@@ -1,7 +1,8 @@
 classdef WindRoseChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %WINDROSECHART Chart for displaying speed and direction data on an
-    %angular (polar) histogram.
+    %WINDROSECHART Plot windspeed and direction on a polar histogram.
+    % A wind rose is a chart for displaying speed and direction data on an
+    % angular (polar) histogram.
 
     % Copyright 2018-2026 The MathWorks, Inc.
 

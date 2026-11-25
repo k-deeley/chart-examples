@@ -1,7 +1,8 @@
 classdef SignalTraceChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %SIGNALTRACECHART Chart for managing a collection of non-overlapping
-    %signal traces plotted against a numeric time vector.
+    %SIGNALTRACECHART Non-overlapping signal traces.
+    % This chart manages a collection of non-overlapping signal traces 
+    % plotted against a numeric time vector.
 
     % Copyright 2018-2026 The MathWorks, Inc.
 

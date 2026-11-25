@@ -1,8 +1,9 @@
 classdef CircularNetFlowChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %CIRCULARNETFLOWCHART Illustrates the directed to/from relationships
-    %between pairs of categories.
-
+    %CIRCULARNETFLOWCHART Visualize pairwise relationships between nodes.
+    % This chart illustrates directed to/from relationships between pairs 
+    % of categories, represented as nodes in a circular diagram.
+    
     % Copyright 2018-2026 The MathWorks, Inc.
 
     properties ( Dependent )

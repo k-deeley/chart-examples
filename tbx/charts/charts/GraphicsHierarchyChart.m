@@ -1,7 +1,8 @@
 classdef GraphicsHierarchyChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %GRAPHICSHIERARCHYCHART Visualize the graphics hierarchy descending
-    %from a given graphics object.
+    %GRAPHICSHIERARCHYCHART Plot the current graphics hierarchy as a graph.
+    % The GraphicsHierarchyChart visualizes the graphics hierarchy 
+    % descending from a given graphics object.
 
     % Copyright 2024-2026 The MathWorks, Inc.
 

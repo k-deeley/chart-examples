@@ -1,7 +1,8 @@
 classdef WaterfallChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %WATERFALLCHART Cumulative bar chart visualizing the evolution of an
-    %initial value.
+    %WATERFALLCHART Cumulative bar chart for changes in a single variable.
+    % The waterfall chart is a cumulative bar chart visualizing the 
+    % evolution of an initial value over time.
 
     % Copyright 2025-2026 The MathWorks, Inc.
 

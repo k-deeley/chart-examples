@@ -1,7 +1,10 @@
 classdef RadarScope < ...
         matlab.ui.componentcontainer.ComponentContainer
-    %RADARSCOPE Component managing a radar scope and a set of blips
-    %representing objects detected on the scope.
+    %RADARSCOPE Visualize blips on a radar scope.
+    % This component manages a radar scope (the chart backdrop) and a set 
+    % of blips representing objects detected on the scope.
+    %
+    % See also Blip
 
     % Copyright 2021-2026 The MathWorks, Inc.
 

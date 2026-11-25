@@ -1,7 +1,8 @@
 classdef ValueAtRiskChart < ...
         matlab.ui.componentcontainer.ComponentContainer
-    %VALUEATRISKCHART Chart displaying the distribution of a return series
-    %together with value at risk metrics and a distribution fit.
+    %VALUEATRISKCHART Visualize risk metrics for a return series.
+    % This chart displays the distribution of a return series together with
+    % value at risk metrics and a distribution fit.
 
     % Copyright 2018-2026 The MathWorks, Inc.
 

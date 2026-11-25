@@ -1,6 +1,9 @@
 classdef AnnulusChart < ...
         matlab.ui.componentcontainer.ComponentContainer
     %ANNULUSCHART Annulus (ring) chart, similar to a 3D pie chart.
+    % From R2023b onwards, consider using DONUTCHART.
+    %
+    % See also donutchart, piechart
 
     % Copyright 2019-2026 The MathWorks, Inc.
 
