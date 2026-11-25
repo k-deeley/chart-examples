@@ -5,8 +5,9 @@ Source file: `PolarChart.m`.
 ````text 
 classdef PolarChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %POLARCHART Chart displaying a line graph of dependent numeric
-    %variables plotted against independent circular data.
+    %POLARCHART Plot dependent variables against independent circular data.
+    % This chart displays a line graph of dependent numeric variables 
+    % plotted against independent circular data.
 
 
     properties ( Dependent )

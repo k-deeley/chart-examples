@@ -5,7 +5,8 @@ Source file: `SpiderChart.m`.
 ````text 
 classdef SpiderChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %SPIDERCHART Manages the display of values from distinct measurements
+    %SPIDERCHART Plot distinct measurements around a web diagram.
+    % This chart manages the display of values from distinct measurements
     %plotted around a web. The number of nodes in the web is equal to the
     %number of distinct measurements.
 

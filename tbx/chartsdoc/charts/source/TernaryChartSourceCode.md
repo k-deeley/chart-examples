@@ -5,8 +5,9 @@ Source file: `TernaryChart.m`.
 ````text 
 classdef TernaryChart < ...
         matlab.ui.componentcontainer.ComponentContainer
-    %TERNARYCHART Chart managing a barycentric plot of three variables
-    %which sum to a constant.
+    %TERNARYCHART Barycentric plot of three variables summing to a constant.
+    % The ternary, or triangular, chart manages a barycentric plot of three
+    % variables whose sum is a constant value.
 
 
     properties ( Dependent )

@@ -5,9 +5,9 @@ Source file: `EdgeworthBowleyChart.m`.
 ````text 
 classdef EdgeworthBowleyChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %EDGEWORTHBOWLEYCHART Creates an Edgeworth-Bowley chart based on the
-    %utility curves of two individuals and the Pareto-efficient contract
-    %curve.
+    %EDGEWORTHBOWLEYCHART Plot utility curves of two individuals.
+    % The Edgeworth-Bowley chart plots the utility curves of two 
+    % individuals and the Pareto-efficient contract curve.
 
 
     properties

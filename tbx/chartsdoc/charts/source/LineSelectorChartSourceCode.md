@@ -5,8 +5,10 @@ Source file: `LineSelectorChart.m`.
 ````text 
 classdef LineSelectorChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %LINESELECTORCHART Chart displaying a collection of line plots,
-    %possibly on different scales.
+    %LINESELECTORCHART Collection of line plots with different y-scales.
+    % This chart displays a collection of line plots, possibly on different
+    % y-scales. The chart data is normalized so that all lines are visible
+    % on the same diagram.
 
 
     properties ( Dependent )

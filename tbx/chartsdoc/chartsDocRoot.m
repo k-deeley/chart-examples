@@ -1,5 +1,5 @@
 function folder = chartsDocRoot()
-%CHARTSDOCROOT Folder containing the Chart Examples documentation
+%CHARTSDOCROOT Folder containing the Chart Examples documentation.
 %
 % folder = chartsDocRoot() returns the full path to the folder containing
 % the Chart Examples documentation.

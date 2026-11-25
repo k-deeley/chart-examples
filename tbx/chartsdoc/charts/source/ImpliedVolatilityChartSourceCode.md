@@ -5,9 +5,10 @@ Source file: `ImpliedVolatilityChart.m`.
 ````text 
 classdef ImpliedVolatilityChart < ...
         matlab.ui.componentcontainer.ComponentContainer
-    %IMPLIEDVOLATILITYCHART Chart managing 3D scattered data comprising
-    %strike price, time to expiry and implied volatility, together with an
-    %interpolated implied volatility surface.
+    %IMPLIEDVOLATILITYCHART Volatility vs. strike price and time to expiry.
+    % This chart manages 3D scattered data comprising strike price, 
+    % time to expiry and implied volatility, together with a
+    % interpolated implied volatility surface.
 
 
     properties ( Dependent )

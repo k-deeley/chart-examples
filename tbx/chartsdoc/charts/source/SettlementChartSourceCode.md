@@ -5,11 +5,11 @@ Source file: `SettlementChart.m`.
 ````text 
 classdef SettlementChart < ...
         matlab.ui.componentcontainer.ComponentContainer
-    %SETTLEMENTCHART Chart displaying option prices against strike prices.
-    %A settlement chart plots option prices on the y-axis against strike
-    %prices on the x-axis. The option prices comprise put prices below
-    %the at-the-money (ATM) price, and call prices above the at-the-money
-    %price.
+    %SETTLEMENTCHART In the money call/put prices against strike prices.
+    % A settlement chart plots option prices on the y-axis against strike
+    % prices on the x-axis. The option prices comprise put prices below
+    % the at-the-money (ATM) price, and call prices above the at-the-money
+    % price.
     %
     % See also BLSPRICE.
 

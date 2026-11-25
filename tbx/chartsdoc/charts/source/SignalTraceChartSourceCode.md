@@ -5,8 +5,9 @@ Source file: `SignalTraceChart.m`.
 ````text 
 classdef SignalTraceChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %SIGNALTRACECHART Chart for managing a collection of non-overlapping
-    %signal traces plotted against a numeric time vector.
+    %SIGNALTRACECHART Non-overlapping signal traces.
+    % This chart manages a collection of non-overlapping signal traces 
+    % plotted against a numeric time vector.
 
 
     properties ( Dependent )

@@ -1,8 +1,9 @@
 function exportChartImage( names )
-%EXPORTCHARTIMAGE Export chart images with transparent backgrounds for use
-%in the example scripts. Call this function with no inputs to regenerate 
-%and export all images. Alternatively, provide a list of required chart 
-%names. Only the specified chart images will be exported.
+%EXPORTCHARTIMAGE Export chart images with transparent backgrounds.
+% This function exports chart images with transparent backgrounds for use
+% in the example scripts. Call this function with no inputs to regenerate 
+% and export all images. Alternatively, provide a list of required chart 
+% names. Only the specified chart images will be exported.
 
 % Copyright 2024-2026 The MathWorks, Inc.
 

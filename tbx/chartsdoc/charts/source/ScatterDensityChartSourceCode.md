@@ -5,8 +5,9 @@ Source file: `ScatterDensityChart.m`.
 ````text 
 classdef ScatterDensityChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %SCATTERDENSITYCHART Bivariate scatter plot using color to indicate
-    %relative density of the data points.
+    %SCATTERDENSITYCHART Scatter plot using color for relative density.
+    % This chart is a bivariate scatter plot using color to indicate the 
+    % relative density of the data points.
 
 
     properties ( Dependent )

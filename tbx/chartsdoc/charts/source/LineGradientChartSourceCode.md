@@ -5,8 +5,9 @@ Source file: `LineGradientChart.m`.
 ````text 
 classdef LineGradientChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %LINEGRADIENTCHART Chart for managing a variable-color curve plotted
-    %against a date/time vector.
+    %LINEGRADIENTCHART Variable-color curve plotted against time.
+    % This chart manages a variable-color curve plotted against a date/time
+    % vector.
 
 
     properties ( Dependent )

@@ -5,9 +5,11 @@ Source file: `InductionMotorChart.m`.
 ````text 
 classdef InductionMotorChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %INDUCTIONMOTORCHART Chart representing the operating performance of an
-    %induction motor. Thanks to Chris Armstrong for the idea behind this
-    %example.
+    %INDUCTIONMOTORCHART Operating performance of an induction motor.
+    % Chart representing the operating performance of an induction motor,
+    % comprising a decorated backdrop with the motor operating regions and
+    % a point representing the current performance. Many thanks to Chris 
+    % Armstrong for the idea behind this example.
     %
     % See also InductionMotorParameters.
 

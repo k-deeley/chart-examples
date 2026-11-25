@@ -5,9 +5,11 @@ Source file: `AircraftChart.m`.
 ````text 
 classdef AircraftChart < ...
         matlab.graphics.chartcontainer.ChartContainer
-    %AIRCRAFTCHART Custom chart for displaying a 3D rendering of an
-    %aircraft. The chart also provides roll, pitch and yaw methods for
-    %modifying the attitude of the aircraft.
+    %AIRCRAFTCHART Display a 3D rendering of an aircraft.
+    % The chart also provides roll, pitch and yaw methods for
+    % modifying the attitude of the aircraft.
+    %
+    % See also trisurf
 
 
     properties
@@ -37,9 +39,12 @@ classdef AircraftChart < ...
     methods
 
         function obj = AircraftChart( namedArgs )
+            %AIRCRAFTCHART Construct an AircraftChart object, given
+            %optional name-value pair arguments.
+
             arguments ( Input )
                 namedArgs.?AircraftChart
-            end % arguments
+            end % arguments ( Input )
 
             % Call the superclass constructor.
             f = figure( "Visible", "off" );
